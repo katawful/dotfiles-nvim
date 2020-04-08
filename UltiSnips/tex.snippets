@@ -7,6 +7,12 @@ snippet table "Table Center"
 \end{center}
 endsnippet
 
+snippet c++ "C++ Code Block"
+\begin{lstlisting}[language=C++]
+	$1
+\end{lstlisting}
+endsnippet
+
 snippet verb "Create verb"
 \verb|$1|
 endsnippet
@@ -31,4 +37,18 @@ endsnippet
 
 snippet sssec "Sub-Sub-Section"
 \subsubsection{$1}
+endsnippet
+
+snippet cjk "Chinese Character Support"
+\begin{CJK}{UTF8}{bsmi}
+$1
+\end{CJK}
+endsnippet
+
+snippet hyper "Hyperlink"
+\href{$1}{$2}
+endsnippet
+
+snippet url "URL Hyperlink"
+\url{$1}
 endsnippet
