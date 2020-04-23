@@ -4,6 +4,8 @@ syntax on
 filetype indent plugin on
 set modeline
 set mouse=a
+set title
+set titlestring=neovim:\ %t titlelen=70
 
 call plug#begin('~/.local/share/vim-plug')
 
