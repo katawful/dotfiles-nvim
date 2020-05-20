@@ -1,9 +1,0 @@
-call plug#begin('~/.vim/plugged')
-
-"Fugitive Vim Github Wrapper
-Plug 'tpope/vim-fugitive'
-
-"NerdTree
-Plug 'preservim/nerdtree'
-
-call plug#end()
