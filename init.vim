@@ -228,3 +228,8 @@ nnoremap <A-H> <C-w>v
 nnoremap <A-J> <C-w>s<C-w>k
 nnoremap <A-K> <C-w>s
 nnoremap <A-L> <C-w>v<C-w>h
+
+" comment out lines in visual mode
+vnoremap <leader>; :s/^/;<CR>:let @/ = "" <CR>
+vnoremap <leader># :s/^/#<CR>:let @/ = "" <CR>
+vnoremap <leader>/ :s/^/\/\/<CR>:let @/ = "" <CR>
