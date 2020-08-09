@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =2
+let g:netrw_dirhist_2='/home/kat/doc'
+let g:netrw_dirhist_1='/home/kat/.local/share/nvim/site/ftplugin/obse'
+let g:netrw_dirhist_0='/home/kat/Programming/oblivion-git/OblivionLessBounded'
+let g:netrw_dirhist_9='/home/kat/Programming/oblivion-git'
+let g:netrw_dirhist_8='/home/kat/Programming'
+let g:netrw_dirhist_7='/home/kat'
+let g:netrw_dirhist_6='/home/kat/Programming/oblivion-git/OblivionLessBounded'
+let g:netrw_dirhist_5='/home/kat'
+let g:netrw_dirhist_4='/home/kat/.config/i3'
+let g:netrw_dirhist_3='/home/kat/.config'
