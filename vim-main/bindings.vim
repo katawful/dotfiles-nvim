@@ -15,11 +15,7 @@ nnoremap Y y$
 nnoremap <leader>y :%y<CR>
 
 " <C-x> <C-u> is for completefunc user complete
-inoremap <C-Space>u <C-x><C-u>
-
-" move buffer next or previous
-nnoremap <leader>bh :bprevious<CR>
-nnoremap <leader>bl :bnext<CR>
+inoremap <C-u> <C-x><C-u>
 
 " buffer searching
 nnoremap <leader>g :g//#<Left><Left>
@@ -60,8 +56,6 @@ nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 
-" rename buffer (mostly for terminal)
-nnoremap :rename :keepalt file
 
 " go back to normal mode from terminal
 tnoremap <C-Space> <C-\><C-N>

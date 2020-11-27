@@ -11,7 +11,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'lervag/vimtex'
 " Vim latex live prwview
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-"UltiSnips
+" UltiSnips
 Plug 'SirVer/ultisnips'
 " Vimwiki
 Plug 'vimwiki/vimwiki'
@@ -33,6 +33,14 @@ Plug 'plasticboy/vim-markdown'
 Plug 'tpope/vim-liquid'
 " indentLine
 Plug 'Yggdroot/indentLine'
+" vim-openscad
+Plug 'sirtaj/vim-openscad'
+" Cxx highlight
+Plug 'jackguo380/vim-lsp-cxx-highlight'
+" vim-print-debug
+Plug 'sentriz/vim-print-debug'
+" vim commentary
+Plug 'tpope/vim-commentary'
 
 call plug#end()
 
@@ -40,6 +48,8 @@ call plug#end()
 source ~/vim-main/settings.vim
 "" Bindings
 source ~/vim-main/bindings.vim
+"" Functions
+source ~/vim-main/functions.vim
 "" Airline
 source ~/plugin-config/airline.vim
 "" wal.vim
@@ -62,3 +72,5 @@ source ~/plugin-config/startify.vim
 source ~/plugin-config/vim-markdown.vim
 "" indentLine
 source ~/plugin-config/indentline.vim
+"" vim-print-debug
+source ~/plugin-config/print-debug.vim
