@@ -10,6 +10,7 @@ let g:startify_bookmarks = [
   \ { 'i': '~/init.vim' }, 
   \ { 'z': '~/.zshrc'},
   \ { 'c': '~/.config/i3/config' },
+  \ { 's': '~/.config/sway/config' },
   \ ]
 let g:startify_commands = [
   \ { 'v': 'VimwikiIndex' },

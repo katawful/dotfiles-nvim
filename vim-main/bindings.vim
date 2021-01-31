@@ -79,3 +79,11 @@ vnoremap <leader>/ :s/^/\/\/<CR>:let @/ = "" <CR>
 
 " delete line in insert mode (cause I keep entering too early)
 inoremap <C-BS> <Esc>dda
+
+" Oblivion/OBSE {{{
+" augroup ftb_obse
+"   autocmd!
+"   autocmd filetype obse iabbrev iff if ()<Esc>hi
+"   autocmd filetype obse inoremap [ []<Esc>i
+" augroup END
+" }}}

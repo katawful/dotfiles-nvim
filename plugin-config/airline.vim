@@ -1,4 +1,4 @@
-let g:airline_theme='wal'
+let g:airline_theme='kat'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 "let g:airline#extensions#tabline#formatter = 'unique_tail'
