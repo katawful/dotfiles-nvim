@@ -9,14 +9,18 @@ set foldmethod=syntax
 set modeline
 set mouse=a
 set relativenumber
+set number
 
 set updatetime=100
 set cmdheight=2
 " set list lcs=tab:\|\ 
+set list
+set listchars=tab:\ \ ,trail:■,extends:>,precedes:<
 set clipboard+=unnamedplus
 set tabstop=4
 set shiftwidth=2
 set expandtab
+set conceallevel=2
 
 set title
 set inccommand=nosplit

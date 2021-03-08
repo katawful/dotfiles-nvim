@@ -42,7 +42,7 @@ Plug 'tpope/vim-commentary'
 " coc.nvim lua
 Plug 'rafcamlet/coc-nvim-lua'
 " Obli-Vim
-Plug 'katawful/Obli-Vim', {'for': 'obse', 'branch': 'cse-plugin'}
+Plug 'katawful/Obli-Vim', {'for': 'obse'}
 Plug 'katawful/Obli-Vim-Docs', {'for': 'obse'}
 
 call plug#end()
@@ -53,6 +53,8 @@ source ~/vim-main/settings.vim
 source ~/vim-main/bindings.vim
 "" Functions
 source ~/vim-main/functions.vim
+"" indentLine
+source ~/plugin-config/indentline.vim
 "" Airline
 source ~/plugin-config/airline.vim
 "" FZF/fzf.vim
@@ -71,7 +73,8 @@ source ~/plugin-config/coc.vim
 source ~/plugin-config/startify.vim
 "" vim-markdown
 source ~/plugin-config/vim-markdown.vim
-"" indentLine
-source ~/plugin-config/indentline.vim
 "" vim-print-debug
 source ~/plugin-config/print-debug.vim
+"" ObliVim
+source ~/plugin-config/oblivim.vim
+
