@@ -8,6 +8,10 @@ snippet let "let thing"
 let $1 := $0
 endsnippet
 
+snippet set "set thing"
+set $1 to $0
+endsnippet
+
 snippet play "PlayerREF"
 PlayerREF
 endsnippet
@@ -32,14 +36,20 @@ snippet int "int var"
 int i$1
 endsnippet
 
-snippet while "while loop"
+snippet while "while loop" b
 While $1
   $0
 Loop
 endsnippet
 
-snippet if "if block"
+snippet if "if block" b
 if $1
   $0
 endif
+endsnippet
+
+snippet for "foreach block" b
+ForEach $1 <- $2
+  $0
+Loop
 endsnippet

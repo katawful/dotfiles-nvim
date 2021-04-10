@@ -1,4 +1,4 @@
-call plug#begin('~/.local/share/vim-plug')
+call plug#begin('~/.local/share/nvim/plug')
 
 "Fugitive Vim Github Wrapper
 Plug 'tpope/vim-fugitive'
@@ -9,8 +9,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "VimTeX
 Plug 'lervag/vimtex'
-" Vim latex live prwview
-Plug 'xuhdev/vim-latex-live-preview'
 " UltiSnips
 Plug 'SirVer/ultisnips'
 " Vimwiki
@@ -44,37 +42,11 @@ Plug 'rafcamlet/coc-nvim-lua'
 " Obli-Vim
 Plug 'katawful/Obli-Vim', {'for': 'obse'}
 Plug 'katawful/Obli-Vim-Docs', {'for': 'obse'}
+" calendar.vim
+Plug 'mattn/calendar-vim'
 
 call plug#end()
 
-"" Settings
-source ~/vim-main/settings.vim
-"" Bindings
-source ~/vim-main/bindings.vim
-"" Functions
-source ~/vim-main/functions.vim
-"" indentLine
-source ~/plugin-config/indentline.vim
-"" Airline
-source ~/plugin-config/airline.vim
-"" FZF/fzf.vim
-source ~/plugin-config/fzf.vim
-"" NerdTree
-source ~/plugin-config/nerdtree.vim
-"" LaTeX
-source ~/plugin-config/latex.vim
-"" UltiSnips
-source ~/plugin-config/ultisnips.vim
-"" Vimwiki
-source ~/plugin-config/vimwiki.vim
-"" coc.nvim
-source ~/plugin-config/coc.vim
-"" startify
-source ~/plugin-config/startify.vim
-"" vim-markdown
-source ~/plugin-config/vim-markdown.vim
-"" vim-print-debug
-source ~/plugin-config/print-debug.vim
-"" ObliVim
-source ~/plugin-config/oblivim.vim
-
+" add my runtime
+runtime! run/*.vim
+runtime! run/**/*.vim
