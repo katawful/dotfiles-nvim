@@ -7,13 +7,7 @@ nnoremap <C-L> <C-W>>
 nnoremap <C-K> <C-W>-
 " increase height
 nnoremap <C-J> <C-W>+
-" from vim terminal help:
-" this lets you move between windows in any mode
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
-" move window in normal/terminal modes
+" move window in normal
 nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k

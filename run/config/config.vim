@@ -21,3 +21,9 @@ set showbreak==>
 
 set inccommand=nosplit
 colorscheme kat
+set guifont=FiraCode\ Nerd\ Font:h15,\ MesloLGS\ NF:h15,DejavuSans:h15
+
+augroup TextYank
+  autocmd!
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank() {higroup="IncSearch", timeout=150}
+augroup END
