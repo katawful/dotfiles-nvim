@@ -1,13 +1,6 @@
 (module init
 	{require-macros [macros]})
 
-; vimwiki stuff
-(let- g :vimwiki_lists 
-  {1 {:path "~/Documents/VimwikiHTML/Vimwiki"
-      :path_html "~/Documents/VimWikiHTML"
-      :auto_generate_links 1
-      :auto_export 1}})
-
 ((. (require :packer) :startup) (fn [] 
     (Plug :wbthomason/packer.nvim)
     (Plug :Olical/aniseed)
