@@ -12,4 +12,13 @@
                                     :node_incremental :grn
                                     :scope_incremental :grc}
                           }
+  :rainbow {
+            :enable true
+            :extended_mode true
+            :max_file_lines 1000}
   })
+
+((. (require :treesitter-context.config) :setup)
+ { :enable true})
+
+(vim.cmd "hi TreesitterContext guibg=#2c466e")

@@ -1,3 +1,7 @@
+; packer
+(fn Plug [plugin]
+    `(use ,plugin))
+
 ; convert to string)
 (fn sym-tostring [x]
   `,(tostring x))
@@ -222,4 +226,5 @@
  :set- set-
  :col- col-
  :cmd cmd
+ :Plug Plug
 }

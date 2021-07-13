@@ -1,5 +1,6 @@
 (module core)
 
+((. (require :bufferline) :setup))
 (require :plug.lualine_con)
 (require :plug.bufferline)
 (require :plug.fzf)

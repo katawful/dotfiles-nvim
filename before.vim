@@ -1,3 +1,4 @@
+" this is whatever needs to be loaded first
 let g:vimwiki_list = [{'path': '~/Documents/VimWikiHTML/VimWiki',
                       \ 'path_html': '~/Documents/VimWikiHTML',
                       \ 'auto_generate_links': 1,
