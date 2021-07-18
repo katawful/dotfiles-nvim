@@ -7,6 +7,7 @@ let g:vimiwiki_folding = 'list'
 let g:vimwiki_nested_syntaxes = {'python': 'python',
       \'c++': 'cpp',
       \'xml': 'xml',
+      \'obse': 'obse',
       \}
 let g:vimwiki_listsyms = '◯◔◐◕●✓'
 let g:vimwiki_global_ext = 0

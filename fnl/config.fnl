@@ -11,7 +11,7 @@
 (set- cmdheight 2)
 (set- list true)
 (set- listchars "tab:  ,trail:■,extends:>,precedes:<")
-(set- clipboard "unnamedplus")
+(seta- clipboard "unnamedplus")
 
 (set- tabstop 2)
 (set- shiftwidth 2)

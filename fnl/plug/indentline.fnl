@@ -12,3 +12,7 @@
                                      2 :help
                                      3 :startify
                                      4 :calendar})
+
+; indent-blankline here cause i'm lazy
+(let- g :indent_blankline_use_treesitter true)
+(let- g :indent_blankline_show_current_context true)

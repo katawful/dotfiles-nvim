@@ -1,7 +1,11 @@
 (module treesitter)
 
 ((. (require :nvim-treesitter.configs) :setup) {
-  :ensure_installed :maintained
+  :ensure_installed {1 :norg
+                     2 :bash
+                     3 :javascript
+                     4 :fennel
+                     5 :lua}
   :highlight {:enable true}
   :indent {:enable true}
   :incremental_selection {
@@ -19,6 +23,6 @@
   })
 
 ((. (require :treesitter-context.config) :setup)
- { :enable true})
+ {:enable true})
 
 (vim.cmd "hi TreesitterContext guibg=#2c466e")

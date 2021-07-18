@@ -1,9 +1,9 @@
 (module init
-	{require-macros [macros]})
-
+        {require-macros [macros]})
 ((. (require :packer) :startup) (fn [] 
     (Plug :wbthomason/packer.nvim)
     (Plug :Olical/aniseed)
+
     (Plug :katawful/kat.vim)
     (Plug :tpope/vim-fugitive)
     (Plug :lervag/vimtex)
@@ -24,11 +24,16 @@
     (Plug :bakpakin/fennel.vim)
     (Plug {1 :nvim-treesitter/nvim-treesitter
            :run ":TSUpdate"})
+    (Plug :nvim-treesitter/playground)
     (Plug :hoob3rt/lualine.nvim)
     (Plug :kyazdani42/nvim-web-devicons)
     (Plug :akinsho/nvim-bufferline.lua)
     (Plug :p00f/nvim-ts-rainbow)
-    (Plug :romgrk/nvim-treesitter-context)))
+    (Plug :romgrk/nvim-treesitter-context)
+    (Plug {1 :vhyrro/neorg
+           :requires :nvim-lua/plenary.nvim})
+    (Plug :lukas-reineke/indent-blankline.nvim))
+    {:display {:open_fn (. (require :packer.util) :float)}})
 
 (require :config)
 (require :au)

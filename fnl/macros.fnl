@@ -29,9 +29,27 @@
 ; set vim options
 (fn set- [option value]
   (let [option (sym-tostring option)
-       value value
-       scope (get-scope option)]
+        value value
+        scope (get-scope option)]
   (set-option option value scope)))
+
+; set append
+(fn seta- [option value]
+  (let [option  (sym-tostring option)
+        value (sym-tostring value)]
+    `(tset vim.opt ,option (+ (. vim.opt ,option) ,value))))
+
+; set prepend
+(fn setp- [option value]
+  (let [option (sym-tostring option)
+        value value]
+    `(tset vim.opt ,option (^ (. vim.opt ,option) ,value))))
+
+; set remove
+(fn setr- [option value]
+  (let [option (sym-tostring option)
+        value value]
+    `(tset vim.opt ,option (- (. vim.opt ,option) ,value))))
 
 ; general vim.cmd functions
 (fn cmd [string]
@@ -224,6 +242,9 @@
  :let- let-
  :au- au-
  :set- set-
+ :seta- seta-
+ :setp- setp-
+ :setr- setr-
  :col- col-
  :cmd cmd
  :Plug Plug
