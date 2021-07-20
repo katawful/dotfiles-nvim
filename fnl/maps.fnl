@@ -3,10 +3,13 @@
 
 (nm- :<Space> :<Nop>)
 (let- :g :mapleader " ")
+(let- :g :maplocalleader ",")
 
 ; easier command line mode
 (nno- ";" ":")
 (nno- ":" ";")
+(vno- ";" ":")
+(vno- ":" ";")
 
 ; make Y behave like D and C
 (nno- :Y :y$)
@@ -38,3 +41,9 @@
 
 ; quit terminal
 (tno- :<C-Space> :<C-\><C-N>)
+
+; show highlight
+(nno- :<Leader>h ":TSHighlightCapturesUnderCursor<CR>")
+
+; enable goyo
+(nno- :<Leader>G ":Goyo<CR>")

@@ -3,21 +3,23 @@
 ((. (require :bufferline) :setup))
 ; ((. (require :nvim-treesitter.configs) :setup))
 
-(require :plug.lualine_con)
-(require :plug.bufferline)
-(require :plug.indentline)
+(require :plug/lualine_con)
+(require :plug/bufferline)
+(require :plug/indentline)
+(require :plug/conjure)
+(require :plug/goyo)
 
 ((. (require :neorg) :setup))
-(require :plug.neorg)
+(require :plug/neorg)
 
-(require :plug.playground)
-(require :plug.treesitter)
+(require :plug/playground)
+(require :plug/treesitter)
 
-(require :plug.startify)
+(require :plug/vimwiki)
+(require :plug/startify)
 
-(require :plug.fzf)
-(require :plug.ultisnips)
+(require :plug/fzf)
+(require :plug/ultisnips)
 
-(require :plug.vimtex)
-(require :plug.vimwiki)
-(require :plug.oblivim)
+(require :plug/vimtex)
+(require :plug/oblivim)
