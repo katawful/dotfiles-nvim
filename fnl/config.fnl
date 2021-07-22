@@ -19,6 +19,7 @@
 
 (set- conceallevel 2)
 (set- breakindent true)
+(set- linebreak true)
 (set- showbreak "=>")
 
 (set- inccommand "nosplit")
