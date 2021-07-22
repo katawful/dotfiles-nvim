@@ -1,6 +1,6 @@
 (module init
         {require-macros [macros]})
-((. (require :packer) :startup) (fn [] 
+(plugInit
     ;; bootstrap stuff
     (Plug :wbthomason/packer.nvim) ; plugin manager
     (Plug :Olical/aniseed)         ; fennel environment
@@ -47,7 +47,7 @@
     (Plug :vimwiki/vimwiki)                   ; personal wiki
     (Plug {1 :vhyrro/neorg
            :requires :nvim-lua/plenary.nvim}) ; beta personal wiki
-    {:display {:open_fn (. (require :packer.util) :float)}}))
+    {:display {:open_fn (. (require :packer.util) :float)}})
 
 (require :config)
 (require :au)

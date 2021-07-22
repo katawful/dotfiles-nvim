@@ -1,7 +1,9 @@
-(module core)
+(module core
+        {require-macros [macros]})
 
-((. (require :bufferline) :setup))
-; ((. (require :nvim-treesitter.configs) :setup))
+; setup configs that need to be here
+(opt- bufferline setup)
+(opt- neorg setup)
 
 (require :plug/lualine_con)
 (require :plug/bufferline)
@@ -9,7 +11,6 @@
 (require :plug/conjure)
 (require :plug/goyo)
 
-((. (require :neorg) :setup))
 (require :plug/neorg)
 
 (require :plug/playground)

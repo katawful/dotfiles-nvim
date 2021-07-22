@@ -1,6 +1,7 @@
-(module treesitter)
+(module treesitter
+        {require-macros [macros]})
 
-((. (require :nvim-treesitter.configs) :setup) {
+(opt- nvim-treesitter.configs setup {
   :ensure_installed {1 :norg
                      2 :bash
                      3 :javascript
@@ -22,7 +23,7 @@
             :max_file_lines 1000}
   })
 
-((. (require :treesitter-context.config) :setup)
+(opt- treesitter-context.config setup
  {:enable true})
 
 (vim.cmd "hi TreesitterContext guibg=#2c466e")

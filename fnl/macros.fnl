@@ -1,10 +1,29 @@
-; packer
-(fn Plug [plugin]
-    `(use ,plugin))
-
 ; convert to string)
 (fn sym-tostring [x]
   `,(tostring x))
+
+; plugin initialization
+; for packer.nvim
+(fn plugInit [...]
+  `(do
+     ((. (require :packer) :startup) (fn []
+      (do
+        ,...)
+      ))))
+
+; i find "Plug" to be more semantically ideal
+(fn Plug [plugin]
+    `(use ,plugin))
+
+; require configs
+; lua options really, i find the table lookup syntax to be garbage
+(fn opt- [tableOrigin lookupValue ...]
+  (let [tableOrigin (sym-tostring tableOrigin)
+        lookupValue (sym-tostring lookupValue)
+        output [...]]
+       `(do
+          ((. (require ,tableOrigin) ,lookupValue)
+           ,...))))
 
 ; get the scope of an option (global, window, or buffer)
 (fn get-scope [opt]
@@ -60,18 +79,27 @@
   (let [scheme (.. "colorscheme " (sym-tostring scheme))]
   (cmd scheme)))
 
+; augroup
+(fn aug- [group ...]
+  ; set up augroup group autocmd!
+  (let [group (.. "augroup " (sym-tostring group) "\nautocmd!")]
+    `(do
+       (cmd ,group)
+       ; do the autocmd
+       (do
+         ,...)
+       ; close the autocmd group
+       (cmd "augroup END"))))
 ; autocmd
-(var id 0)
-(fn au- [event file com]
-  (let [group (.. "augroup con_" (sym-tostring id) "\n") ; should be "augroup group\n"
-       event (.. "autocmd " (sym-tostring event) " ") ; should be "autocmd Event "
-       file (.. file " ") ; should be "filetype "
-       com (.. com "\n") ; should be "cmd\n"
-       austart "autocmd!\n"
-       auend "augroup END"]
-    (set id (+ id 1))
-    (var output (.. group austart event file com auend))
-    (cmd (sym-tostring output))))
+(fn auc- [event filetype command]
+  (let [event (sym-tostring event)
+        filetype (sym-tostring filetype)
+        command command]
+    ; execute the autocmd
+    ; i saw other macros that were much more robust, is this needed?
+    ; proper lua support will come eventually anyways so this macro seems EOL
+    `(do
+      ,(cmd (string.format "autocmd %s %s %s" event filetype command)))))
 
 ; let
 (fn let- [scope obj ...]
@@ -81,10 +109,13 @@
        value []]
     (var output [...])
     (var value [])
+    ; if number of operands is 1
     (if (= (length output) 1
       (each [key val (pairs output)]
+        ; set the output to just the value of the operands
         (set value  val)))
       (> (length output) 1
+         ; else set the output to the whole table
         (do (set value output))))
     (match scope
       :g `(tset vim.g ,obj ,value)
@@ -100,7 +131,10 @@
         right (sym-tostring right)
         output []
         tab []]
+    ; set that noremap is true
     (tset tab :noremap true)
+    ; set each value of the options to true
+    ; they are false by default
     (each [key val (ipairs [...])]
       (tset tab val true))
     `(vim.api.nvim_set_keymap :n ,left ,right ,tab)))
@@ -126,17 +160,6 @@
     (each [key val (ipairs [...])]
       (tset tab val true))
     `(vim.api.nvim_set_keymap :v ,left ,right ,tab)))
-
-; rnoremap
-(fn rno- [left right ...]
-  (let [left (sym-tostring left)
-        right (sym-tostring right)
-        output []
-        tab []]
-    (tset tab :noremap true)
-    (each [key val (ipairs [...])]
-      (tset tab val true))
-    `(vim.api.nvim_set_keymap :r ,left ,right ,tab)))
 
 ; tnoremap
 (fn tno- [left right ...]
@@ -193,17 +216,6 @@
       (tset tab val true))
     `(vim.api.nvim_set_keymap :i ,left ,right ,tab)))
 
-; rmap
-(fn rm- [left right ...]
-  (let [left (sym-tostring left)
-        right (sym-tostring right)
-        output []
-        tab []]
-    (tset tab :noremap false)
-    (each [key val (ipairs [...])]
-      (tset tab val true))
-    `(vim.api.nvim_set_keymap :r ,left ,right ,tab)))
-
 ; tmap
 (fn tm- [left right ...]
   (let [left (sym-tostring left)
@@ -229,8 +241,6 @@
 {
  :ino- ino-
  :im- im-
- :rno- rno-
- :rm- rm-
  :vno- vno-
  :vm- vm-
  :tno- tno-
@@ -240,7 +250,6 @@
  :nno- nno-
  :nm- nm-
  :let- let-
- :au- au-
  :set- set-
  :seta- seta-
  :setp- setp-
@@ -248,4 +257,8 @@
  :col- col-
  :cmd cmd
  :Plug Plug
+ :plugInit plugInit
+ :aug- aug-
+ :auc- auc-
+ :opt- opt-
 }

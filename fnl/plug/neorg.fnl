@@ -1,7 +1,7 @@
 (module neorg
         {require-macros [macros]})
 
-((. (require :neorg) :setup) 
+(opt- neorg setup
  {:load {:core.defaults {}
          :core.norg.concealer {}
          :core.keybinds {:config {
@@ -12,9 +12,7 @@
                      :autodetect true
                      :autochdir true}}}})
 
-; (let [parser-configs.norg]
-; ((. (require :nvim-treesitter.parsers) :get_parser_configs)
-(var parser-configs ((. (require :nvim-treesitter.parsers) :get_parser_configs)))
+(var parser-configs (opt- nvim-treesitter.parsers get_parser_configs))
 (set parser-configs.norg
   {:install_info {:url "https://github.com/vhyrro/tree-sitter-norg"
                         :files {1 :src/parser.c}

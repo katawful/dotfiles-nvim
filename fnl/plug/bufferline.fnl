@@ -1,7 +1,7 @@
 (module bufferline
         {require-macros [macros]})
 
-((. (require :bufferline) :setup)
+(opt- bufferline setup
  { :options {
              :numbers :both
              :number_style :subscript
