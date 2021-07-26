@@ -131,24 +131,47 @@
         right (sym-tostring right)
         output []
         tab []]
+    (var isBuffer false) ; so we don't have to specify not in a buffer
     ; set that noremap is true
     (tset tab :noremap true)
-    ; set each value of the options to true
-    ; they are false by default
+    ; set each option to be true
     (each [key val (ipairs [...])]
-      (tset tab val true))
-    `(vim.api.nvim_set_keymap :n ,left ,right ,tab)))
+      ; buffer isn't an option for nvim_set_keymap
+      ; if we see buffer, set flag
+      (match val
+        :buffer (do (set isBuffer true))
+        ; everything else is a valid option
+        & (do (tset tab val true))))
+    ; if buffer is set, use a buffer map
+    (if (= isBuffer true)
+      (do
+        `(vim.api.nvim_buf_set_keymap 0 :n ,left ,right ,tab))
+      (do
+        `(vim.api.nvim_set_keymap :n ,left ,right ,tab)))))
 
 ; inoremap
 (fn ino- [left right ...]
   (let [left (sym-tostring left)
-        right (sym-tostring right)
+        right right
         output []
         tab []]
+    (var isBuffer false) ; so we don't have to specify not in a buffer
+    ; set that noremap is true
     (tset tab :noremap true)
+    ; set each option to be true
     (each [key val (ipairs [...])]
-      (tset tab val true))
-    `(vim.api.nvim_set_keymap :i ,left ,right ,tab)))
+      ; buffer isn't an option for nvim_set_keymap
+      ; if we see buffer, set flag
+      (match val
+        :buffer (do (set isBuffer true))
+        ; everything else is a valid option
+        & (do (tset tab val true))))
+    ; if buffer is set, use a buffer map
+    (if (= isBuffer true)
+      (do
+        `(vim.api.nvim_buf_set_keymap 0 :i ,left ,right ,tab))
+      (do
+        `(vim.api.nvim_set_keymap :i ,left ,right ,tab)))))
 
 ; vnoremap
 (fn vno- [left right ...]
@@ -156,10 +179,23 @@
         right (sym-tostring right)
         output []
         tab []]
+    (var isBuffer false) ; so we don't have to specify not in a buffer
+    ; set that noremap is true
     (tset tab :noremap true)
+    ; set each option to be true
     (each [key val (ipairs [...])]
-      (tset tab val true))
-    `(vim.api.nvim_set_keymap :v ,left ,right ,tab)))
+      ; buffer isn't an option for nvim_set_keymap
+      ; if we see buffer, set flag
+      (match val
+        :buffer (do (set isBuffer true))
+        ; everything else is a valid option
+        & (do (tset tab val true))))
+    ; if buffer is set, use a buffer map
+    (if (= isBuffer true)
+      (do
+        `(vim.api.nvim_buf_set_keymap 0 :v ,left ,right ,tab))
+      (do
+        `(vim.api.nvim_set_keymap :v ,left ,right ,tab)))))
 
 ; tnoremap
 (fn tno- [left right ...]
@@ -167,10 +203,23 @@
         right (sym-tostring right)
         output []
         tab []]
+    (var isBuffer false) ; so we don't have to specify not in a buffer
+    ; set that noremap is true
     (tset tab :noremap true)
+    ; set each option to be true
     (each [key val (ipairs [...])]
-      (tset tab val true))
-    `(vim.api.nvim_set_keymap :t ,left ,right ,tab)))
+      ; buffer isn't an option for nvim_set_keymap
+      ; if we see buffer, set flag
+      (match val
+        :buffer (do (set isBuffer true))
+        ; everything else is a valid option
+        & (do (tset tab val true))))
+    ; if buffer is set, use a buffer map
+    (if (= isBuffer true)
+      (do
+        `(vim.api.nvim_buf_set_keymap 0 :t ,left ,right ,tab))
+      (do
+        `(vim.api.nvim_set_keymap :t ,left ,right ,tab)))))
 
 ; cnoremap
 (fn cno- [left right ...]
@@ -178,10 +227,23 @@
         right (sym-tostring right)
         output []
         tab []]
+    (var isBuffer false) ; so we don't have to specify not in a buffer
+    ; set that noremap is true
     (tset tab :noremap true)
+    ; set each option to be true
     (each [key val (ipairs [...])]
-      (tset tab val true))
-    `(vim.api.nvim_set_keymap :c ,left ,right ,tab)))
+      ; buffer isn't an option for nvim_set_keymap
+      ; if we see buffer, set flag
+      (match val
+        :buffer (do (set isBuffer true))
+        ; everything else is a valid option
+        & (do (tset tab val true))))
+    ; if buffer is set, use a buffer map
+    (if (= isBuffer true)
+      (do
+        `(vim.api.nvim_buf_set_keymap 0 :c ,left ,right ,tab))
+      (do
+        `(vim.api.nvim_set_keymap :c ,left ,right ,tab)))))
 
 ; nmap
 (fn nm- [left right ...]
@@ -189,10 +251,23 @@
         right (sym-tostring right)
         output []
         tab []]
+    (var isBuffer false) ; so we don't have to specify not in a buffer
+    ; set that noremap is false
     (tset tab :noremap false)
+    ; set each option to be true
     (each [key val (ipairs [...])]
-      (tset tab val true))
-    `(vim.api.nvim_set_keymap :n ,left ,right ,tab)))
+      ; buffer isn't an option for nvim_set_keymap
+      ; if we see buffer, set flag
+      (match val
+        :buffer (do (set isBuffer true))
+        ; everything else is a valid option
+        & (do (tset tab val true))))
+    ; if buffer is set, use a buffer map
+    (if (= isBuffer true)
+      (do
+        `(vim.api.nvim_buf_set_keymap 0 :n ,left ,right ,tab))
+      (do
+        `(vim.api.nvim_set_keymap :n ,left ,right ,tab)))))
 
 ; vmap
 (fn vm- [left right ...]
@@ -200,10 +275,23 @@
         right (sym-tostring right)
         output []
         tab []]
+    (var isBuffer false) ; so we don't have to specify not in a buffer
+    ; set that noremap is false
     (tset tab :noremap false)
+    ; set each option to be true
     (each [key val (ipairs [...])]
-      (tset tab val true))
-    `(vim.api.nvim_set_keymap :v ,left ,right ,tab)))
+      ; buffer isn't an option for nvim_set_keymap
+      ; if we see buffer, set flag
+      (match val
+        :buffer (do (set isBuffer true))
+        ; everything else is a valid option
+        & (do (tset tab val true))))
+    ; if buffer is set, use a buffer map
+    (if (= isBuffer true)
+      (do
+        `(vim.api.nvim_buf_set_keymap 0 :v ,left ,right ,tab))
+      (do
+        `(vim.api.nvim_set_keymap :v ,left ,right ,tab)))))
 
 ; imap
 (fn im- [left right ...]
@@ -211,10 +299,23 @@
         right (sym-tostring right)
         output []
         tab []]
+    (var isBuffer false) ; so we don't have to specify not in a buffer
+    ; set that noremap is false
     (tset tab :noremap false)
+    ; set each option to be true
     (each [key val (ipairs [...])]
-      (tset tab val true))
-    `(vim.api.nvim_set_keymap :i ,left ,right ,tab)))
+      ; buffer isn't an option for nvim_set_keymap
+      ; if we see buffer, set flag
+      (match val
+        :buffer (do (set isBuffer true))
+        ; everything else is a valid option
+        & (do (tset tab val true))))
+    ; if buffer is set, use a buffer map
+    (if (= isBuffer true)
+      (do
+        `(vim.api.nvim_buf_set_keymap 0 :i ,left ,right ,tab))
+      (do
+        `(vim.api.nvim_set_keymap :i ,left ,right ,tab)))))
 
 ; tmap
 (fn tm- [left right ...]
@@ -222,10 +323,23 @@
         right (sym-tostring right)
         output []
         tab []]
+    (var isBuffer false) ; so we don't have to specify not in a buffer
+    ; set that noremap is false
     (tset tab :noremap false)
+    ; set each option to be true
     (each [key val (ipairs [...])]
-      (tset tab val true))
-    `(vim.api.nvim_set_keymap :t ,left ,right ,tab)))
+      ; buffer isn't an option for nvim_set_keymap
+      ; if we see buffer, set flag
+      (match val
+        :buffer (do (set isBuffer true))
+        ; everything else is a valid option
+        & (do (tset tab val true))))
+    ; if buffer is set, use a buffer map
+    (if (= isBuffer true)
+      (do
+        `(vim.api.nvim_buf_set_keymap 0 :t ,left ,right ,tab))
+      (do
+        `(vim.api.nvim_set_keymap :t ,left ,right ,tab)))))
 
 ; cmap
 (fn cm- [left right ...]
@@ -233,10 +347,23 @@
         right (sym-tostring right)
         output []
         tab []]
+    (var isBuffer false) ; so we don't have to specify not in a buffer
+    ; set that noremap is false
     (tset tab :noremap false)
+    ; set each option to be true
     (each [key val (ipairs [...])]
-      (tset tab val true))
-    `(vim.api.nvim_set_keymap :c ,left ,right ,tab)))
+      ; buffer isn't an option for nvim_set_keymap
+      ; if we see buffer, set flag
+      (match val
+        :buffer (do (set isBuffer true))
+        ; everything else is a valid option
+        & (do (tset tab val true))))
+    ; if buffer is set, use a buffer map
+    (if (= isBuffer true)
+      (do
+        `(vim.api.nvim_buf_set_keymap 0 :c ,left ,right ,tab))
+      (do
+        `(vim.api.nvim_set_keymap :c ,left ,right ,tab)))))
 
 {
  :ino- ino-
@@ -251,6 +378,7 @@
  :nm- nm-
  :let- let-
  :set- set-
+ :setl- setl-
  :seta- seta-
  :setp- setp-
  :setr- setr-

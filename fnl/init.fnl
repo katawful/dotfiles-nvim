@@ -1,5 +1,6 @@
 (module init
-        {require-macros [macros]})
+        {require-macros [macros]
+         autoload {c aniseed.compile}})
 (plugInit
     ;; bootstrap stuff
     (Plug :wbthomason/packer.nvim) ; plugin manager
@@ -12,7 +13,8 @@
 
     ;; treesitter
     (Plug {1 :nvim-treesitter/nvim-treesitter
-           :run ":TSUpdate"})              ; tree-sitter main plugin
+           :run ":TSUpdate"
+           :branch "0.5-compat"})              ; tree-sitter main plugin
     (Plug :nvim-treesitter/playground)     ; view AST in real time
     (Plug :p00f/nvim-ts-rainbow)           ; color matching brackets
     (Plug :romgrk/nvim-treesitter-context) ; enhanced colors for embedded languages
@@ -49,6 +51,17 @@
            :requires :nvim-lua/plenary.nvim}) ; beta personal wiki
     {:display {:open_fn (. (require :packer.util) :float)}})
 
+; compile non-fnl files
+; after/ftplugin
+(c.glob "*.fnl" "/home/kat/after/ftplugin" "/home/kat/after/ftplugin")
+; plugin
+(c.glob "*.fnl" "/home/kat/plugin" "/home/kat/plugin")
+; autoload
+(c.glob "*.fnl" "/home/kat/autoload" "/home/kat/autoload")
+; ftplugin
+(c.glob "*.fnl" "/home/kat/ftplugin" "/home/kat/ftplugin")
+
+(require :plugins/core)
 (require :config)
 (require :au)
 (require :maps)

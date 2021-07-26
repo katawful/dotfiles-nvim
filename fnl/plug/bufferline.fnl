@@ -100,16 +100,16 @@
                                             :highlight :SpecialChar}
                                     }
                :duplicate_visible {
-                                   :guifg { :attribute :fg
+                                   :guifg { :attribute :bg
                                            :highlight :Normal}
                                    :guibg { :attribute :fg
-                                           :highlight :SpecialChar}
+                                           :highlight :SpecialComment}
                                    }
                :duplicate {
-                           :guifg { :attribute :fg
+                           :guifg { :attribute :bg
                                    :highlight :Normal}
                            :guibg { :attribute :fg
-                                   :highlight :SpecialChar}
+                                   :highlight :Exception}
                            }
 
                :separator_selected {
