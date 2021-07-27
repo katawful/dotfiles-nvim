@@ -1,3 +1,7 @@
+; general vim.cmd functions
+(fn cmd [string]
+  `(vim.cmd ,string))
+
 ; convert to string)
 (fn sym-tostring [x]
   `,(tostring x))
@@ -14,6 +18,16 @@
 ; i find "Plug" to be more semantically ideal
 (fn Plug [plugin]
     `(use ,plugin))
+
+; nvim_api_command
+; for Ex commands/user commands
+(fn com- [function ...]
+  (let [function (sym-tostring function)
+        args [...]]
+    (var output function)
+    (each [k v (pairs args)]
+      (set output (.. output " " (sym-tostring v))))
+    `(vim.api.nvim_command ,output)))
 
 ; require configs
 ; lua options really, i find the table lookup syntax to be garbage
@@ -38,19 +52,28 @@
     :win `(vim.api.nvim_win_set_option 0 ,option ,value)
     :buf `(vim.api.nvim_buf_set_option 0 ,option ,value)))
 
+; set global
+(fn setg- [option value]
+  (let [option (sym-tostring option)
+        value value
+        scope :buf]
+    `(tset vim.opt_global ,option ,value)))
+
 ; set local
 (fn setl- [option value]
   (let [option (sym-tostring option)
         value value
         scope :buf]
-    (set-option option value scope)))
+    `(tset vim.opt_local ,option ,value)))
 
 ; set vim options
+; i didn't use vim.opt for this
+; i wanted it to be as thorough as possible
 (fn set- [option value]
   (let [option (sym-tostring option)
         value value
         scope (get-scope option)]
-  (set-option option value scope)))
+    (set-option option value scope)))
 
 ; set append
 (fn seta- [option value]
@@ -69,10 +92,6 @@
   (let [option (sym-tostring option)
         value value]
     `(tset vim.opt ,option (- (. vim.opt ,option) ,value))))
-
-; general vim.cmd functions
-(fn cmd [string]
-  `(vim.cmd ,string))
 
 ; set colorscheme
 (fn col- [scheme]
@@ -379,6 +398,7 @@
  :let- let-
  :set- set-
  :setl- setl-
+ :setg- setg-
  :seta- seta-
  :setp- setp-
  :setr- setr-
@@ -389,4 +409,5 @@
  :aug- aug-
  :auc- auc-
  :opt- opt-
+ :com- com-
 }
