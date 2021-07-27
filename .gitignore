@@ -1,0 +1,4 @@
+lua/
+.netrwhist
+plugin/packer_compiled.lua
+*.lua
