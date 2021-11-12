@@ -6,8 +6,9 @@
 (setl- shiftwidth 2)
 (let- g :ov_sync_time 1)
 (let- g :ov_window_style :double)
+; (nno- :<LocalLeader>s :caw :buffer)
 
-; ; enclose word
+; enclose word
 (ino- "(" "()<Left>" :buffer)
 (ino- "[" "[]<Left>" :buffer)
 (ino- "{" "{}<Left>" :buffer)

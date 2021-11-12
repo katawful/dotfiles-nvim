@@ -10,3 +10,4 @@
   (auc- TermOpen * "setlocal relativenumber!")
   (auc- TermOpen * "setlocal nospell")
   (auc- TermOpen * "setlocal bufhidden=hide"))
+

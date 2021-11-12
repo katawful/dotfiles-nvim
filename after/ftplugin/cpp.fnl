@@ -1,7 +1,13 @@
 (module cpp
-        {require-macros [macros]})
+        {require-macros [macros]
+         require {b plugins.closeBracket
+                  i plugins.autoIndentCurly}})
 
-; ; enclose word
+
+(setl- tabstop 2)
+(setl- shiftwidth 2)
+
+; enclose word
 (ino- "(" "()<Left>" :buffer)
 (ino- "[" "[]<Left>" :buffer)
 (ino- "{" "{}<Left>" :buffer)
@@ -10,3 +16,7 @@
 (ino- ")" "v:lua.paren()" :buffer :expr)
 (ino- "]" "v:lua.bracket()" :buffer :expr)
 (ino- "}" "v:lua.brace()" :buffer :expr)
+(ino- "<CR>" "v:lua.indentCurly()" :buffer :expr)
+
+; make button
+(nno- :<F9> ":make! -C ./build<CR>")

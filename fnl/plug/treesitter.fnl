@@ -6,8 +6,14 @@
                      2 :bash
                      3 :javascript
                      4 :fennel
-                     5 :lua}
-  :highlight {:enable true}
+                     5 :lua
+                     6 :html
+                     7 :css
+                     8 :cpp
+                     9 :c
+                     }
+  :highlight {:enable true
+              }
   :indent {:enable true}
   :incremental_selection {
                           :enable true
@@ -26,4 +32,3 @@
 (opt- treesitter-context.config setup
  {:enable true})
 
-(vim.cmd "hi TreesitterContext guibg=#2c466e")

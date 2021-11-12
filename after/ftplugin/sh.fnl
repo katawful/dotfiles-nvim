@@ -1,6 +1,7 @@
 (module sh
         {require-macros [macros]
-         require {b plugins.closeBracket}})
+         require {b plugins.closeBracket
+                  i plugins.autoIndentCurly}})
 
 (setl- tabstop 2)
 (setl- shiftwidth 2)
@@ -14,3 +15,4 @@
 (ino- ")" "v:lua.paren()" :buffer :expr)
 (ino- "]" "v:lua.bracket()" :buffer :expr)
 (ino- "}" "v:lua.brace()" :buffer :expr)
+(ino- "<CR>" "v:lua.indentCurly()" :buffer :expr)

@@ -1,7 +1,7 @@
 (module startify
         {require-macros [macros]})
 
-(fn startShowCurrRepo []
+(defn- startShowCurrRepo []
   ; make sure we are in a git repo
   (vim.cmd "silent! !git rev-parse --is-inside-work-tree")
   (when (= vim.v.shell_error 0)
@@ -16,7 +16,7 @@
       (local iter 1)
 
       ; iterate over the initial table to construct things
-      (each [k v (ipairs commits)]
+      (each [_ v (ipairs commits)]
         ; create the 'line': strings
         (local index (lineRegex:match_str v))
         (local line (v:sub (+ index 1)))
@@ -35,7 +35,7 @@
       :header {1 "   Recent Global Files"}}
    2 {:type :dir
       :header {1 (.. "   Recent Files in: " (vim.fn.getcwd))}}
-   3 {:type (startShowCurrRepo)
+   3 {:type startShowCurrRepo
       :header {1 (.. "   Commits in: " (vim.fn.getcwd))}}
    4 {:type :sessions
       :header {1 "   Sessions"}}

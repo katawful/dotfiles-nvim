@@ -13,8 +13,8 @@
 (set- listchars "tab:  ,trail:■,extends:>,precedes:<")
 (seta- clipboard "unnamedplus")
 
-(setg- tabstop 2)
-(setg- shiftwidth 2)
+(setl- tabstop 2)
+(setl- shiftwidth 2)
 (setg- expandtab true)
 
 (set- conceallevel 2)
@@ -23,5 +23,26 @@
 (set- showbreak "=>")
 
 (set- inccommand "nosplit")
-(col- kat)
+; (col- "kat.nvim")
 (set- title true)
+
+(setr- nrformats :octal)
+
+(defn changeColorscheme []
+  (let [timeLocal (tonumber (vim.fn.strftime "%H"))]
+    (if (and (> timeLocal 20)
+             (<= timeLocal 8))
+        (col- "kat.nvim")
+        (and (> timeLocal 8)
+             (<= timeLocal 12))
+        (col- "kat.lightenvim-owo")
+        (and (> timeLocal 12)
+             (<= timeLocal 15))
+        (col- "kat.lightenvim")
+        (and (> timeLocal 15)
+             (<= timeLocal 20))
+        (col- "kat.nvim-owo")
+        (col- "kat.nvim"))))
+(changeColorscheme)
+
+; (set- guifont "FiraCode Nerd Font:h15, MesloLGS NF:h15,DejavuSans:h15")

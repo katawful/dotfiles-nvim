@@ -1,39 +1,33 @@
 (module lualine_con
-        {require-macros [macros]})
-
-; (fn luaTablineBuffers []
-;   ; store buffer
-;   (let [currBuffs (vim.api.nvim_list_bufs)
-;         output []]
-;     ; work through each buffer
-;     (each [k v (ipairs currBuffs)]
-;       ; if loaded, store to new table
-;       (if (= (vim.api.nvim_buf_is_loaded v) true)
-;         (table.insert output k (vim.api.nvim_buf_get_name v))))
-;     (each [k v (pairs output)]
-
-; (luaTablineBuffers)
+        {require-macros [macros]
+         ; require {gps nvim-gps}
+         })
 
 (opt- lualine setup
       { :options {
                   :icons_enabled 1
                   :theme :kat
-                  :component_separators {1 "" 
-                                         2 ""}
-                  :section_separators {1 ""
-                                       2 ""}
-                  :disabled_filetypes {}}
+                  :component_separators {:left ""
+                                         :right ""}
+                  :section_separators {:left ""
+                                       :right ""}
+                  :disabled_filetypes {}
+                  :always_divide_middle true
+                  }
        :sections  {
                    :lualine_a {1 :mode}
                    :lualine_b {1 :branch}
                    :lualine_c {1 {1 :filename
                                   :file_status true
                                   :path 1}}
-                   :lualine_x {1 :encoding
-                               2 :fileformat
-                               3 {1 :filetype 
+                   :lualine_x {1 {1 :filetype 
                                   :colored true}}
-                   :lualine_y {1 :progress}
+                               ; 2 {1 gps.get_location
+                               ;    :condition gps.is_available}
+                               
+                   :lualine_y {1 :progress
+                               2 :fileformat
+                               }
                    :lualine_z {1 :location}}
        :inactive_sections  {
                             :lualine_a {}

@@ -157,10 +157,10 @@
     (each [key val (ipairs [...])]
       ; buffer isn't an option for nvim_set_keymap
       ; if we see buffer, set flag
-      (match val
-        :buffer (do (set isBuffer true))
-        ; everything else is a valid option
-        & (do (tset tab val true))))
+      ; else just set the option to true
+      (if (= val :buffer)
+        (do (set isBuffer true))
+        (do (tset tab val true))))
     ; if buffer is set, use a buffer map
     (if (= isBuffer true)
       (do
@@ -181,10 +181,10 @@
     (each [key val (ipairs [...])]
       ; buffer isn't an option for nvim_set_keymap
       ; if we see buffer, set flag
-      (match val
-        :buffer (do (set isBuffer true))
-        ; everything else is a valid option
-        & (do (tset tab val true))))
+      ; else just set the option to true
+      (if (= val :buffer)
+        (do (set isBuffer true))
+        (do (tset tab val true))))
     ; if buffer is set, use a buffer map
     (if (= isBuffer true)
       (do
@@ -205,10 +205,10 @@
     (each [key val (ipairs [...])]
       ; buffer isn't an option for nvim_set_keymap
       ; if we see buffer, set flag
-      (match val
-        :buffer (do (set isBuffer true))
-        ; everything else is a valid option
-        & (do (tset tab val true))))
+      ; else just set the option to true
+      (if (= val :buffer)
+        (do (set isBuffer true))
+        (do (tset tab val true))))
     ; if buffer is set, use a buffer map
     (if (= isBuffer true)
       (do
@@ -229,10 +229,10 @@
     (each [key val (ipairs [...])]
       ; buffer isn't an option for nvim_set_keymap
       ; if we see buffer, set flag
-      (match val
-        :buffer (do (set isBuffer true))
-        ; everything else is a valid option
-        & (do (tset tab val true))))
+      ; else just set the option to true
+      (if (= val :buffer)
+        (do (set isBuffer true))
+        (do (tset tab val true))))
     ; if buffer is set, use a buffer map
     (if (= isBuffer true)
       (do
@@ -253,10 +253,10 @@
     (each [key val (ipairs [...])]
       ; buffer isn't an option for nvim_set_keymap
       ; if we see buffer, set flag
-      (match val
-        :buffer (do (set isBuffer true))
-        ; everything else is a valid option
-        & (do (tset tab val true))))
+      ; else just set the option to true
+      (if (= val :buffer)
+        (do (set isBuffer true))
+        (do (tset tab val true))))
     ; if buffer is set, use a buffer map
     (if (= isBuffer true)
       (do
@@ -277,10 +277,10 @@
     (each [key val (ipairs [...])]
       ; buffer isn't an option for nvim_set_keymap
       ; if we see buffer, set flag
-      (match val
-        :buffer (do (set isBuffer true))
-        ; everything else is a valid option
-        & (do (tset tab val true))))
+      ; else just set the option to true
+      (if (= val :buffer)
+        (do (set isBuffer true))
+        (do (tset tab val true))))
     ; if buffer is set, use a buffer map
     (if (= isBuffer true)
       (do
@@ -301,10 +301,10 @@
     (each [key val (ipairs [...])]
       ; buffer isn't an option for nvim_set_keymap
       ; if we see buffer, set flag
-      (match val
-        :buffer (do (set isBuffer true))
-        ; everything else is a valid option
-        & (do (tset tab val true))))
+      ; else just set the option to true
+      (if (= val :buffer)
+        (do (set isBuffer true))
+        (do (tset tab val true))))
     ; if buffer is set, use a buffer map
     (if (= isBuffer true)
       (do
@@ -325,10 +325,10 @@
     (each [key val (ipairs [...])]
       ; buffer isn't an option for nvim_set_keymap
       ; if we see buffer, set flag
-      (match val
-        :buffer (do (set isBuffer true))
-        ; everything else is a valid option
-        & (do (tset tab val true))))
+      ; else just set the option to true
+      (if (= val :buffer)
+        (do (set isBuffer true))
+        (do (tset tab val true))))
     ; if buffer is set, use a buffer map
     (if (= isBuffer true)
       (do
@@ -349,10 +349,10 @@
     (each [key val (ipairs [...])]
       ; buffer isn't an option for nvim_set_keymap
       ; if we see buffer, set flag
-      (match val
-        :buffer (do (set isBuffer true))
-        ; everything else is a valid option
-        & (do (tset tab val true))))
+      ; else just set the option to true
+      (if (= val :buffer)
+        (do (set isBuffer true))
+        (do (tset tab val true))))
     ; if buffer is set, use a buffer map
     (if (= isBuffer true)
       (do
@@ -373,10 +373,10 @@
     (each [key val (ipairs [...])]
       ; buffer isn't an option for nvim_set_keymap
       ; if we see buffer, set flag
-      (match val
-        :buffer (do (set isBuffer true))
-        ; everything else is a valid option
-        & (do (tset tab val true))))
+      ; else just set the option to true
+      (if (= val :buffer)
+        (do (set isBuffer true))
+        (do (tset tab val true))))
     ; if buffer is set, use a buffer map
     (if (= isBuffer true)
       (do

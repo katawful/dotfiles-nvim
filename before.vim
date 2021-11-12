@@ -12,3 +12,4 @@ let g:vimwiki_nested_syntaxes = {'python': 'python',
 let g:vimwiki_listsyms = '◯◔◐◕●✓'
 let g:vimwiki_global_ext = 0
 let g:vimwiki_conceallevel = 2
+let g:vimwiki_use_calendar = 1
