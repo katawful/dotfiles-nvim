@@ -1,6 +1,12 @@
 (module treesitter
         {require-macros [macros]})
 
+(var parser-configs (opt- nvim-treesitter.parsers get_parser_configs))
+(set parser-configs.norg
+  {:install_info {:url "https://github.com/nvim-neorg/tree-sitter-norg"
+                        :files {1 :src/parser.c
+                                2 :src/scanner.cc}
+                        :branch :main}})
 (opt- nvim-treesitter.configs setup {
   :ensure_installed {1 :norg
                      2 :bash
@@ -23,12 +29,8 @@
                                     :node_incremental :grn
                                     :scope_incremental :grc}
                           }
-  :rainbow {
-            :enable true
-            :extended_mode true
-            :max_file_lines 1000}
   })
 
-(opt- treesitter-context.config setup
- {:enable true})
+; show highlight
+(nno- :<Leader>h ":TSHighlightCapturesUnderCursor<CR>")
 

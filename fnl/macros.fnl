@@ -112,13 +112,16 @@
 ; autocmd
 (fn auc- [event filetype command]
   (let [event (sym-tostring event)
-        filetype (sym-tostring filetype)
         command command]
-    ; execute the autocmd
-    ; i saw other macros that were much more robust, is this needed?
-    ; proper lua support will come eventually anyways so this macro seems EOL
+    ; check if the filetype is a regex
+    ; set to string first so its parsed as such
+    ; else just set to value of the filetype arg
+    (var ftOut (sym-tostring filetype))
+    (if (= ftOut "*")
+      (set ftOut "*")
+      (set ftOut filetype))
     `(do
-      ,(cmd (string.format "autocmd %s %s %s" event filetype command)))))
+      (cmd (.. "autocmd " ,event " " ,ftOut " " ,command)))))
 
 ; let
 (fn let- [scope obj ...]
@@ -264,6 +267,30 @@
       (do
         `(vim.api.nvim_set_keymap :c ,left ,right ,tab)))))
 
+; map
+(fn map- [left right ...]
+  (let [left (sym-tostring left)
+        right (sym-tostring right)
+        output []
+        tab []]
+    (var isBuffer false) ; so we don't have to specify not in a buffer
+    ; set that noremap is false
+    (tset tab :noremap false)
+    ; set each option to be true
+    (each [key val (ipairs [...])]
+      ; buffer isn't an option for nvim_set_keymap
+      ; if we see buffer, set flag
+      ; else just set the option to true
+      (if (= val :buffer)
+        (do (set isBuffer true))
+        (do (tset tab val true))))
+    ; if buffer is set, use a buffer map
+    (if (= isBuffer true)
+      (do
+        `(vim.api.nvim_buf_set_keymap 0 "" ,left ,right ,tab))
+      (do
+        `(vim.api.nvim_set_keymap "" ,left ,right ,tab)))))
+
 ; nmap
 (fn nm- [left right ...]
   (let [left (sym-tostring left)
@@ -385,6 +412,7 @@
         `(vim.api.nvim_set_keymap :c ,left ,right ,tab)))))
 
 {
+ :map- map-
  :ino- ino-
  :im- im-
  :vno- vno-

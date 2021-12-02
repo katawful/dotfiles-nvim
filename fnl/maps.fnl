@@ -3,16 +3,17 @@
 
 (nm- :<Space> :<Nop>)
 (let- :g :mapleader " ")
-(let- :g :maplocalleader ",")
+(let- :g :maplocalleader ",") ; i didn't like \ as local leader
+
+; allow gf to open non-existent files
+; currently not working, no idea why
+; (map- :gf ":edit <cfile><CR>")
 
 ; easier command line mode
 (nno- ";" ":")
 (nno- ":" ";")
 (vno- ";" ":")
 (vno- ":" ";")
-
-; make Y behave like D and C
-(nno- :Y :y$)
 
 ; HJKL to moving bindings
 (nno- :H :g^)
@@ -42,8 +43,10 @@
 ; quit terminal
 (tno- :<C-Space> :<C-\><C-N>)
 
-; show highlight
-(nno- :<Leader>h ":TSHighlightCapturesUnderCursor<CR>")
+; Reselect in when adjusting indent
+(vno- :< :<gv)
+(vno- :> :>gv)
 
-; enable goyo
-(nno- :<Leader>G ":Goyo<CR>")
+; maintain cursor when yanking in visual mode
+(vno- :y "myy`y")
+(vno- :Y "myY`y")

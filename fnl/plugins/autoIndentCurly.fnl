@@ -1,7 +1,7 @@
-(module closeBracket
+(module autoIndentCurly
         {autoload {a aniseed.core}})
 
-(fn func [bracket]
+(defn func []
   ; get the character under the cursor
   (def getCursor (vim.api.nvim_win_get_cursor 0))
   (var row 0)
@@ -17,20 +17,14 @@
   (def currLine (vim.api.nvim_get_current_line))
   ; get current character
   (def currCharacter (currLine:sub (+ col 1) (+ col 1)))
-  ; if current character is the bracket then return <Right>
-  (if (= (tostring bracket) (tostring currCharacter))
-    ; we need to use the termcode directly, else <Right> prints literally
-    (do (set result (vim.api.nvim_replace_termcodes :<Right> true true true)))
-    (do (set result (tostring bracket))))
+  (if (= "}" (tostring currCharacter))
+    ; print term codes
+    (do (set result (vim.api.nvim_replace_termcodes :<CR><Up><End><CR> true true true)))
+    (do (set result (vim.api.nvim_replace_termcodes :<CR> true true true))))
   result)
 
-(fn _G.paren []
-  (func ")"))
-(fn _G.bracket []
-  (func "]"))
-(fn _G.brace []
-  (func "}"))
+; add to global index
+(fn _G.indentCurly []
+  (func))
 
-{: paren
- :bracket bracket
- :brace brace}
+{:indentCurly indentCurly}

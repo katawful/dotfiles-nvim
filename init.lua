@@ -21,9 +21,16 @@ function ensure (user, repo)
 	end
 end
 
+
+ensure("lewis6991", "impatient.nvim")
+require("impatient")
 ensure("wbthomason", "packer.nvim")
 
 ensure("Olical", "aniseed")
+-- require("au")
+-- require("config")
+-- require("maps")
+-- require("packer_compiled")
 
 -- load aniseed environment
 vim.g["aniseed#env"] = {module = "init"}

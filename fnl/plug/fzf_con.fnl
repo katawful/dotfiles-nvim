@@ -1,9 +1,12 @@
-(module fzf
+(module fzf_con
         {require-macros [macros]})
 
-(nno- :<leader>b ":Buffers<CR>")
-(nno- "<leader>'" ":Marks<CR>")
-(nno- :<leader>f ":Files<CR>")
-(nno- :<leader>g ":Rg<CR>")
+(defn doMaps []
+  (nno- :<leader>b ":Buffers<CR>" :silent)
+  (nno- "<leader>'" ":Marks<CR>" :silent)
+  (nno- :<leader>f ":Files<CR>" :silent)
+  (nno- :<leader>g ":Rg<CR>" :silent)
+  )
+(doMaps)
 
 ; (vim.api.nvim_command "-bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)")

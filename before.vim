@@ -8,6 +8,7 @@ let g:vimwiki_nested_syntaxes = {'python': 'python',
       \'c++': 'cpp',
       \'xml': 'xml',
       \'obse': 'obse',
+      \'make': 'make',
       \}
 let g:vimwiki_listsyms = '◯◔◐◕●✓'
 let g:vimwiki_global_ext = 0

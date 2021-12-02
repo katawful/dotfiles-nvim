@@ -1,6 +1,7 @@
 (module au ; autocommands
         {require-macros [macros]})
 
+; highlight on yank
 (aug- highlightOnYank
   (auc- TextYankPost * "silent! lua vim.highlight.on_yank()"))
 
@@ -11,3 +12,7 @@
   (auc- TermOpen * "setlocal nospell")
   (auc- TermOpen * "setlocal bufhidden=hide"))
 
+; apply suffixes to all files directly
+(aug- suffixAdd
+      (let [ext (vim.fn.expand "%:e")]
+        (auc- FileType ext (.. "setlocal suffixesadd=." ext))))
