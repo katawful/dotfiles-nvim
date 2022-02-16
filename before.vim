@@ -9,6 +9,7 @@ let g:vimwiki_nested_syntaxes = {'python': 'python',
       \'xml': 'xml',
       \'obse': 'obse',
       \'make': 'make',
+			\'scala': 'scala',
       \}
 let g:vimwiki_listsyms = '◯◔◐◕●✓'
 let g:vimwiki_global_ext = 0

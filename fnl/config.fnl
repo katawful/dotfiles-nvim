@@ -5,8 +5,12 @@
 (set- number true)
 (set- relativenumber true)
 (set- modeline true)
-(set- foldmethod "syntax")
 (set- undofile true)
+(set- hidden false)
+
+(set- foldmethod "syntax")
+(setl- foldtext "substitute(getline(v:foldstart),'\t',repeat(' ',&tabstop),'g').'  '.trim(getline(v:foldend))")
+(set- foldcolumn "3")
 
 (set- updatetime 100)
 (set- cmdheight 2)
@@ -28,5 +32,6 @@
 
 (setr- nrformats :octal)
 
+(vim.diagnostic.config {:virtual_text false})
 
 (set- guifont "FiraCode Nerd Font:h15, MesloLGS NF:h15,DejavuSans:h15")

@@ -9,6 +9,9 @@
 ; currently not working, no idea why
 ; (map- :gf ":edit <cfile><CR>")
 
+; remap C-l to return functionality
+(nno- :<leader>r :<C-l>)
+
 ; easier command line mode
 (nno- ";" ":")
 (nno- ":" ";")
@@ -50,3 +53,4 @@
 ; maintain cursor when yanking in visual mode
 (vno- :y "myy`y")
 (vno- :Y "myY`y")
+

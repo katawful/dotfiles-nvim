@@ -75,6 +75,11 @@
         scope (get-scope option)]
     (set-option option value scope)))
 
+(fn setw- [option value]
+  (let [option (sym-tostring option)
+        value value]
+    (set-option option value :win)))
+
 ; set append
 (fn seta- [option value]
   (let [option  (sym-tostring option)
@@ -149,8 +154,8 @@
 
 ; nnoremap
 (fn nno- [left right ...]
-  (let [left (sym-tostring left)
-        right (sym-tostring right)
+  (let [left left
+        right right
         output []
         tab []]
     (var isBuffer false) ; so we don't have to specify not in a buffer
@@ -173,7 +178,7 @@
 
 ; inoremap
 (fn ino- [left right ...]
-  (let [left (sym-tostring left)
+  (let [left left
         right right
         output []
         tab []]
@@ -197,8 +202,8 @@
 
 ; vnoremap
 (fn vno- [left right ...]
-  (let [left (sym-tostring left)
-        right (sym-tostring right)
+  (let [left left
+        right right
         output []
         tab []]
     (var isBuffer false) ; so we don't have to specify not in a buffer
@@ -221,8 +226,8 @@
 
 ; tnoremap
 (fn tno- [left right ...]
-  (let [left (sym-tostring left)
-        right (sym-tostring right)
+  (let [left left
+        right right
         output []
         tab []]
     (var isBuffer false) ; so we don't have to specify not in a buffer
@@ -245,8 +250,8 @@
 
 ; cnoremap
 (fn cno- [left right ...]
-  (let [left (sym-tostring left)
-        right (sym-tostring right)
+  (let [left left
+        right right
         output []
         tab []]
     (var isBuffer false) ; so we don't have to specify not in a buffer
@@ -269,8 +274,8 @@
 
 ; map
 (fn map- [left right ...]
-  (let [left (sym-tostring left)
-        right (sym-tostring right)
+  (let [left left
+        right right
         output []
         tab []]
     (var isBuffer false) ; so we don't have to specify not in a buffer
@@ -293,8 +298,8 @@
 
 ; nmap
 (fn nm- [left right ...]
-  (let [left (sym-tostring left)
-        right (sym-tostring right)
+  (let [left left
+        right right
         output []
         tab []]
     (var isBuffer false) ; so we don't have to specify not in a buffer
@@ -317,8 +322,8 @@
 
 ; vmap
 (fn vm- [left right ...]
-  (let [left (sym-tostring left)
-        right (sym-tostring right)
+  (let [left left
+        right right
         output []
         tab []]
     (var isBuffer false) ; so we don't have to specify not in a buffer
@@ -341,8 +346,8 @@
 
 ; imap
 (fn im- [left right ...]
-  (let [left (sym-tostring left)
-        right (sym-tostring right)
+  (let [left left
+        right right
         output []
         tab []]
     (var isBuffer false) ; so we don't have to specify not in a buffer
@@ -365,8 +370,8 @@
 
 ; tmap
 (fn tm- [left right ...]
-  (let [left (sym-tostring left)
-        right (sym-tostring right)
+  (let [left left
+        right right
         output []
         tab []]
     (var isBuffer false) ; so we don't have to specify not in a buffer
@@ -389,8 +394,8 @@
 
 ; cmap
 (fn cm- [left right ...]
-  (let [left (sym-tostring left)
-        right (sym-tostring right)
+  (let [left left
+        right right
         output []
         tab []]
     (var isBuffer false) ; so we don't have to specify not in a buffer
@@ -438,4 +443,5 @@
  :auc- auc-
  :opt- opt-
  :com- com-
+ :setw- setw-
 }

@@ -7,6 +7,7 @@
 (require :au)
 (require :config)
 (require :maps)
+(set- termguicolors true)
 
 ; check if our compiled packer file exists and source it
 (defn checkForCompile []
@@ -15,9 +16,7 @@
       (do
         (io.close file)
         (require :packer_compiled))
-      (do
-        false
-        ))))
+      (do false))))
 (checkForCompile)
 
 ((. (require :packer) :startup) {1 (fn [use]
@@ -29,10 +28,10 @@
 
   ;; fennel dev
   (Plug {1 :Olical/conjure
-         :version :4.27.0
+         :version :4.29.1
          })            ; REPL tools
-  (Plug {1 :bakpakin/fennel.vim
-         :ft :fennel}) ; enhanced regex syntax highlight
+  ; (Plug {1 :bakpakin/fennel.vim
+  ;        :ft :fennel}) ; enhanced regex syntax highlight
 
   ;; treesitter
   (Plug {1 :nvim-treesitter/nvim-treesitter
@@ -48,6 +47,13 @@
   (Plug {1 :romgrk/nvim-treesitter-context
          :config (fn []
                    (require :plug/treesitter-context_con))}) ; enhanced colors for embedded languages
+  (Plug {1 :nvim-treesitter/nvim-tree-docs
+         :config (fn []
+                   (require :plug/treesitter-doc))
+         })
+  (Plug {1 :SmiteshP/nvim-gps
+         :config (fn []
+                   (require :plug/nvim-gps_con))}) ; TS cursor location
 
   ;; lsp
   (Plug {1 :neovim/nvim-lspconfig
@@ -55,35 +61,51 @@
          :config (fn []
                    (require :plug/lspconfig_con))
          })
+  (Plug {1 "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
+         :config (fn []
+                   (require :plug/lsp_lines_con))
+         })
 
   ;; aesthetics
   (Plug :katawful/kat.vim) ; vimscript colorscheme
   (Plug {1 "~/Programs_and_Stuff/Git_Repos/katdotnvim/"
          :config (fn []
                    (let [timeLocal (tonumber (vim.fn.strftime "%H"))]
-                     (let- :g :kat_nvim_integrations
-                       {1 :treesitter
-                        2 :lsp
-                        3 :ts_rainbow
-                        4 :indent_blankline
-                        5 :startify
-                        })
-                     (if (and (> timeLocal 20)
+                     (let- :g :kat_nvim_integrations [:lsp
+                                                      :treesitter
+                                                      :ts_rainbow
+                                                      :indent_blankline
+                                                      :startify
+                                                      :coc
+                                                      :cmp
+                                                      :fugitive
+                                                      ])
+                     ; (col- "kat.nvim")
+                     ; (set- background :light)))})
+                     (if (and (> timeLocal 18)
                               (<= timeLocal 8))
-                       (col- "kat.nvim")
-                       (and (> timeLocal 8)
-                            (<= timeLocal 12))
-                       (col- "kat.lightenwim")
-                       (and (> timeLocal 12)
-                            (<= timeLocal 15))
-                       (col- "kat.lightenvim")
-                       (and (> timeLocal 15)
-                            (<= timeLocal 20))
-                       (col- "kat.nwim")
-                       (col- "kat.nvim"))))}) ; fennel colorscheme
+                         (do
+                              (set- background :dark)
+                              (col- "kat.nvim"))
+                         (and (> timeLocal 8)
+                              (<= timeLocal 12))
+                         (do
+                              (set- background :light)
+                              (col- "kat.nwim"))
+                         (and (> timeLocal 12)
+                              (<= timeLocal 15))
+                         (do
+                              (set- background :light)
+                              (col- "kat.nvim"))
+                         (and (> timeLocal 15)
+                              (<= timeLocal 18))
+                         (do
+                              (set- background :dark)
+                              (col- "kat.nwim"))
+                         (col- "kat.nvim"))))}) ; fennel colorscheme
 
-  (Plug :nanozuki/tabby.nvim)
-  ; (Plug :akinsho/nvim-bufferline.lua)         ; buffer/tabline
+(Plug :nanozuki/tabby.nvim)
+; (Plug :akinsho/nvim-bufferline.lua)         ; buffer/tabline
   (Plug {1 :nvim-lualine/lualine.nvim
          :config (fn []
                    (require :plug/lualine_con))})  ; statusline
@@ -98,8 +120,6 @@
          :config (fn []
                    (require :plug/startify))}); vim startscreen
   (Plug :andweeb/presence.nvim)               ; discord presence
-  ; (Plug {1 :SmiteshP/nvim-gps
-  ;        :config (require :plug/nvim-gps_con)}); TS cursor location
 
   ;; editing plugins
   (Plug {1 :lervag/vimtex
@@ -120,9 +140,13 @@
   (Plug :ggandor/lightspeed.nvim) ; lightspeed
   (Plug {1 :gelguy/wilder.nvim
          :config (fn []
-                   (require :plug/wilder_con))})
+                   (require :plug/wilder_con))}) ; completion for command line and search
   (Plug "~/Programs_and_Stuff/Git_Repos/syntax-test") ; syntax tester
-  ; (Plug :hrsh7th/nvim-cmp) ; nvim-cmp
+  (Plug {1 :hrsh7th/nvim-cmp
+         :config (fn []
+                   (require :plug/nvim-cmp_con))}) ; nvim-cmp
+  (Plug :vim-scripts/bnf.vim)
+  (Plug :killphi/vim-ebnf)
   ; (Plug :hrsh7th/cmp-nvim-lsp)
   ; (Plug {1 :nvim-telescope/telescope.nvim
   ;        :requires :nvim-lua/plenary.nvim
@@ -132,25 +156,39 @@
   (Plug {1 :junegunn/fzf
          :run (fn []
                 (. vim.fn "fzf#install"))}) ; main FZF binary
-  (Plug {1 :junegunn/fzf.vim
+  ; (Plug {1 :junegunn/fzf.vim
+  ;        :config (fn []
+  ;                  (require :plug/fzf_con))})   ; bindings for FZF in vim
+  (Plug :elihunter173/dirbuf.nvim)
+  (Plug {1 :ibhagwan/fzf-lua
+         :requires :vijaymarupudi/nvim-fzf
          :config (fn []
-                   (require :plug/fzf_con))})   ; bindings for FZF in vim
-  (Plug :tpope/vim-fugitive)   ; git management
-  (Plug :airblade/vim-rooter)  ; puts vim to the root directory if possible
+                   (require :plug/fzf_con))
+         })
+  (Plug {1 :tpope/vim-fugitive
+         :config (fn []
+                   (require :plug/fugitive))
+         })   ; git management
+  (Plug :airblade/vim-rooter) ; rooter
 
   ;; diary and wiki
   (Plug :mattn/calendar-vim)   ; calendar
   (Plug {1 :vimwiki/vimwiki
          :config (fn []
                    (require :plug/vimwiki))}); personal wiki
-  (Plug {1 :nvim-neorg/neorg
-         :branch :unstable
+  (Plug {1 "~/Programs_and_Stuff/Git_Repos/neorg"
          :config (fn []
                    (require :plug/neorg_con))
          :requires :nvim-lua/plenary.nvim}) ; beta personal wiki
+  ; (Plug {1 :nvim-neorg/neorg
+  ;        :branch :main
+  ;        :config (fn []
+  ;                  (require :plug/neorg_con))
+  ;        :requires :nvim-lua/plenary.nvim}) ; beta personal wiki
   ; (Plug {1 "~/Programs_and_Stuff/Git_Repos/neorg"
   ;        :branch :code-regex-fallback
   ;        :requires :nvim-lua/plenary.nvim}) ; beta personal wiki
+  (Plug :psliwka/termcolors.nvim)
   )
   :config {:display {:open_fn (. (require :packer.util) :float)}
            :compile_path (.. (vim.fn.stdpath :config )

@@ -4,15 +4,27 @@
 (def neorg_leader :<Leader>n)
 (opt- neorg setup
       {:load {:core.defaults {}
-              :core.norg.concealer {}
-              :core.keybinds {:config {
-                                       :neorg_leader :<Leader>n}}
-              :core.norg.dirman {
-                                 :config {:workspaces {:main "~/Document/neorg"
-                                                       }
-                                          :autodetect true
-                                          :autochdir true}}
-              :core.gtd.base {}
+              :core.norg.concealer {:config {:markup_preset :dimmed
+                                             }}
+              :core.keybinds {:config {:neorg_leader :<Leader>n}}
+              :core.norg.dirman {:config
+                                 {:workspaces
+                                  {:blog "~/Documents/neorg/Blog"
+                                   :fennel "~/Documents/neorg/Fennel"
+                                   :oblivion "~/Documents/neorg/Oblivion"
+                                   :personal "~/Documents/neorg/Personal"
+                                   :programming "~/Documents/neorg/Programming"
+                                   :wood "~/Documents/neorg/Woodworking"}
+                                  :index "main.norg"
+                                  :autodetect true
+                                  :autochdir true}}
+              :core.gtd.base {:config {:workspace :programming}}
+              :core.norg.qol.toc {}
+              :core.norg.journal {:config {:workspace :personal
+                                           :journal_folder "journal"
+                                           :use_folders false
+                                           }}
+              :core.norg.completion {:config {:engine :nvim-cmp}}
               }
         :hook (fn []
          (local neorg_callbacks (require :neorg.callbacks))
@@ -35,7 +47,7 @@
                    4 {1 :<C-Space>
                       2 :core.norg.qol.todo_items.todo.task_cycle}
                    5 {1 :<CR>
-                      2 :core.norg.esupports.goto_link}
+                      2 :core.norg.esupports.hop.hop-link}
                    6 {1 "[["
                       2 :core.integrations.treesitter.next.heading}
                    7 {1 "]]"
@@ -92,4 +104,12 @@
                :noremap true
                })
              )))})
-
+; (opt- neorg setup 
+;       {:load {:core.defaults {}
+;               :core.norg.concealer {:config {:markup_preset :safe}}
+;               :core.norg.dirman {:config {:workspaces {:main "~/Documents/neorg"}
+;                                           :autodetect true
+;                                           :autochdir true}}
+;               }}
+;       )
+; (vim.cmd "NeorgStart silent=true")

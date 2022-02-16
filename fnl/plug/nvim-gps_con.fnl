@@ -4,12 +4,10 @@
 (opt- nvim-gps setup
       {:icons {:class-name " "
                :function-name " "
-               :method-name " "}
-       :languages {:javascript true
-                   :lua true
-                   :fennel true
-                   :bash true}
-       :separator " > "})
+               :method-name " "
+               :container-name "⛶ "
+               :tag-name "炙 "}
+       :separator "  "})
 
 ; (def- gps (require :nvim-gps))
 ; (opt- lualine setup

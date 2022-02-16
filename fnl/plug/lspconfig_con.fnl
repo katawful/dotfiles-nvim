@@ -1,11 +1,6 @@
 (module lspconfig_con
         {require-macros [macros]})
 
-; (def lspconfig (require :lspconfig))
-; (lspconfig.clangd.setup {})
-; (local lspconfig (require :lspconfig))
-; (lspconfig.ccls.setup {})
-
 (def nvim-lsp (require :lspconfig))
 (defn on-attach [client bufnr]
   (set- omnifunc "v:lua.vim.lsp.omnifunc")
@@ -21,23 +16,37 @@
   (nno- :<leader>rn "<cmd>lua vim.lsp.buf.rename()<CR>" :silent)
   (nno- :<leader>ca "<cmd>lua vim.lsp.buf.code_action()<CR>" :silent)
   (nno- :gr "<cmd>lua vim.lsp.buf.references()<CR>" :silent)
-  (nno- :<leader>E "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>" :silent)
-  (nno- "[d" "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>" :silent)
-  (nno- "]d" "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>" :silent)
-  (nno- :<leader>Q "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>" :silent)
+  (nno- :<leader>E "<cmd>lua vim.diagnostic.open_float(0)<CR>" :silent)
+  (nno- "[d" "<cmd>lua vim.diagnostic.goto_prev()<CR>" :silent)
+  (nno- "]d" "<cmd>lua vim.diagnostic.goto_next()<CR>" :silent)
+  (nno- :<leader>Q "<cmd>lua vim.diagnostic.set_loclist()<CR>" :silent)
   (nno- :<leader>F "<cmd>lua vim.lsp.buf.formatting()<CR>" :silent))
 
-(def servers {1 clangd
-              2 sumneko_lua
-              })
-; (each [_ lsp (ipairs servers)]
-;   ((. (. nvim-lsp lsp) :setup) {:on_attach on-attach
-;                                 :flags {:debounce_text_changes 150}}))
-(def lsp_installer (require :nvim-lsp-installer))
+(def servers [
+              :clangd
+              :sumneko_lua
+              ])
+(def lsp_installer (require :nvim-lsp-installer.servers))
 
-(lsp_installer.on_server_ready (fn [server]
-                                 (def opts {:on_attach on-attach
-                                            :flags {:debounce_text_changes 150}})
-                                 (server:setup opts)))
-(each [_ lsp (ipairs servers)]
-  (lsp_installer.on_server_ready lsp))
+(local runtime-path (vim.split package.path ";"))
+(table.insert runtime-path :lua/?.lua)
+(table.insert runtime-path :lua/?/init.lua)
+(defn install_servers []
+  (each [_ lsp (pairs servers)]
+    (local (server_is_found server) (lsp_installer.get_server lsp))
+    (when server_is_found
+      (server:on_ready (fn []
+                         (let [opts {:on_attach on-attach
+                                     :flags {:debounce_text_changes 150}}]
+                           (when (= server.name :sumneko_lua)
+                             (print "lua")
+                             (set opts.settings {:Lua {:runtime {:version :LuaJIT
+                                                                 :path runtime-path}
+                                                       :workspace {:library (vim.api.nvim_get_runtime_file "" true)}
+                                                       :diagnostics {:globals {1 :vim}}}}))
+                         (server:setup_lsp opts)))))
+  (when (not (server:is_installed))
+    (vim.notify (.. "Installing " lsp) vim.log.levels.INFO)
+    (server:install))))
+
+(install_servers)

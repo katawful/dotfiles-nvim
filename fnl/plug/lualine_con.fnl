@@ -1,6 +1,6 @@
 (module lualine_con
         {require-macros [macros]
-         ; require {gps nvim-gps}
+         require {gps nvim-gps}
          })
 
 (opt- lualine setup
@@ -23,7 +23,7 @@
                    :lualine_x {1 {1 :filetype 
                                   :colored true}}
                                ; 2 {1 gps.get_location
-                               ;    :condition gps.is_available}
+                               ;    :cond gps.is_available}}
                                
                    :lualine_y {1 :progress
                                2 :fileformat
