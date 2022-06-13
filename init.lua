@@ -4,7 +4,7 @@
 
 -- load early loading stuff first
 -- this is mostly needed for Vimwiki, that set variables well before this init fully loads
-vim.cmd("source ~/before.vim")
+vim.cmd("source ~/.config/nvim/before.vim")
 
 local execute = vim.api.nvim_command
 local fn = vim.fn
