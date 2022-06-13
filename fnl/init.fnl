@@ -15,7 +15,7 @@
 
 ; check if our compiled packer file exists and source it
 (defn checkForCompile []
-  (let [file (io.open "/home/kat/lua/packer_compiled.lua" "r")]
+  (let [file (io.open "/home/kat/.config/nvim/lua/packer_compiled.lua" "r")]
     (if (not= file nil)
       (do
         (io.close file)
@@ -187,13 +187,13 @@
 
 ;; compile non-fnl files
 ; after/ftplugin
-(c.glob "*.fnl" "/home/kat/after/ftplugin" "/home/kat/after/ftplugin")
+(c.glob "*.fnl" "/home/kat/.config/nvim/after/ftplugin" "/home/kat/.config/nvim/after/ftplugin")
 ; plugin
-(c.glob "*.fnl" "/home/kat/plugin" "/home/kat/plugin")
+(c.glob "*.fnl" "/home/kat/.config/nvim/plugin" "/home/kat/.config/nvim/plugin")
 ; autoload
-(c.glob "*.fnl" "/home/kat/autoload" "/home/kat/autoload")
+(c.glob "*.fnl" "/home/kat/.config/nvim/autoload" "/home/kat/.config/nvim/autoload")
 ; ftplugin
-(c.glob "*.fnl" "/home/kat/ftplugin" "/home/kat/ftplugin")
+(c.glob "*.fnl" "/home/kat/.config/nvim/ftplugin" "/home/kat/.config/nvim/ftplugin")
 
 ((. (require :plug/colorscheme) :set*))
 
