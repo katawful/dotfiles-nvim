@@ -1,5 +1,5 @@
 (module vimtex
-        {require-macros [macros]})
+        {require-macros [katcros-fnl.macros.nvim.api.options.macros]})
 
 ; set for neovim-remote
 (let- g :vimtex_compiler_progname :nvr)

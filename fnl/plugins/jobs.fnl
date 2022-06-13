@@ -1,5 +1,5 @@
 (module jobs
-        {require-macros [macros]})
+        {require-macros [katcros-fnl.macros.nvim.api.utils.macros]})
 
 (fn _G.lazyGitUpdate []
   (com- Git "add -u")

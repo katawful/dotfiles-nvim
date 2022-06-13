@@ -1,5 +1,5 @@
 (module treesitter-context_con
-  {require-macros [macros]})
+  {require-macros [katcros-fnl.macros.lispism.macros]})
 
-(opt- treesitter-context.config setup
+(opt- :treesitter-context :setup
        {:enable true})

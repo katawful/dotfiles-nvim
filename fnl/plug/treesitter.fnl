@@ -1,7 +1,8 @@
 (module treesitter
-        {require-macros [macros]})
+        {require-macros [katcros-fnl.macros.lispism.macros
+                         katcros-fnl.macros.nvim.api.maps.macros]})
 
-(var parser-configs (opt- nvim-treesitter.parsers get_parser_configs))
+(var parser-configs (opt- :nvim-treesitter.parsers :get_parser_configs))
 (set parser-configs.norg
   {:install_info {:url "https://github.com/nvim-neorg/tree-sitter-norg"
                         :files {1 :src/parser.c
@@ -28,20 +29,20 @@
                  11 :javascript
                  12 :markdown})
 
-(opt- nvim-treesitter.configs setup {
-  :ensure_installed languages
-  :highlight {:enable true
-              }
-  :indent {:enable true}
-  :incremental_selection {
-                          :enable true
-                          :keymaps {
-                                    :init_selection :gnn
-                                    :node_decremental :grm
-                                    :node_incremental :grn
-                                    :scope_incremental :grc}
-                          }
-  })
+(opt- :nvim-treesitter.configs :setup {
+                                       :ensure_installed languages
+                                       :highlight {:enable true}
+              
+                                       :indent {:enable true}
+                                       :incremental_selection {
+                                                               :enable true
+                                                               :keymaps {
+                                                                         :init_selection :gnn
+                                                                         :node_decremental :grm
+                                                                         :node_incremental :grn
+                                                                         :scope_incremental :grc}}})
+                          
+  
 
 ; show highlight
-(nno- :<Leader>h ":TSHighlightCapturesUnderCursor<CR>")
+(nno- :<Leader>h ":TSHighlightCapturesUnderCursor<CR>" "Show highlight under cursor")

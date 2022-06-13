@@ -1,19 +1,18 @@
 (module lualine_con
-        {require-macros [macros]
-         require {gps nvim-gps}
-         })
+        {require-macros [katcros-fnl.macros.lispism.macros]})
+         ; require {gps nvim-gps}})
 
-(opt- lualine setup
+(def- kat (require :lualine.themes.kat))
+(opt- :lualine :setup
       { :options {
                   :icons_enabled 1
-                  :theme :kat
+                  :theme :kreative
                   :component_separators {:left ""
                                          :right ""}
                   :section_separators {:left ""
                                        :right ""}
                   :disabled_filetypes {}
-                  :always_divide_middle true
-                  }
+                  :always_divide_middle true}
        :sections  {
                    :lualine_a {1 :mode}
                    :lualine_b {1 :branch}
@@ -24,10 +23,8 @@
                                   :colored true}}
                                ; 2 {1 gps.get_location
                                ;    :cond gps.is_available}}
-                               
                    :lualine_y {1 :progress
-                               2 :fileformat
-                               }
+                               2 :fileformat}
                    :lualine_z {1 :location}}
        :inactive_sections  {
                             :lualine_a {}
@@ -36,7 +33,7 @@
                             :lualine_x {1 :location}
                             :lualine_y {}
                             :lualine_z {}}
-       :tabline {}
-       :extensions {1 :fzf
-                    2 :fugitive}})
+       :tabline {}})
+       ; :extensions {1 :fzf
+       ;              2 :fugitive}})
 

@@ -1,4 +1,4 @@
 (module vim
-        {require-macros [macros]})
+        {require-macros [katcros-fnl.macros.nvim.api.options.macros]})
 
 (set- foldmethod :marker)

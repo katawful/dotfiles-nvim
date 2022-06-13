@@ -1,5 +1,5 @@
 (module ultisnips
-        {require-macros [macros]})
+        {require-macros [katcros-fnl.macros.nvim.api.options.macros]})
 
 (let- g :UltiSnipsExpandTrigger "<tab>")
 (let- g :UltiSnipsJumpForwardTrigger "<tab>")

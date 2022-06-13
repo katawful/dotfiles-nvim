@@ -1,5 +1,6 @@
 (module obse
-        {require-macros [macros]
+        {require-macros [katcros-fnl.macros.nvim.api.options.macros
+                         katcros-fnl.macros.nvim.api.maps.macros]
          require {b plugins.closeBracket}})
 
 (setl- tabstop 2)
@@ -9,11 +10,14 @@
 ; (nno- :<LocalLeader>s :caw :buffer)
 
 ; enclose word
-(ino- "(" "()<Left>" :buffer)
-(ino- "[" "[]<Left>" :buffer)
-(ino- "{" "{}<Left>" :buffer)
+(ino- "(" "()<Left>" {:buffer true})
+(ino- "[" "[]<Left>" {:buffer true})
+(ino- "{" "{}<Left>" {:buffer true})
 
 ; comes from plugins.closeBracket
-(ino- ")" "v:lua.paren()" :buffer :expr)
-(ino- "]" "v:lua.bracket()" :buffer :expr)
-(ino- "}" "v:lua.brace()" :buffer :expr)
+(ino- ")" "v:lua.paren()" {:buffer true
+                           :expr true})
+(ino- "]" "v:lua.bracket()" {:buffer true
+                             :expr true})
+(ino- "}" "v:lua.brace()" {:buffer true
+                           :expr true})

@@ -1,10 +1,10 @@
 (module core
-        {require-macros [macros]})
+        {require-macros [katcros-fnl.macros.lispism.macros]})
 
 ; setup configs that need to be here
 ; (opt- tabby setup)
 ; (opt- bufferline setup)
-(opt- neorg setup)
+(opt- :neorg :setup)
 ; (opt- nvim-gps setup)
 ; ((. (require :obluavim.main) :init))
 

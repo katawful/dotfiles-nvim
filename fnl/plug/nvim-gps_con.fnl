@@ -1,7 +1,7 @@
 (module nvim-gps_con
-        {require-macros [macros]})
+        {require-macros [katcros-fnl.macros.lispism.macros]})
 
-(opt- nvim-gps setup
+(opt- :nvim-gps :setup
       {:icons {:class-name " "
                :function-name " "
                :method-name " "

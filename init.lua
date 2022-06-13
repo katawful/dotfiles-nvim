@@ -21,16 +21,26 @@ function ensure (user, repo)
 	end
 end
 
+function local_ensure (dir, repo)
+    local install_path = fmt("%s/packer/start/%s", packer_path, repo)
+    local pack_path = fmt("%s/packer/start/", packer_path)
+    fn.system(fmt("rm -r %s", install_path))
+    fn.system(fmt("ln -s %s %s", dir, pack_path))
+    execute(fmt("packadd %s", repo))
+end
+
 
 ensure("lewis6991", "impatient.nvim")
 require("impatient")
 ensure("wbthomason", "packer.nvim")
 
+local_ensure("~/Programs_and_Stuff/Git_Repos/katcros-fnl/", "katcros-fnl")
 ensure("Olical", "aniseed")
+
 -- require("au")
 -- require("config")
 -- require("maps")
 -- require("packer_compiled")
 
 -- load aniseed environment
-vim.g["aniseed#env"] = {module = "init"}
+vim.g["aniseed#env"] = {module = "init", compile = true}

@@ -1,18 +1,33 @@
 (module au ; autocommands
-        {require-macros [macros]})
+        {require-macros [katcros-fnl.macros.nvim.api.autocommands.macros
+                         katcros-fnl.macros.nvim.api.options.macros]})
 
-; highlight on yank
-(aug- highlightOnYank
-  (auc- TextYankPost * "silent! lua vim.highlight.on_yank()"))
+; ; highlight on yank
+(let [highlight (def-aug- "highlightOnYank")]
+  (aug- highlight
+        (auc- "TextYankPost" :* 
+              (fn [] ((. (require :vim.highlight) :on_yank)))
+              "Highlight yank region")))
 
 ; terminal settings
-(aug- terminalSettings
-  (auc- TermOpen * "setlocal nonumber")
-  (auc- TermOpen * "setlocal relativenumber!")
-  (auc- TermOpen * "setlocal nospell")
-  (auc- TermOpen * "setlocal bufhidden=hide"))
+(let [terminal (def-aug- "terminalSettings")]
+  (aug- terminal
+   (auc- "TermOpen" :* (fn [] (setl- number false)) "No number")
+   (auc- "TermOpen" :* (fn [] (setl- relativenumber false)) "No relative number")
+   (auc- "TermOpen" :* (fn [] (setl- spell false)) "No spell")
+   (auc- "TermOpen" :* (fn [] (setl- bufhidden :hide)) "Bufhidden")))
 
 ; apply suffixes to all files directly
-(aug- suffixAdd
-      (let [ext (vim.fn.expand "%:e")]
-        (auc- FileType ext (.. "setlocal suffixesadd=." ext))))
+
+(let [suffix (def-aug- "suffixAdd")]
+  (fn suffix-add-run []
+    (let [ext (vim.fn.expand "%:e")]
+      (aug- suffix
+        (auc- "FileType" ext 
+              (fn []
+                (setl- suffixesadd (.. "." ext)))
+              "Add suffixes to all files"))))
+  (aug- suffix
+        (auc- "BufEnter" "*"
+              suffix-add-run
+              "Run suffixAdd for each buffer")))

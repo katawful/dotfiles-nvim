@@ -1,5 +1,5 @@
 (module nvim-cmp_con
-        {require-macros [macros]})
+        {require-macros [katcros-fnl.macros.nvim.api.options.macros]})
 
 (def- cmp (require :cmp))
 (set- completeopt "menu,menuone,noselect")

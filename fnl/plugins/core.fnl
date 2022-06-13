@@ -1,6 +1,4 @@
-(module core
-        {require-macros [macros]
-         autoload {a aniseed.core}})
+(module core)
 
 
 ; close brackets functions

@@ -1,4 +1,4 @@
 (module text
-        {require-macros [macros]})
+        {require-macros [katcros-fnl.macros.nvim.api.options.macros]})
 
 (setl- spell true)

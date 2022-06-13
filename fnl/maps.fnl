@@ -1,7 +1,8 @@
 (module maps
-   {require-macros [macros]})
+   {require-macros [katcros-fnl.macros.nvim.api.maps.macros
+                    katcros-fnl.macros.nvim.api.options.macros]})
 
-(nm- :<Space> :<Nop>)
+(nm- :<Space> :<Nop> "Set space to no operation")
 (let- :g :mapleader " ")
 (let- :g :maplocalleader ",") ; i didn't like \ as local leader
 
@@ -9,48 +10,32 @@
 ; currently not working, no idea why
 ; (map- :gf ":edit <cfile><CR>")
 
-; remap C-l to return functionality
-(nno- :<leader>r :<C-l>)
+(nno- :<leader>r :<C-l> "Return <C-l> functionality")
 
-; easier command line mode
-(nno- ";" ":")
-(nno- ":" ";")
-(vno- ";" ":")
-(vno- ":" ";")
+(nomap- [:n :v] ";" ":" "Swap char search and command-line enter")
+(nomap- [:n :v] ":" ";" "Swap command-line enter and char search")
 
-; HJKL to moving bindings
-(nno- :H :g^)
-(nno- :J "}")
-(nno- :K "{")
-(nno- :L :g_)
-(vno- :H :g^)
-(vno- :J "}")
-(vno- :K "{")
-(vno- :L :g_)
+(nomap- [:n :v] :H :g^ "Move to beginning of virtual line")
+(nomap- [:n :v] :J "}" "Jump to bottom of paragraph")
+(nomap- [:n :v] :K "{" "Jump to top of paragraph")
+(nomap- [:n :v] :L :g_ "Move to end of virtual line")
 
-; quick completefunc user
-(ino- :<C-u> :<C-x><C-u>)
+(ino- :<C-u> :<C-x><C-u> "Enter user complete easier")
 
-; resize
-(nno- :<C-h> :<C-W><)
-(nno- :<C-j> :<C-W>+)
-(nno- :<C-k> :<C-W>-)
-(nno- :<C-l> :<C-W>>)
+(nno- :<C-h> :<C-W>< "Shrink window horizontally")
+(nno- :<C-j> :<C-W>+ "Grow window vertically")
+(nno- :<C-k> :<C-W>- "Shrin window vertically")
+(nno- :<C-l> :<C-W>> "Grow window horizontally")
 
-; move window
-(nno- :<A-h> :<C-w>h)
-(nno- :<A-j> :<C-w>j)
-(nno- :<A-k> :<C-w>k)
-(nno- :<A-l> :<C-w>l)
+(nno- :<A-h> :<C-w>h "Go to window to the left")
+(nno- :<A-j> :<C-w>j "Go to window below")
+(nno- :<A-k> :<C-w>k "Go to window above")
+(nno- :<A-l> :<C-w>l "Go to window to the right")
 
-; quit terminal
-(tno- :<C-Space> :<C-\><C-N>)
+(tno- :<C-Space> :<C-\><C-N> "Easier terminal mode escape")
 
-; Reselect in when adjusting indent
-(vno- :< :<gv)
-(vno- :> :>gv)
+(vno- :< :<gv "Maintain visual mode when indenting")
+(vno- :> :>gv "Maintain visual mode when indenting")
 
-; maintain cursor when yanking in visual mode
-(vno- :y "myy`y")
-(vno- :Y "myY`y")
-
+(vno- :y "myy`y" "Maintain visual mode when yanking")
+(vno- :Y "myY`y" "Maintain visual mode when yanking")

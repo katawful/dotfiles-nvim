@@ -1,9 +1,9 @@
 (module bufferline
-        {require-macros [macros]})
+        {require-macros [katcros-fnl.macros.lispism.macros]})
 
-(opt- bufferline setup)
+(opt- :bufferline :setup)
 (fn runBufferline []
-  (opt- bufferline setup
+  (opt- :bufferline :setup
    { :options {
                :numbers (fn function [opts]
                           (string.format "%s.%s" opts.id (opts.raise opts.ordinal)))
@@ -63,105 +63,105 @@
                                           :highlight :Exception}
                                   :gui "bold"}
                  :close_button_visible {
-                                  :guifg { :attribute :bg
-                                          :highlight :Normal}
-                                  :guibg { :attribute :fg
-                                          :highlight :SpecialComment}
-                                  :gui "bold"}
+                                        :guifg { :attribute :bg
+                                                :highlight :Normal}
+                                        :guibg { :attribute :fg
+                                                :highlight :SpecialComment}
+                                        :gui "bold"}
                  :close_button_selected {
-                                  :guifg { :attribute :bg
-                                          :highlight :Normal}
-                                  :guibg { :attribute :fg
-                                          :highlight :SpecialChar}
-                                  :gui :bold}
+                                         :guifg { :attribute :bg
+                                                 :highlight :Normal}
+                                         :guibg { :attribute :fg
+                                                 :highlight :SpecialChar}
+                                         :gui :bold}
 
                  :modified {
                             :guifg { :attribute :fg
                                     :highlight :Tag}
                             :guibg { :attribute :fg
-                                    :highlight :Exception}
-                            }
+                                    :highlight :Exception}}
+                            
                  :modified_visible {
                                     :guifg { :attribute :fg
                                             :highlight :Tag}
                                     :guibg { :attribute :fg
-                                            :highlight :SpecialComment}
-                                    }
+                                            :highlight :SpecialComment}}
+                                    
                  :modified_selected {
                                      :guifg { :attribute :fg
                                              :highlight :Tag}
                                      :guibg { :attribute :fg
-                                             :highlight :SpecialChar}
-                                     }
+                                             :highlight :SpecialChar}}
+                                     
 
                  :duplicate_selected {
                                       :guifg { :attribute :fg
                                               :highlight :Normal}
                                       :guibg { :attribute :fg
-                                              :highlight :SpecialChar}
-                                      }
+                                              :highlight :SpecialChar}}
+                                      
                  :duplicate_visible {
                                      :guifg { :attribute :bg
                                              :highlight :Normal}
                                      :guibg { :attribute :fg
-                                             :highlight :SpecialComment}
-                                     }
+                                             :highlight :SpecialComment}}
+                                     
                  :duplicate {
                              :guifg { :attribute :bg
                                      :highlight :Normal}
                              :guibg { :attribute :fg
-                                     :highlight :Exception}
-                             }
+                                     :highlight :Exception}}
+                             
 
                  :separator_selected {
                                       :guifg { :attribute :fg
                                               :highlight :Conditional}
                                       :guibg { :attribute :fg
-                                              :highlight :SpecialChar}
-                                      }
+                                              :highlight :SpecialChar}}
+                                      
                  :separator_visible {
                                      :guifg { :attribute :fg
                                              :highlight :Conditional}
                                      :guibg { :attribute :fg
-                                             :highlight :SpecialComment}
-                                     }
+                                             :highlight :SpecialComment}}
+                                     
                  :separator {
                              :guifg { :attribute :fg
                                      :highlight :Conditional}
                              :guibg { :attribute :fg
-                                     :highlight :Exception}
-                             }
+                                     :highlight :Exception}}
+                             
 
                  :indicator_selected {
                                       :guifg { :attribute :bg
                                               :highlight :Normal}
                                       :guibg { :attribute :fg
-                                              :highlight :SpecialChar}
-                                      }
+                                              :highlight :SpecialChar}}
+                                      
 
                  :pick_selected {
                                  :guifg { :attribute :fg
                                          :highlight :Normal}
                                  :guibg { :attribute :fg
-                                         :highlight :SpecialChar}
-                                 }
+                                         :highlight :SpecialChar}}
+                                 
                  :pick_visible {
                                 :guifg { :attribute :fg
                                         :highlight :Normal}
                                 :guibg { :attribute :fg
-                                        :highlight :SpecialChar}
-                                }
+                                        :highlight :SpecialChar}}
+                                
                  :pick {
                         :guifg { :attribute :fg
                                  :highlight :Normal}
                         :guibg { :attribute :fg
-                                 :highlight :SpecialChar}
-                         }
+                                 :highlight :SpecialChar}}
+                         
 
                  :background {
                                :guifg { :attribute :bg
                                        :highlight :Normal}
                                :guibg { :attribute :fg
-                                       :highlight :Exception}}}})
-  )
+                                       :highlight :Exception}}}}))
+  
 (runBufferline)

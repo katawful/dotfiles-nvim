@@ -1,11 +1,16 @@
 (module tex
-        {require-macros [macros]
+        {require-macros [katcros-fnl.macros.nvim.api.options.macros
+                         katcros-fnl.macros.nvim.api.maps.macros]
          require {j plugins.jobs}})
 
 (setl- spell true)
 (set- updatetime 500)
 
-(nno- :<leader>O ":VimtexCompileOutput<CR>" :buffer :silent)
-(nno- :<leader>C ":VimtexCompile<CR>" :buffer :silent)
-(nno- :<leader>V ":VimtexView<CR>" :buffer :silent)
-(nno- :<leader>O "<Cmd>lua require('j').lazyGitUpdate()<CR>" :buffer :silent)
+(nno- :<leader>O ":VimtexCompileOutput<CR>" "Compile and output TeX file" {:buffer true
+                                                                           :silent true})
+(nno- :<leader>C ":VimtexCompile<CR>" "Compile TeX file" {:buffer true
+                                                          :silent true})
+(nno- :<leader>V ":VimtexView<CR>" "View current TeX file if compiled" {:buffer true
+                                                                        :silent true})
+(nno- :<leader>O "<Cmd>lua require('j').lazyGitUpdate()<CR>" "Update git repo" {:buffer true
+                                                                                :silent true})
