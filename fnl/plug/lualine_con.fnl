@@ -6,7 +6,7 @@
 (opt- :lualine :setup
       { :options {
                   :icons_enabled 1
-                  :theme :kreative
+                  :theme :kat
                   :component_separators {:left ""
                                          :right ""}
                   :section_separators {:left ""
