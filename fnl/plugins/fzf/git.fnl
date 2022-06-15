@@ -29,7 +29,8 @@
           (let [fug-floatwin (def-aug- "fugitiveFloatwin")]
             (aug- fug-floatwin
                   (auc- "BufLeave" nil
-                        (fn [] (vim.api.nvim_win_close fug-win true))
+                        (fn [] (vim.api.nvim_win_close fug-win true)
+                          (vim.api.nvim_del_augroup_by_id fug-floatwin))
                         "Close fugitive floating window after we leave it"
                         {:buffer fug-buf})))
           (vim.api.nvim_win_set_config fug-win win-opts))))))
