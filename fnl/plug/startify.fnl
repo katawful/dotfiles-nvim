@@ -124,7 +124,7 @@
   (let- g :startify_padding_left (padding-size))
   (let- g :startify_files_number 5)
   (let- g :startify_bookmarks 
-      [{:i "~/fnl/init.fnl"}
+      [{:i "~/.config/nvim/fnl/init.fnl"}
        {:z "~/.zshrc"}
        {:c "~/.config/i3/config"}])
   (let- g :startify_fortune_use_unicode 1)
@@ -135,7 +135,8 @@
        {:f [" Search for file" :KatFZFOpenFile]}
        {:b [" Search for buffer" :KatFZFOpenBuffer]}
        {:m [" Search for marks" :KatFZFOpenMarks]}
-       {:h [" Search help tags" :KatFZFOpenHelpTags]}])
+       {:h [" Search help tags" :KatFZFOpenHelpTags]}
+       {:D [" Search dotfile repos" :KatFZFGetDotfiles]}])
   (let- g :startify_custom_header ((. vim.fn :startify#center) vim.g.ascii)))
 (update-variables)
 
