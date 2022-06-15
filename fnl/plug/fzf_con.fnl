@@ -1,5 +1,9 @@
 (module fzf_con
-  {autoload {fzf fzf}
+  {autoload {fzf fzf
+             fzf-lua fzf-lua.init
+             preview plugins.fzf.preview
+             git plugins.fzf.git
+             repos plugins.git.repos}
    require-macros [katcros-fnl.macros.nvim.api.maps.macros
                    katcros-fnl.macros.lispism.macros
                    katcros-fnl.macros.nvim.api.utils.macros]})
@@ -55,6 +59,7 @@
 ;;; for some reason the fzf path is just broken on my laptop
 ;;; Search for it and and use it directly
 (defonce- fzf-path (. (vim.api.nvim_get_runtime_file "bin/fzf" true) 1))
+(defonce- fzf-nvim-opts {:border :rounded})
 ;; FN -- get a predefined list of directories
 (defn- get-list-dirs []
   ((coroutine.wrap
@@ -63,16 +68,42 @@
                                   {:height (+ 3 (length (working-dirs)))
                                    :width 40
                                    :fzf_binary fzf-path})]
-         ; (print (fzf.fzf (working-dirs) "--nth=1" 
-         ;                 {:height (+ 3 (length (working-dirs)))
-         ;                  :width 40}))
-         ; (print result))))))
          (when result
            (do
              (vim.fn.chdir (. result 1))
              (vim.notify (.. "cwd: " (. result 1)) vim.log.levels.INFO))))))))
-; (get-list-dirs)
 (command- :KatFZFGetListDirs (fn [] (get-list-dirs)) "Get a list of dirs to cd into")
+
+(defn open-preview []
+
+  ; feed entries into fzf
+  (fn func [fzf-cb]
+    (var i 1)
+    ; format entry so that it has an index
+    ; item -> 1. item
+    ; this is then what you see in fzf
+    (each [_ e (ipairs (preview.contents))]
+      (fzf-cb (: "%d. %s" :format i e.text))
+      (set i (+ i 1)))
+    (fzf-cb nil))
+
+  (local actions
+         {:default (fn [selected _]
+                     (let [index (preview.get-index (. selected 1))]
+                       (git.open$ (. (. (preview.contents) index) :text))))})
+          ; :ctrl-s (fn [selected _]
+          ;           (local index (preview.get-index (. selected 1)))
+          ;           (print :ctrl-s (. (. (preview.contents) index) :data)))})
+  ((coroutine.wrap (fn []
+                     (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Prompt❯ "
+                                                                  :previewer preview.module-tab
+                                                                  : actions
+                                                                  :fzf_opts {:--delimiter "."
+                                                                             :--nth :3..}}
+                                                                 func)]
+                       ((. (. (require :fzf-lua) :actions) :act) actions
+                                                                 selected {}))))))  
+
 
 ;; FN -- search for directory
 ;; -- TODO: show preview of directory in second window
@@ -111,6 +142,7 @@
 (command- :KatFZFOpenMarks (fn [] (marks)) "Open marks")
 (command- :KatFZFOpenGrep (fn [] (live-grep)) "Open live grep")
 (command- :KatFZFOpenHelpTags (fn [] (help-tags)) "Open help files")
+(command- :KatFZFGetDotfiles (fn [] (open-preview)) "Get dotfiles")
 
 (nno- :<leader>f (fn [] (files)) "Open FZF file window" {:silent true})
 (nno- :<leader>b (fn [] (buffers)) "Open FZF buffer window" {:silent true})
@@ -120,5 +152,4 @@
 (nno- "<leader>H" (fn [] (help-tags)) "Open FZF help tags window" {:silent true})
 (nno- "<leader>N" (fn [] (files {:cwd "/home/kat/Documents/neorg"})) "Open FZF window of neorg files" {:silent true})
 (nno- "<leader>C" (fn [] (files {:cwd "/home/kat/.config/nvim"})) "Open FZF window of Neovim config directory" {:silent true})
-
-; (vim.api.nvim_command "-bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)")
+(nno- "<leader>Gd" (fn [] (open-preview)) "Open a FZF window of dotfiles, going to a floating fugitive window" {:silent true})
