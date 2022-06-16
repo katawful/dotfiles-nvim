@@ -14,8 +14,12 @@
         fug-win (vim.api.nvim_get_current_win)
         fug-buf (vim.api.nvim_win_get_buf fug-win)
         ui (. (vim.api.nvim_list_uis) 1)
-        win-width 90
-        win-height 20
+        width-pad (math.floor (/ ui.width 3.14))
+        win-width (-> ui.width
+                      (- width-pad))
+        height-pad (math.floor (/ ui.height 3.14))
+        win-height (-> ui.height
+                    (- height-pad))
         win-opts {:relative :editor
                   :height win-height
                   :width win-width
