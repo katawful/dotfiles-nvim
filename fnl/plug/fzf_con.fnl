@@ -74,7 +74,10 @@
              (vim.notify (.. "cwd: " (. result 1)) vim.log.levels.INFO))))))))
 (command- :KatFZFGetListDirs (fn [] (get-list-dirs)) "Get a list of dirs to cd into")
 
-(defn open-preview []
+(defn open-preview [repo]
+
+  ; make sure we have the correct repo type in mind
+  (set preview.repo-type.current repo)
 
   ; feed entries into fzf
   (fn func [fzf-cb]
@@ -90,7 +93,7 @@
   (local actions
          {:default (fn [selected _]
                      (let [index (preview.get-index (. selected 1))]
-                       (git.open$ (. (. (preview.contents) index) :text))))})
+                       (git.open$ (. (. (preview.contents) index) :dir))))})
           ; :ctrl-s (fn [selected _]
           ;           (local index (preview.get-index (. selected 1)))
           ;           (print :ctrl-s (. (. (preview.contents) index) :data)))})
@@ -142,7 +145,8 @@
 (command- :KatFZFOpenMarks (fn [] (marks)) "Open marks")
 (command- :KatFZFOpenGrep (fn [] (live-grep)) "Open live grep")
 (command- :KatFZFOpenHelpTags (fn [] (help-tags)) "Open help files")
-(command- :KatFZFGetDotfiles (fn [] (open-preview)) "Get dotfiles")
+(command- :KatFZFGetDotfiles (fn [] (open-preview repos.dotfiles)) "Get dotfiles")
+(command- :KatFZFGetNeovimPlugins (fn [] (open-preview repos.neovim-plugins)) "Get neovim plugin directories")
 
 (nno- :<leader>f (fn [] (files)) "Open FZF file window" {:silent true})
 (nno- :<leader>b (fn [] (buffers)) "Open FZF buffer window" {:silent true})
@@ -152,4 +156,5 @@
 (nno- "<leader>H" (fn [] (help-tags)) "Open FZF help tags window" {:silent true})
 (nno- "<leader>N" (fn [] (files {:cwd "/home/kat/Documents/neorg"})) "Open FZF window of neorg files" {:silent true})
 (nno- "<leader>C" (fn [] (files {:cwd "/home/kat/.config/nvim"})) "Open FZF window of Neovim config directory" {:silent true})
-(nno- "<leader>Gd" (fn [] (open-preview)) "Open a FZF window of dotfiles, going to a floating fugitive window" {:silent true})
+(nno- "<leader>Gd" (fn [] (open-preview repos.dotfiles)) "Open a FZF window of dotfiles, going to a floating fugitive window" {:silent true})
+(nno- "<leader>Gn" (fn [] (open-preview repos.neovim-plugins)) "Open a FZF window of dotfiles, going to a floating fugitive window" {:silent true})

@@ -9,6 +9,9 @@
 (def buffer_or_file (. (require :fzf-lua.previewer.builtin)
                        :buffer_or_file))
 
+;; A mutable table to determine what dir we are working on
+(def repo-type {})
+
 ;; output the module table explicitly
 ;; This is needed to get the preview window working
 (def module-tab *module*)
@@ -22,11 +25,13 @@
 ;; FN -- output a table of contents appropriately
 ;; This is needed to minimize how much work is needed to change things
 (defn contents [] "Contents to parse"
-  (let [dirs (repos.directories repos.dotfiles)
+  (let [dirs repo-type.current ; look at current repo type for dirs
         output []]
-    (each [_ v (ipairs dirs)]
-      (table.insert output {:text v
-                            :data (repos.status v)}))
+    (each [k v (pairs dirs)]
+      (table.insert output {:text v.name
+                            :data (repos.status v.dir)
+                            :dir v.dir
+                            :desc v.desc}))
     output))
 
 (defn parse_entry [self entry-str] "Get content at specified index"
