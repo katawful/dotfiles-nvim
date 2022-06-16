@@ -1,5 +1,6 @@
 (module plugins.fzf.git.init
-  {require-macros [katcros-fnl.macros.nvim.api.autocommands.macros]})
+  {require-macros [katcros-fnl.macros.nvim.api.autocommands.macros
+                   katcros-fnl.macros.nvim.api.maps.macros]})
 
 ;;; Handles manipulation of git stuff from fzf directly
 
@@ -26,6 +27,10 @@
     (timer:start 1 0
       (vim.schedule_wrap
         (fn []
+          (nno- :q (fn []
+                    (vim.api.nvim_win_close fug-win true))
+               "Close fugitive window with just q"
+               {:buffer fug-buf})
           (let [fug-floatwin (def-aug- "fugitiveFloatwin")]
             (aug- fug-floatwin
                   (auc- "BufLeave" nil
