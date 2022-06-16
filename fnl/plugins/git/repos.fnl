@@ -17,7 +17,10 @@
         :name "i3 Configs"}
    :rofi {:dir "~/.config/rofi"
           :desc "Configuration for the rofi menu"
-          :name "rofi Configs"}})
+          :name "rofi Configs"}
+   :polybar {:dir "~/.config/polybar"
+             :desc "Configs for the polybar WM bar"
+             :name "Polybar Configs"}})
 
 (defonce neovim-plugins
   {
