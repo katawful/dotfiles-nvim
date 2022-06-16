@@ -92,8 +92,10 @@
 
   (local actions
          {:default (fn [selected _]
-                     (let [index (preview.get-index (. selected 1))]
-                       (git.open$ (. (. (preview.contents) index) :dir))))})
+                     (let [index (preview.get-index (. selected 1))
+                           contents (. (preview.contents) index)]
+                       (vim.notify contents.dir vim.log.levels.INFO)
+                       (git.open$ contents.dir)))})
           ; :ctrl-s (fn [selected _]
           ;           (local index (preview.get-index (. selected 1)))
           ;           (print :ctrl-s (. (. (preview.contents) index) :data)))})
