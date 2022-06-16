@@ -1,5 +1,6 @@
-(module plugins.fzf.preview
+(module plugins.fzf.git.preview
   {autoload {repos plugins.git.repos
+             preview plugins.fzf.preview
              s aniseed.string}})
 
 ;;; preview module specific to git operations
@@ -13,15 +14,10 @@
 (def module-tab *module*)
 
 (defn get-index [item] "Get index for current item"
-  (tonumber (item:match "^[(%d)]")))
+  (preview.get-index* item))
 
 (defn new [self o opts fzf-win]
-  (set-forcibly! self
-                 (setmetatable (base o opts fzf-win)
-                               {:__index (vim.tbl_deep_extend :keep self
-                                                              base)}))
-  self)
-
+  (preview.new* self o opts fzf-win))
 
 ;; FN -- output a table of contents appropriately
 ;; This is needed to minimize how much work is needed to change things
