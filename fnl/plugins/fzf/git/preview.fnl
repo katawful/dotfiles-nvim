@@ -2,6 +2,8 @@
   {autoload {repos plugins.git.repos
              s aniseed.string}})
 
+;;; preview module specific to git operations
+
 (def base (. (require :fzf-lua.previewer.builtin) :base))
 (def buffer_or_file (. (require :fzf-lua.previewer.builtin)
                        :buffer_or_file))
@@ -48,6 +50,7 @@
         line-count (data-length entry.data)]
     (set self.preview_bufloaded true)
     (vim.api.nvim_buf_set_lines self.preview_bufnr 0 line-count false data)
-    ; (local filetype :git)
-    ; (vim.api.nvim_buf_set_option self.preview_bufnr :filetype filetype)
+    ; TODO new syntax type for git status?
+    (local filetype :fugitive)
+    (vim.api.nvim_buf_set_option self.preview_bufnr :filetype filetype)
     (self.win:update_scrollbar)))

@@ -1,4 +1,4 @@
-(module plugins.fzf.git
+(module plugins.fzf.init
   {require-macros [katcros-fnl.macros.nvim.api.autocommands.macros]})
 
 ;;; Handles manipulation of git stuff from fzf directly

@@ -1,8 +1,8 @@
 (module fzf_con
   {autoload {fzf fzf
              fzf-lua fzf-lua.init
-             preview plugins.fzf.preview
-             git plugins.fzf.git
+             preview plugins.fzf.git.preview
+             git plugins.fzf.git.init
              repos plugins.git.repos}
    require-macros [katcros-fnl.macros.nvim.api.maps.macros
                    katcros-fnl.macros.lispism.macros
