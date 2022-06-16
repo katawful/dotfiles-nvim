@@ -10,8 +10,6 @@
 ; currently not working, no idea why
 ; (map- :gf ":edit <cfile><CR>")
 
-(nno- :<leader>r :<C-l> "Return <C-l> functionality")
-
 (nomap- [:n :v] ";" ":" "Swap char search and command-line enter")
 (nomap- [:n :v] ":" ";" "Swap command-line enter and char search")
 
@@ -26,6 +24,7 @@
 (nno- :<C-j> :<C-W>+ "Grow window vertically")
 (nno- :<C-k> :<C-W>- "Shrin window vertically")
 (nno- :<C-l> :<C-W>> "Grow window horizontally")
+(nno- :<leader>r "<Cmd>nohlsearch|diffupdate|normal! <C-L><CR>" "Return <C-l> functionality")
 
 (nno- :<A-h> :<C-w>h "Go to window to the left")
 (nno- :<A-j> :<C-w>j "Go to window below")
