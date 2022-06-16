@@ -94,7 +94,7 @@
          {:default (fn [selected _]
                      (let [index (preview.get-index (. selected 1))
                            contents (. (preview.contents) index)]
-                       (vim.notify contents.dir vim.log.levels.INFO)
+                       (vim.notify (.. "cwd: " contents.dir) vim.log.levels.INFO)
                        (git.open$ contents.dir)))})
           ; :ctrl-s (fn [selected _]
           ;           (local index (preview.get-index (. selected 1)))
