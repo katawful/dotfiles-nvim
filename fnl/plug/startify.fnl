@@ -137,7 +137,8 @@
        {:m [" Search for marks" :KatFZFOpenMarks]}
        {:h [" Search help tags" :KatFZFOpenHelpTags]}
        {:D [" Search dotfile repos" :KatFZFGetDotfiles]}
-       {:N [" Search Neovim repos" :KatFZFGetNeovimPlugins]}])
+       {:N [" Search Neovim repos" :KatFZFGetNeovimPlugins]}
+       {:G [" Search git repos" :KatFZFGetGitRepos]}])
   (let- g :startify_custom_header ((. vim.fn :startify#center) vim.g.ascii)))
 (update-variables)
 
