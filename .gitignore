@@ -2,3 +2,4 @@ lua/
 .netrwhist
 plugin/packer_compiled.lua
 *.lua
+fnl/plugins/fnlfmt/fnlfmt.fnl
