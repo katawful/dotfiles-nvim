@@ -18,9 +18,9 @@
   (if (and (= (curl.fnlfmt) 0) (= (curl.fennel-lua) 0))
     (let [fnlfmt (require :plugins.fnlfmt.fnlfmt)]
       (each [_ v (pairs (config-files))]
-        (let [out-file (vim.loop.fs_open v :w+)
+        (let [out-file (vim.loop.fs_open v :w+ 438)
               out-stat (vim.loop.fs_stat out-file)
-              temp-file (vim.loop.fs_open (.. v "-bak") :w+)]
+              temp-file (vim.loop.fs_open (.. v "-bak") :w+ 438)]
           (temp-file:fs_write (out-file:fs_read out-stat 0))
           (local temp-stat (vim.loop.fs_stat temp-file))
           (print (temp-file:fs_read temp-stat 0))
