@@ -14,13 +14,14 @@
     fmt-table))
 
 (defn format []
-  (let [fnlfmt (require :plugins.fnlfmt.fnlfmt)]
-    (each [_ v (pairs (config-files))]
-      (var contents "")
-      (with-open [in-file (io.open v :r)]
-        (set contents (in-file:read :*all)))
-      (with-open [temp-file (io.open (.. v "-bak") :r+)
-                  out-file (io.open v :w)]
-        (temp-file:write contents)
-        (out-file:write (fnlfmt.format-file (.. v "-bak") {})))
-      (vim.fn.system (.. "rm " v "-bak")))))
+  (if (and (= curl.fnlfmt 0) (= curl.fennel-lua))
+    (let [fnlfmt (require :plugins.fnlfmt.fnlfmt)]
+      (each [_ v (pairs (config-files))]
+        (var contents "")
+        (with-open [in-file (io.open v :r)]
+          (set contents (in-file:read :*all)))
+        (with-open [temp-file (io.open (.. v "-bak") :w+)
+                    out-file (io.open v :w)]
+          (temp-file:write contents)
+          (out-file:write (fnlfmt.format-file (.. v "-bak") {})))
+        (vim.fn.system (.. "rm " v "-bak"))))))
