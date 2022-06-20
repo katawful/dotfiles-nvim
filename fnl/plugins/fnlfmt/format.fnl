@@ -19,7 +19,7 @@
       (var contents "")
       (with-open [in-file (io.open v :r)]
         (set contents (in-file:read :*all)))
-      (with-open [temp-file (io.open (.. v "-bak" :r))
+      (with-open [temp-file (io.open (.. v "-bak") :r+)
                   out-file (io.open v :w)]
         (temp-file:write contents)
         (out-file:write (fnlfmt.format-file (.. v "-bak") {})))
