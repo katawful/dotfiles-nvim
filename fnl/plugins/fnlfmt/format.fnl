@@ -14,7 +14,7 @@
     fmt-table))
 
 (defn format []
-  (if (and (= curl.fnlfmt 0) (= curl.fennel-lua))
+  (if (and (= (curl.fnlfmt) 0) (= (curl.fennel-lua) 0))
     (let [fnlfmt (require :plugins.fnlfmt.fnlfmt)]
       (each [_ v (pairs (config-files))]
         (var contents "")
