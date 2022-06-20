@@ -21,12 +21,12 @@
         (let [out-file (vim.loop.fs_open v :w+ 438)
               out-stat (vim.loop.fs_stat out-file)
               temp-file (vim.loop.fs_open (.. v "-bak") :w+ 438)]
-          (temp-file:fs_write (out-file:fs_read out-stat 0))
+          (vim.loop.fs_write temp-file (vim.loop.fs_read out-file out-stat 0))
           (local temp-stat (vim.loop.fs_stat temp-file))
-          (print (temp-file:fs_read temp-stat 0))
-          (temp-file:fs_unlink (.. v "-bak"))
-          (out-file:fs_close)
-          (temp-file:fs_close))))))
+          (print (vim.loop.fs_read temp-file temp-stat 0))
+          (vim.loop.fs_unlink temp-file (.. v "-bak"))
+          (vim.loop.fs_close out-file)
+          (vim.loop.fs_close temp-file))))))
         ; (var contents "")
         ; (with-open [in-file (io.open v :r)]
         ;   (set contents (in-file:read :*all)))
