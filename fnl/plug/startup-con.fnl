@@ -1,5 +1,3 @@
-(module startup-con
-  {require-macros [katcros-fnl.macros.lispism.macros]})
+(module startup-con {require-macros [katcros-fnl.macros.lispism.macros]})
 
-(opt- :startup :setup
-      {:theme "kat"})
+(opt- :startup :setup {:theme :kat})

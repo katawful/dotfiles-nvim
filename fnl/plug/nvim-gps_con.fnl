@@ -1,13 +1,11 @@
-(module nvim-gps_con
-        {require-macros [katcros-fnl.macros.lispism.macros]})
+(module nvim-gps_con {require-macros [katcros-fnl.macros.lispism.macros]})
 
-(opt- :nvim-gps :setup
-      {:icons {:class-name " "
-               :function-name " "
-               :method-name " "
-               :container-name "⛶ "
-               :tag-name "炙 "}
-       :separator "  "})
+(opt- :nvim-gps :setup {:icons {:class-name " "
+                                :function-name " "
+                                :method-name " "
+                                :container-name "⛶ "
+                                :tag-name "炙 "}
+                        :separator "  "})
 
 ; (def- gps (require :nvim-gps))
 ; (opt- lualine setup

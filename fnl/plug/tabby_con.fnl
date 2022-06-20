@@ -1,4 +1,4 @@
 (module tabby_con)
 
-((. (require :tabby) :setup)
- {:tabline (. (require :tabby.presets) :active_wins_at_tail)})
+((. (require :tabby) :setup) {:tabline (. (require :tabby.presets)
+                                          :active_wins_at_tail)})

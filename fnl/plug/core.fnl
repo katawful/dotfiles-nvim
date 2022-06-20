@@ -1,5 +1,4 @@
-(module core
-        {require-macros [katcros-fnl.macros.lispism.macros]})
+(module core {require-macros [katcros-fnl.macros.lispism.macros]})
 
 ; setup configs that need to be here
 ; (opt- tabby setup)
