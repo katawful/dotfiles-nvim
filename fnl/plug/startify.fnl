@@ -180,11 +180,14 @@
 (nno- :<leader>sn (fn []
                     (kat-start :none))
       "Open Startify in window")
+
 (nno- :<leader>ss (fn []
                     (kat-start :hor))
       "Open Startify in split")
+
 (nno- :<leader>sv (fn []
                     (kat-start :ver))
       "Open Startify in vsplit")
+
 (nno- :<leader>st (fn []
                     (kat-start :tab)) "Open Startify in tab")

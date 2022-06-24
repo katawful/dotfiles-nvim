@@ -159,11 +159,13 @@
 ; after/ftplugin
 (c.glob :*.fnl :/home/kat/.config/nvim/after/ftplugin
         :/home/kat/.config/nvim/after/ftplugin)
+
 ; plugin
 (c.glob :*.fnl :/home/kat/.config/nvim/plugin :/home/kat/.config/nvim/plugin)
 ; autoload
 (c.glob :*.fnl :/home/kat/.config/nvim/autoload
         :/home/kat/.config/nvim/autoload)
+
 ; ftplugin
 (c.glob :*.fnl :/home/kat/.config/nvim/ftplugin
         :/home/kat/.config/nvim/ftplugin)

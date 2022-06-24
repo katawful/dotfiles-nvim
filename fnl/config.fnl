@@ -11,6 +11,7 @@
 (set- foldmethod :syntax)
 (setl- foldtext
        "substitute(getline(v:foldstart),'\t',repeat(' ',&tabstop),'g').'  '.trim(getline(v:foldend))")
+
 (set- foldcolumn :3)
 
 (set- updatetime 100)
