@@ -1,6 +1,6 @@
-(module autoIndentCurly {autoload {a aniseed.core}})
+(module plugins.insert.indent {autoload {a aniseed.core}})
 
-(defn func [] ; get the character under the cursor
+(defn curly [] ; get the character under the cursor
       (def getCursor (vim.api.nvim_win_get_cursor 0)) (var row 0) (var col 0)
       (var result :empty) ; this is stored as {1 r, 2 c}
       (each [k v (pairs getCursor)]
@@ -14,14 +14,7 @@
       (if (= "}" (tostring currCharacter)) ; print term codes
           (do
             (set result
-                 (vim.api.nvim_replace_termcodes :<CR><Up><End><CR> true true
-                                                 true)))
+                 :<CR><Up><End><CR>))
           (do
-            (set result (vim.api.nvim_replace_termcodes :<CR> true true true))))
+            (set result :<CR>)))
       result)
-
-; add to global index
-(fn _G.indentCurly []
-  (func))
-
-{: indentCurly}
