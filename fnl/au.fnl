@@ -20,7 +20,7 @@
                          (setl- number false)
                          (setl- relativenumber false)
                          (setl- spell false)
-                         (setl- bufhidden false))
+                         (setl- bufhidden :hide))
                        "No number, relativenumber, & spell. Bufhidden")))
 
 ;; AUG -- suffix addition
