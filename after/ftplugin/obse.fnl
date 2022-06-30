@@ -1,6 +1,6 @@
 (module obse {require-macros [katcros-fnl.macros.nvim.api.options.macros
-                              katcros-fnl.macros.nvim.api.maps.macros]
-              require {b plugins.closeBracket}})
+                              katcros-fnl.macros.nvim.api.maps.macros]}
+         autoload {autoclose plugins.insert.autoclose})
 
 (setl- tabstop 2)
 (setl- shiftwidth 2)
@@ -13,9 +13,8 @@
 (ino- "[" "[]<Left>" {:buffer true})
 (ino- "{" "{}<Left>" {:buffer true})
 
-; comes from plugins.closeBracket
-(ino- ")" "v:lua.paren()" {:buffer true :expr true})
+(ino- ")" (fn [] (autoclose.paren)) {:buffer true :expr true})
 
-(ino- "]" "v:lua.bracket()" {:buffer true :expr true})
+(ino- "]" (fn [] (autoclose.bracket)) {:buffer true :expr true})
 
-(ino- "}" "v:lua.brace()" {:buffer true :expr true})
+(ino- "}" (fn [] (autoclose.brace)) {:buffer true :expr true})

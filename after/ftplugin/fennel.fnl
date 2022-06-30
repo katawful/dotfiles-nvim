@@ -1,18 +1,6 @@
 (module fennel-con
         {require-macros [katcros-fnl.macros.nvim.api.options.macros
-                         katcros-fnl.macros.nvim.api.maps.macros]
-         require {b plugins.closeBracket i plugins.autoIndentCurly}})
-
-; ; enclose word
-; (ino- "(" "()<Left>" :buffer)
-; (ino- "[" "[]<Left>" :buffer)
-; (ino- "{" "{}<Left>" :buffer)
-
-; ; comes from plugins.closeBracket
-; (ino- ")" "v:lua.paren()" :buffer :expr)
-; (ino- "]" "v:lua.bracket()" :buffer :expr)
-; (ino- "}" "v:lua.brace()" :buffer :expr)
-; (ino- "<CR>" "v:lua.indentCurly()" :buffer :expr)
+                         katcros-fnl.macros.nvim.api.maps.macros]})
 
 (defn vsplit [file] (vim.cmd :vsplit) (vim.cmd (.. "edit " file)))
 

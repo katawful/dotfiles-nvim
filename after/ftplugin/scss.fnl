@@ -1,17 +1,17 @@
 (module scss
         {require-macros [katcros-fnl.macros.nvim.api.maps.macros]
-         require {b plugins.closeBracket i plugins.autoIndentCurly}})
+         autoload {autoclose plugins.insert.autoclose
+                   indent plugins.insert.indent}})
 
 ; enclose word
 (ino- "(" "()<Left>" {:buffer true})
 (ino- "[" "[]<Left>" {:buffer true})
 (ino- "{" "{}<Left>" {:buffer true})
 
-; comes from plugins.closeBracket
-(ino- ")" "v:lua.paren()" {:buffer true :expr true})
+(ino- ")" (fn [] (autoclose.paren)) {:buffer true :expr true})
 
-(ino- "]" "v:lua.bracket()" {:buffer true :expr true})
+(ino- "]" (fn [] (autoclose.bracket)) {:buffer true :expr true})
 
-(ino- "}" "v:lua.brace()" {:buffer true :expr true})
+(ino- "}" (fn [] (autoclose.brace)) {:buffer true :expr true})
 
-(ino- :<CR> "v:lua.indentCurly()" {:buffer true :expr true})
+(ino- :<CR> (fn [] (indent.curly)) {:buffer true :expr true})

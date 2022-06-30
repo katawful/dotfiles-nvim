@@ -1,6 +1,6 @@
 (module tex {require-macros [katcros-fnl.macros.nvim.api.options.macros
                              katcros-fnl.macros.nvim.api.maps.macros]
-             require {j plugins.jobs}})
+             autoload {git-command plugins.git.commands}})
 
 (setl- spell true)
 (set- updatetime 500)
@@ -14,5 +14,5 @@
 (nno- :<leader>V ":VimtexView<CR>" "View current TeX file if compiled"
       {:buffer true :silent true})
 
-(nno- :<leader>O "<Cmd>lua require('j').lazyGitUpdate()<CR>" "Update git repo"
+(nno- :<leader>O (fn [] (git-command.lazy-update)) "Update git repo"
       {:buffer true :silent true})
