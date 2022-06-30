@@ -1,4 +1,4 @@
-(module fennel
+(module fennel-con
         {require-macros [katcros-fnl.macros.nvim.api.options.macros
                          katcros-fnl.macros.nvim.api.maps.macros]
          require {b plugins.closeBracket i plugins.autoIndentCurly}})
