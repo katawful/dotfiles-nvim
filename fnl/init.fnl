@@ -164,7 +164,9 @@
                                      ;        :config (fn [] 
                                      ;                  (require :plug/fzf_con))})   
                                      ; bindings for FZF in vim
-                                     (Plug :elihunter173/dirbuf.nvim)
+                                     (Plug {1 :elihunter173/dirbuf.nvim
+                                            :config (fn []
+                                                      (require :plugins.dirbuf.config))})
                                      (Plug {1 :ibhagwan/fzf-lua
                                             :requires :vijaymarupudi/nvim-fzf
                                             :config (fn []
