@@ -52,7 +52,10 @@
                              :name "Tree-sitter OBSE"}
           :oblivion-git {:dir (.. git-path "oblivion-git/")
                          :desc "Plugin files"
-                         :name "Oblivion Plugins"}})
+                         :name "Oblivion Plugins"}
+          :katawful.github.io {:dir (.. git-path "katawful.github.io/")
+                               :desc "Website hosted by GitHub"
+                               :name "katawful.github.io"}})
 
 ;; FN -- get status of a repo
 ;; @repo -- indexed repo from a specified table
