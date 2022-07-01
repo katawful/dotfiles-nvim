@@ -2,7 +2,7 @@
 
 ;;; Module that deals with git repos
 
-;; Table of dotfile repos
+;; Key -- Key value table of repo directories
 ;; structure:
 ;; name {:dir directory
 ;;       :desc descrpition
