@@ -127,7 +127,7 @@
                                      (Plug {1 :ibhagwan/fzf-lua
                                             :requires :vijaymarupudi/nvim-fzf
                                             :config (fn []
-                                                      (require :plug/fzf_con))})
+                                                      (require :plugins/fzf/config))})
                                      (Plug {1 :tpope/vim-fugitive
                                             :config (fn []
                                                       (require :plug/fugitive))})
