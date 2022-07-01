@@ -10,6 +10,8 @@
 
 ;;; FZF plugin configuration
 
+(def- actions (require :fzf-lua.actions))
+
 ;; Setup -- setup table for fzf.lua
 ;; https://github.com/ibhagwan/fzf-lua
 (opt- :fzf-lua :setup

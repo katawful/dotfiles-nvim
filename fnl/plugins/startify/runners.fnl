@@ -5,7 +5,7 @@
                          katcros-fnl.macros.nvim.api.maps.macros
                          katcros-fnl.macros.nvim.api.autocommands.macros]})
 
-(defn- startShowCurrRepo [] ; make sure we are in a git repo
+(defn startShowCurrRepo [] ; make sure we are in a git repo
        (vim.cmd "silent! !git rev-parse --is-inside-work-tree")
        (when (= vim.v.shell_error 0) ; create the table of git commits
          (let [commits (vim.fn.systemlist "git log --oneline | head -n5")
@@ -21,10 +21,10 @@
              (+ iter 1))
            output)))
 
-(defn- kat-start-delay [time#]
+(defn kat-start-delay [time#]
        (if (= vim.b.current_syntax :startify)
            (do
-             (if (or (> padding.last 0) (not= padding.last (configs.padding-size)))
+             (if (or (> configs.padding.last 0) (not= configs.padding.last (configs.padding-size)))
                  (let [timer (vim.loop.new_timer)]
                    (timer:start time# 0
                                 (vim.schedule_wrap (fn []
@@ -33,10 +33,9 @@
                                                          (do
                                                            (configs.update-variables)
                                                            ((. vim.fn
-                                                               "startify#insane_in_the_membrane") 0
-                                                                                                                                                                        1)))))))))))
+                                                             "startify#insane_in_the_membrane") 0)))))))))))
 
-(defn- kat-start [split]
+(defn kat-start [split]
        (match split
          :none (do
                  (configs.update-variables)

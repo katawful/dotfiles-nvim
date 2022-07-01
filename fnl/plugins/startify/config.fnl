@@ -7,15 +7,18 @@
 ;;; https://github.com/mhinz/vim-startify
 
 ;; FN -- gets padding size needed
-(defn- padding-size [] (let [width (vim.api.nvim_win_get_width 0)
+(defn padding-size [] (let [width (vim.api.nvim_win_get_width 0)
                              padding (if (> width 100)
                                          (math.floor (/ (- width 80) 2))
                                          4)]
                          padding))
 
+;; Key -- key/value table for storing the last padding
+(def padding {:last 0})
+
 ;; FN -- amount of whitespace needed
 ;; @amount -- amount of whitespace
-(defn- whitespace-size [amount] (var output "")
+(defn whitespace-size [amount] (var output "")
        (for [i 0 (- amount 9)]
          (set output (string.format "%s " output))) output)
 
@@ -75,7 +78,7 @@
       "                ▓▓▒▒▓▓▒▒▓▓▓▓            ▓▓▒▒▓▓▒▒▓▓▓▓                     "
       "                ░░▓▓▓▓▓▓▓▓                ▒▒▓▓▓▓▓▓░░ "])
 
-(defn- update-variables [] (set padding.last (padding-size))
+(defn update-variables [] (set padding.last (padding-size))
        (let- g :startify_lists
              [{:type :commands
                :header [(.. (whitespace-size (padding-size)) :Commands)]}
