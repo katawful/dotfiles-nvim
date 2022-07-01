@@ -34,8 +34,17 @@
                                                       (set vim.notify
                                                            (require :notify))
                                                       (vim.notify.setup {:stages :slide}))})
-                                     ;; fennel dev ; REPL tools
-                                     (Plug {1 :Olical/conjure :tag :v4.35.1}) ; (Plug {1 :bakpakin/fennel.vim ;        :ft :fennel}) ; enhanced regex syntax highlight
+                                     ;; fnlfmt: skip
+                                     ;; fennel dev 
+                                     ; REPL tools
+                                     (Plug {1 :Olical/conjure
+                                            :tag :v4.35.1
+                                            :config (fn []
+                                                      (require :plugins.conjure.config))})
+                                     ;; fnlfmt: skip
+                                     ; (Plug {1 :bakpakin/fennel.vim
+                                     ;        :ft :fennel})
+                                     ; enhanced regex syntax highlight
                                      ;; treesitter
                                      (Plug {1 :nvim-treesitter/nvim-treesitter
                                             :run ":TSUpdate"
@@ -71,7 +80,12 @@
                                      ;; aesthetics
                                      (Plug :katawful/kat.vim) ; vimscript colorscheme
                                      (Plug "~/Programs_and_Stuff/Git_Repos/katdotnvim/")
-                                     (Plug {1 :nanozuki/tabby.nvim}) ; :config (fn [] ;           (require :plug/tabby_con))}) ; (Plug :akinsho/nvim-bufferline.lua)         ; buffer/tabline
+                                     (Plug {1 :nanozuki/tabby.nvim})
+                                     ;; fnlfmt: skip
+                                     ; :config (fn [] 
+                                     ;           (require :plug/tabby_con))})
+                                     ; (Plug :akinsho/nvim-bufferline.lua)
+                                     ; buffer/tabline
                                      (Plug {1 :nvim-lualine/lualine.nvim
                                             :config (fn []
                                                       (require :plug/lualine_con))})
@@ -84,8 +98,14 @@
                                      (Plug {1 :lukas-reineke/indent-blankline.nvim
                                             :config (fn []
                                                       (require :plug/indentline))})
-                                     ; fill in paragraph lines ; (Plug {1 :startup-nvim/startup.nvim ;        :config (fn [] ;                  (require :plug/startup-con))})
-                                     ; (Plug {1 :mhinz/vim-startify ;        :config (fn [] ;                  (require :plug/startify))}); vim startscreen
+                                     ;; fnlfmt: skip
+                                     ; fill in paragraph lines
+                                     ; (Plug {1 :startup-nvim/startup.nvim
+                                     ;        :config (fn []
+                                     ;                  (require :plug/startup-con))})
+                                     ; (Plug {1 :mhinz/vim-startify
+                                     ;        :config (fn []
+                                     ;                  (require :plug/startify))}); vim startscreen
                                      (Plug {1 "~/Programs_and_Stuff/Git_Repos/vim-startify/"
                                             :config (fn []
                                                       (require :plug/startify))})
@@ -96,8 +116,13 @@
                                      (Plug {1 :lervag/vimtex
                                             :config (fn []
                                                       (require :plug/vimtex))})
-                                     ; LaTeX tools ; (Plug {1 :katawful/Obli-Vim ;        :ft :obse})            ; oblivion script syntax and tools
-                                     ; (Plug {1 :katawful/obse.vim   ; Oblivion syntax
+                                     ;; fnlfmt: skip
+                                     ; LaTeX tools 
+                                     ; (Plug {1 :katawful/Obli-Vim
+                                     ;        :ft :obse})
+                                     ; oblivion script syntax and tools
+                                     ; (Plug {1 :katawful/obse.vim
+                                     ; Oblivion syntax
                                      ;        :ft :obse})
                                      (Plug "~/Programs_and_Stuff/Git_Repos/obse.vim")
                                      (Plug "~/Programs_and_Stuff/Git_Repos/obluavim")
@@ -108,7 +133,11 @@
                                             :config (fn []
                                                       (require :plug/ultisnips))})
                                      ; snippet engine
-                                     (Plug :tpope/vim-commentary) ; comment management ; (Plug :ggandor/lightspeed.nvim) ; lightspeed
+                                     (Plug :tpope/vim-commentary)
+                                     ;; fnlfmt: skip
+                                     ; comment management
+                                     ; (Plug :ggandor/lightspeed.nvim) 
+                                     ; lightspeed
                                      (Plug {1 :gelguy/wilder.nvim
                                             :config (fn []
                                                       (require :plug/wilder_con))})
@@ -116,13 +145,28 @@
                                      (Plug "~/Programs_and_Stuff/Git_Repos/syntax-test")
                                      ; syntax tester
                                      (Plug "~/Programs_and_Stuff/Git_Repos/kreative")
-                                     ; syntax tester ; (Plug {1 :hrsh7th/nvim-cmp ;        :config (fn [] ;                  (require :plug/nvim-cmp_con))}) ; nvim-cmp
+                                     ;; fnlfmt: skip
+                                     ; syntax tester 
+                                     ; (Plug {1 :hrsh7th/nvim-cmp 
+                                     ;        :config (fn [] 
+                                     ;                  (require :plug/nvim-cmp_con))}) 
+                                     ; nvim-cmp
                                      (Plug :vim-scripts/bnf.vim)
-                                     (Plug :killphi/vim-ebnf) ; (Plug :hrsh7th/cmp-nvim-lsp) ; (Plug {1 :nvim-telescope/telescope.nvim ;        :requires :nvim-lua/plenary.nvim ;        })
+                                     (Plug :killphi/vim-ebnf) 
+                                     ;; fnlfmt: skip
+                                     ; (Plug :hrsh7th/cmp-nvim-lsp) 
+                                     ; (Plug {1 :nvim-telescope/telescope.nvim 
+                                     ;        :requires :nvim-lua/plenary.nvim 
+                                     ;        })
                                      ;; usability plugins
                                      (Plug {1 :junegunn/fzf
                                             :run "./install --all"})
-                                     ; main FZF binary ; (Plug {1 :junegunn/fzf.vim ;        :config (fn [] ;                  (require :plug/fzf_con))})   ; bindings for FZF in vim
+                                     ;; fnlfmt: skip
+                                     ; main FZF binary
+                                     ; (Plug {1 :junegunn/fzf.vim 
+                                     ;        :config (fn [] 
+                                     ;                  (require :plug/fzf_con))})   
+                                     ; bindings for FZF in vim
                                      (Plug :elihunter173/dirbuf.nvim)
                                      (Plug {1 :ibhagwan/fzf-lua
                                             :requires :vijaymarupudi/nvim-fzf
@@ -138,18 +182,26 @@
                                      (Plug {1 :vimwiki/vimwiki
                                             :config (fn []
                                                       (require :plug/vimwiki))})
-                                     ; personal wiki ; (Plug {1 "~/Programs_and_Stuff/Git_Repos/neorg"
-                                     ;        :config (fn [] ;                  (require :plug/neorg_con))
-                                     ;        :requires :nvim-lua/plenary.nvim}) ; beta personal wiki
+                                     ;; fnlfmt: skip
+                                     ; personal wiki 
+                                     ; (Plug {1 "~/Programs_and_Stuff/Git_Repos/neorg"
+                                     ;        :config (fn [] 
+                                     ;                  (require :plug/neorg_con))
+                                     ;        :requires :nvim-lua/plenary.nvim}) 
+                                     ; beta personal wiki
                                      (Plug {1 :nvim-neorg/neorg
                                             :branch :main
                                             :config (fn []
                                                       (require :plug/neorg_con))
                                             :requires :nvim-lua/plenary.nvim})
-                                     ; beta personal wiki ; (Plug {1 "~/Programs_and_Stuff/Git_Repos/neorg"
-                                     ;        :branch :code-regex-fallback ;        :requires :nvim-lua/plenary.nvim}) ; beta personal wiki
+                                     ;; fnlfmt: skip
+                                     ; beta personal wiki 
+                                     ; (Plug {1 "~/Programs_and_Stuff/Git_Repos/neorg"
+                                     ;        :branch :code-regex-fallback 
+                                     ;        :requires :nvim-lua/plenary.nvim}) 
+                                     ; beta personal wiki
                                      (Plug :psliwka/termcolors.nvim))
-                                 ; (Plug "~/Programs_and_Stuff/Git_Repos/test-fennel/"))
+                                     ; (Plug "~/Programs_and_Stuff/Git_Repos/test-fennel/"))
                                  :config {:display {:open_fn (. (require :packer.util)
                                                                 :float)}
                                           :compile_path (.. (vim.fn.stdpath :config)
