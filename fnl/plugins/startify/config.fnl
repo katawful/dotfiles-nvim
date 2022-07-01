@@ -103,15 +103,14 @@
              {:c "~/.config/i3/config"}])
       (let- g :startify_fortune_use_unicode 1)
       (let- g :startify_commands
-            [{:d [" Open directory" :KatFZFGetListDirs]}
-             {:s [" Search for directory" :KatFZFSearchDir]}
+            [{:s [" Search for directory" :KatFZFSearchDir]}
              {:f [" Search for file" :KatFZFOpenFile]}
              {:b [" Search for buffer" :KatFZFOpenBuffer]}
              {:m [" Search for marks" :KatFZFOpenMarks]}
              {:h [" Search help tags" :KatFZFOpenHelpTags]}
-             {:D [" Search dotfile repos" :KatFZFGetDotfiles]}
-             {:N [" Search Neovim repos" :KatFZFGetNeovimPlugins]}
-             {:G [" Search git repos" :KatFZFGetGitRepos]}])
+             {:d [" Search dotfile repos" :KatFZFGetDotfiles]}
+             {:n [" Search Neovim repos" :KatFZFGetNeovimPlugins]}
+             {:g [" Search git repos" :KatFZFGetGitRepos]}])
       (let- g :startify_custom_header
             ((. vim.fn "startify#center") vim.g.ascii)))
 

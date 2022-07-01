@@ -12,10 +12,6 @@
 
 ;;; User commands for fzf
 
-(command- :KatFZFGetListDirs
-          (fn []
-            (launcher.get-list-dirs)) "Get a list of dirs to cd into")
-
 (command- :KatFZFSearchDir (fn []
                              (launcher.search-dirs))
           "Search for directories")
