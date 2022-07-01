@@ -17,31 +17,33 @@
       {:silent true})
 
 (nno- :<leader>b (fn []
-                   (launcher.buffers)) "Open FZF buffer window"
-      {:silent true})
+                   (launcher.buffers))
+      "Open FZF buffer window" {:silent true})
 
 (nno- "<leader>'" (fn []
                     (launcher.marks)) "Open FZF marks window"
       {:silent true})
 
 (nno- :<leader>g (fn []
-                   (launcher.live-grep)) "Open FZF live grep window"
-      {:silent true})
+                   (launcher.live-grep))
+      "Open FZF live grep window" {:silent true})
 
 (nno- :z= (fn []
             (launcher.spell-suggest)) "Open FZF spell suggest window"
       {:silent true})
 
 (nno- :<leader>H (fn []
-                   (launcher.help-tags)) "Open FZF help tags window"
-      {:silent true})
+                   (launcher.help-tags))
+      "Open FZF help tags window" {:silent true})
 
-(nno- :<leader>N (fn []
-                   (launcher.files {:cwd :/home/kat/Documents/neorg}))
+(nno- :<leader>N
+      (fn []
+        (launcher.files {:cwd :/home/kat/Documents/neorg}))
       "Open FZF window of neorg files" {:silent true})
 
-(nno- :<leader>C (fn []
-                   (launcher.files {:cwd :/home/kat/.config/nvim}))
+(nno- :<leader>C
+      (fn []
+        (launcher.files {:cwd :/home/kat/.config/nvim}))
       "Open FZF window of Neovim config directory" {:silent true})
 
 (nno- :<leader>Gd (fn []
@@ -49,8 +51,9 @@
       "Open a FZF window of dotfiles, going to a floating fugitive window"
       {:silent true})
 
-(nno- :<leader>Gn (fn []
-                    (launcher.open-preview repos.neovim-plugins))
+(nno- :<leader>Gn
+      (fn []
+        (launcher.open-preview repos.neovim-plugins))
       "Open a FZF window of Neovim plugins, going to a floating fugitive window"
       {:silent true})
 

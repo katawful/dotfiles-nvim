@@ -7,5 +7,6 @@
 (setl- listchars "tab:  ")
 (setl- concealcursor :nc)
 
-(nno- :<leader>U (fn [] (git-command.lazy-update)) "Update git repo"
-      {:buffer true})
+(nno- :<leader>U (fn []
+                   (git-command.lazy-update))
+      "Update git repo" {:buffer true})

@@ -1,4 +1,5 @@
-(module plugins.latex.config {require-macros [katcros-fnl.macros.nvim.api.options.macros]})
+(module plugins.latex.config
+        {require-macros [katcros-fnl.macros.nvim.api.options.macros]})
 
 ;;; Configs for latex
 

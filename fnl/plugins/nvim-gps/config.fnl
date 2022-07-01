@@ -1,4 +1,5 @@
-(module plugins.nvim-gps.config {require-macros [katcros-fnl.macros.lispism.macros]})
+(module plugins.nvim-gps.config
+        {require-macros [katcros-fnl.macros.lispism.macros]})
 
 ;;; Configs for nvim-gps
 ;;; https://github.com/SmiteshP/nvim-gps

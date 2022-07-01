@@ -37,12 +37,12 @@
 
 ;; FN -- get proper dirs based on machine i use
 (defn working-dirs [] "Get working directories for proper machine"
-       (let [uname (vim.fn.system "uname -n")]
-         (if (= uname "Kat-Arch\n")
-             ["~/Programs_and_Stuff/Git_Repos/"
-              "~/.config/nvim"
-              "~/Documents/neorg/"]
-             ["~/Git Repos/" "~/.config/nvim" "~/Documents/neorg/"])))
+      (let [uname (vim.fn.system "uname -n")]
+        (if (= uname "Kat-Arch\n")
+            ["~/Programs_and_Stuff/Git_Repos/"
+             "~/.config/nvim"
+             "~/Documents/neorg/"]
+            ["~/Git Repos/" "~/.config/nvim" "~/Documents/neorg/"])))
 
 ;; String -- fzf executable path
 ;; For some reason the fzf path is just broken on my laptop

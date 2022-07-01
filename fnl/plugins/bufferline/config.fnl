@@ -1,4 +1,5 @@
-(module plugins.bufferline.config {require-macros [katcros-fnl.macros.lispism.macros]})
+(module plugins.bufferline.config
+        {require-macros [katcros-fnl.macros.lispism.macros]})
 
 ;;; Configs for bufferline.nvim
 ;;; https://github.com/akinsho/bufferline.nvim

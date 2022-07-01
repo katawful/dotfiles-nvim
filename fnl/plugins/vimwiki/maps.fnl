@@ -1,4 +1,5 @@
-(module plugins.vimwiki.maps {require-macros [katcros-fnl.macros.nvim.api.maps.macros]})
+(module plugins.vimwiki.maps
+        {require-macros [katcros-fnl.macros.nvim.api.maps.macros]})
 
 ;;; Maps for vimwiki
 

@@ -13,8 +13,6 @@
       (def currCharacter (currLine:sub (+ col 1) (+ col 1)))
       (if (= "}" (tostring currCharacter)) ; print term codes
           (do
-            (set result
-                 :<CR><Up><End><CR>))
+            (set result :<CR><Up><End><CR>))
           (do
-            (set result :<CR>)))
-      result)
+            (set result :<CR>))) result)

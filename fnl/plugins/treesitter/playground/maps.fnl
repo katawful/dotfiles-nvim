@@ -1,4 +1,5 @@
-(module plugins.treesitter.playground.maps {require-macros [katcros-fnl.macros.nvim.api.maps.macros]})
+(module plugins.treesitter.playground.maps
+        {require-macros [katcros-fnl.macros.nvim.api.maps.macros]})
 
 ;;; Maps for playground
 

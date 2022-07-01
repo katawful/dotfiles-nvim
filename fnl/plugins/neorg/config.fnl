@@ -1,4 +1,5 @@
-(module plugins.neorg.config {require-macros [katcros-fnl.macros.lispism.macros]})
+(module plugins.neorg.config
+        {require-macros [katcros-fnl.macros.lispism.macros]})
 
 ;;; Configs for Neorg
 ;;; https://github.com/nvim-neorg/neorg

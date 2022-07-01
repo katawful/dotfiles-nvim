@@ -17,4 +17,5 @@
       "Open Startify in vsplit")
 
 (nno- :<leader>st (fn []
-                    (runners.kat-start :tab)) "Open Startify in tab")
+                    (runners.kat-start :tab))
+      "Open Startify in tab")

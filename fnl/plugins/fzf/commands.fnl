@@ -12,31 +12,33 @@
 
 ;;; User commands for fzf
 
-(command- :KatFZFGetListDirs (fn []
-                               (launcher.get-list-dirs))
-          "Get a list of dirs to cd into")
+(command- :KatFZFGetListDirs
+          (fn []
+            (launcher.get-list-dirs)) "Get a list of dirs to cd into")
 
 (command- :KatFZFSearchDir (fn []
                              (launcher.search-dirs))
           "Search for directories")
 
 (command- :KatFZFOpenFile (fn []
-                            (launcher.files)) "Open files")
+                            (launcher.files))
+          "Open files")
 
 (command- :KatFZFOpenBuffers (fn []
                                (launcher.buffers))
           "Open buffers")
 
 (command- :KatFZFOpenMarks (fn []
-                             (launcher.marks)) "Open marks")
+                             (launcher.marks))
+          "Open marks")
 
 (command- :KatFZFOpenGrep (fn []
                             (launcher.live-grep))
           "Open live grep")
 
-(command- :KatFZFOpenHelpTags (fn []
-                                (launcher.help-tags))
-          "Open help files")
+(command- :KatFZFOpenHelpTags
+          (fn []
+            (launcher.help-tags)) "Open help files")
 
 (command- :KatFZFGetDotfiles
           (fn []

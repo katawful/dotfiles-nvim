@@ -11,17 +11,17 @@
 
 ;; FN -- get a predefined list of directories
 (defn get-list-dirs []
-       ((coroutine.wrap (fn []
-                          (let [result (fzf.fzf (configs.working-dirs) :--nth=1
-                                                {:height (+ 3
-                                                            (length (configs.working-dirs)))
-                                                 :width 40
-                                                 :fzf_binary configs.fzf-path})]
-                            (when result
-                              (do
-                                (vim.fn.chdir (. result 1))
-                                (vim.notify (.. "cwd: " (. result 1))
-                                            vim.log.levels.INFO))))))))
+      ((coroutine.wrap (fn []
+                         (let [result (fzf.fzf (configs.working-dirs) :--nth=1
+                                               {:height (+ 3
+                                                           (length (configs.working-dirs)))
+                                                :width 40
+                                                :fzf_binary configs.fzf-path})]
+                           (when result
+                             (do
+                               (vim.fn.chdir (. result 1))
+                               (vim.notify (.. "cwd: " (. result 1))
+                                           vim.log.levels.INFO))))))))
 
 ;; FN -- open a preview of git repos
 ;; @repo -- repo table to preview
@@ -56,21 +56,21 @@
 ;; FN -- search for directory
 ;; -- TODO: show preview of directory in second window
 (defn search-dirs []
-       ((coroutine.wrap (fn []
-                          (let [fd (vim.loop.fs_opendir "." nil 500)
-                                directories []]
-                            (each [_ file (pairs (vim.loop.fs_readdir fd))]
-                              (if (= file.type :directory)
-                                  (table.insert directories file.name)))
-                            (let [result (fzf.fzf directories :--nth=1
-                                                  {:height 20
-                                                   :width 40
-                                                   :fzf_binary configs.fzf-path})]
-                              (when result
-                                (vim.fn.chdir (. result 1))
-                                (vim.notify (.. "cwd: " (. result 1))
-                                            vim.log.levels.INFO)
-                                (vim.loop.fs_close fd))))))))
+      ((coroutine.wrap (fn []
+                         (let [fd (vim.loop.fs_opendir "." nil 500)
+                               directories []]
+                           (each [_ file (pairs (vim.loop.fs_readdir fd))]
+                             (if (= file.type :directory)
+                                 (table.insert directories file.name)))
+                           (let [result (fzf.fzf directories :--nth=1
+                                                 {:height 20
+                                                  :width 40
+                                                  :fzf_binary configs.fzf-path})]
+                             (when result
+                               (vim.fn.chdir (. result 1))
+                               (vim.notify (.. "cwd: " (. result 1))
+                                           vim.log.levels.INFO)
+                               (vim.loop.fs_close fd))))))))
 
 ;; FN -- launchers built into fzf.lua
 (defn files [opts] ((. (require :fzf-lua) :files) opts))

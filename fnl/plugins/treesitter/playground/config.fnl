@@ -1,4 +1,5 @@
-(module plugins.treesitter.playground.config {require-macros [katcros-fnl.macros.lispism.macros]})
+(module plugins.treesitter.playground.config
+        {require-macros [katcros-fnl.macros.lispism.macros]})
 
 ;;; Configs for treesitter playground
 ;;; https://github.com/nvim-treesitter/playground

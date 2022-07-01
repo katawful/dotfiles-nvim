@@ -1,4 +1,5 @@
-(module plugins.lualine.configs {require-macros [katcros-fnl.macros.lispism.macros]})
+(module plugins.lualine.configs
+        {require-macros [katcros-fnl.macros.lispism.macros]})
 
 ;;; Configs for nvim-lualine
 ;;; https://github.com/nvim-lualine/lualine.nvim

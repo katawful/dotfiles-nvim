@@ -14,5 +14,6 @@
 (nno- :<leader>V ":VimtexView<CR>" "View current TeX file if compiled"
       {:buffer true :silent true})
 
-(nno- :<leader>O (fn [] (git-command.lazy-update)) "Update git repo"
-      {:buffer true :silent true})
+(nno- :<leader>O (fn []
+                   (git-command.lazy-update))
+      "Update git repo" {:buffer true :silent true})

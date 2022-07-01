@@ -15,13 +15,14 @@
 ;; AUG -- terminal
 ;; 1. set no number, relative number and spell. Also set buffer hidden
 (let [terminal (def-aug- :terminalSettings)]
-  (aug- terminal (auc- :TermOpen "*"
-                       (fn []
-                         (setl- number false)
-                         (setl- relativenumber false)
-                         (setl- spell false)
-                         (setl- bufhidden :hide))
-                       "No number, relativenumber, & spell. Bufhidden")))
+  (aug- terminal
+        (auc- :TermOpen "*"
+              (fn []
+                (setl- number false)
+                (setl- relativenumber false)
+                (setl- spell false)
+                (setl- bufhidden :hide))
+              "No number, relativenumber, & spell. Bufhidden")))
 
 ;; AUG -- suffix addition
 ;; 1. add appropriate suffixes to each filetype

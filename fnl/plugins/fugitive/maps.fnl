@@ -1,4 +1,5 @@
-(module plugins.fugitive.maps {require-macros [katcros-fnl.macros.nvim.api.maps.macros]})
+(module plugins.fugitive.maps
+        {require-macros [katcros-fnl.macros.nvim.api.maps.macros]})
 
 ;;; Maps for vim-fugitive
 

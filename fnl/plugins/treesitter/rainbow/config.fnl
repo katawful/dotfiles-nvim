@@ -1,4 +1,5 @@
-(module plugins.treesitter.rainbow.config {require-macros [katcros-fnl.macros.lispism.macros]})
+(module plugins.treesitter.rainbow.config
+        {require-macros [katcros-fnl.macros.lispism.macros]})
 
 ;;; Configs for TS-rainbow
 ;;; https://github.com/p00f/nvim-ts-rainbow

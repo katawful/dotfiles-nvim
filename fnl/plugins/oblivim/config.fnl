@@ -1,4 +1,5 @@
-(module plugins.oblivim.config {require-macros [katcros-fnl.macros.nvim.api.options.macros]})
+(module plugins.oblivim.config
+        {require-macros [katcros-fnl.macros.nvim.api.options.macros]})
 
 ;;; Configs for Obli-Vim
 ;;; https://github.com/katawful/Obli-Vim
