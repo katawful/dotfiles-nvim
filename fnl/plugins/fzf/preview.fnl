@@ -7,7 +7,7 @@
 (def buffer_or_file (. (require :fzf-lua.previewer.builtin) :buffer_or_file))
 
 (defn get-index* [item] "Get index for current item"
-      (tonumber (item:match "^[(%d)]")))
+      (tonumber (item:match "^(%d+)")))
 
 (defn new* [self o opts fzf-win]
       (set-forcibly! self
