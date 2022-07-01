@@ -34,7 +34,8 @@
                  :c
                  :bash
                  :javascript
-                 :markdown])
+                 :markdown
+                 :markdown_inline])
 
 ;; Setup -- setup table for nvim-treesitter
 ;; https://github.com/nvim-treesitter/nvim-treesitter
