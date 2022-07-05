@@ -8,7 +8,7 @@
 (ino- "{" "{}<Left>" {:buffer true})
 
 (ino- ")" (fn []
-            (autoclose.paren)) {:buffer true :expr true})
+            (autoclose.parenthesis)) {:buffer true :expr true})
 
 (ino- "]" (fn []
             (autoclose.bracket)) {:buffer true :expr true})
