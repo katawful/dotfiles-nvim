@@ -60,7 +60,7 @@
       "Open a FZF window of Neovim plugins, going to a floating fugitive window"
       {:silent true})
 
-(nno- (.. fzf-leader :g) (fn []
+(nno- (.. fzf-leader :r) (fn []
                             (launcher.open-preview repos.git-repos))
       "Open a FZF window of git repos, going to a floating fugitive window"
       {:silent true})
