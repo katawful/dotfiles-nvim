@@ -4,7 +4,7 @@
 ;;; Maps for vim-fugitive
 
 ;; String -- leader key for how fugitive should be subkeyed
-(defonce- gitLeader :G)
+(defonce- gitLeader :g)
 
 ;; FN -- create a single mode map using the fugitive leader key
 ;; @mode -- mode to use
