@@ -12,52 +12,55 @@
 
 ;;; Maps for fzf
 
-(nno- :<leader>f (fn []
-                   (launcher.files)) "Open FZF file window"
+;; String -- leader sub key for fzf
+(def- fzf-leader :<leader>f)
+
+(nno- (.. fzf-leader :f) (fn []
+                          (launcher.files)) "Open FZF file window"
       {:silent true})
 
-(nno- :<leader>b (fn []
-                   (launcher.buffers))
+(nno- (.. fzf-leader :b) (fn []
+                           (launcher.buffers))
       "Open FZF buffer window" {:silent true})
 
-(nno- "<leader>'" (fn []
-                    (launcher.marks)) "Open FZF marks window"
+(nno- (.. fzf-leader "'") (fn []
+                            (launcher.marks)) "Open FZF marks window"
       {:silent true})
 
-(nno- :<leader>g (fn []
-                   (launcher.live-grep))
+(nno- (.. fzf-leader :g) (fn []
+                           (launcher.live-grep))
       "Open FZF live grep window" {:silent true})
 
 (nno- :z= (fn []
             (launcher.spell-suggest)) "Open FZF spell suggest window"
       {:silent true})
 
-(nno- :<leader>H (fn []
-                   (launcher.help-tags))
+(nno- (.. fzf-leader :h) (fn []
+                           (launcher.help-tags))
       "Open FZF help tags window" {:silent true})
 
-(nno- :<leader>N
+(nno- (.. fzf-leader :o)
       (fn []
         (launcher.files {:cwd :/home/kat/Documents/neorg}))
       "Open FZF window of neorg files" {:silent true})
 
-(nno- :<leader>C
+(nno- (.. fzf-leader :c)
       (fn []
         (launcher.files {:cwd :/home/kat/.config/nvim}))
       "Open FZF window of Neovim config directory" {:silent true})
 
-(nno- :<leader>Gd (fn []
-                    (launcher.open-preview repos.dotfiles))
+(nno- (.. fzf-leader :d) (fn []
+                            (launcher.open-preview repos.dotfiles))
       "Open a FZF window of dotfiles, going to a floating fugitive window"
       {:silent true})
 
-(nno- :<leader>Gn
+(nno- (.. fzf-leader :n)
       (fn []
         (launcher.open-preview repos.neovim-plugins))
       "Open a FZF window of Neovim plugins, going to a floating fugitive window"
       {:silent true})
 
-(nno- :<leader>Go (fn []
-                    (launcher.open-preview repos.git-repos))
+(nno- (.. fzf-leader :g) (fn []
+                            (launcher.open-preview repos.git-repos))
       "Open a FZF window of git repos, going to a floating fugitive window"
       {:silent true})
