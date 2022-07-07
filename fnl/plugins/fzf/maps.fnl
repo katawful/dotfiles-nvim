@@ -31,6 +31,10 @@
                            (launcher.live-grep))
       "Open FZF live grep window" {:silent true})
 
+(nno- (.. fzf-leader :G) (fn []
+                           (launcher.live-grep {:continue_last_search true}))
+      "Open FZF live grep window with last search string" {:silent true})
+
 (nno- :z= (fn []
             (launcher.spell-suggest)) "Open FZF spell suggest window"
       {:silent true})
