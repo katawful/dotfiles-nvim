@@ -7,7 +7,7 @@
   (let [uname (vim.fn.system "uname -n")]
     (if (= uname "Kat-Arch\n")
       "~/Programs_and_Stuff/Git_Repos/"
-      "~/Git Repos/")))
+      "~/Git\\ Repos/")))
 
 ;; Key -- Key value table of repo directories
 ;; structure:
