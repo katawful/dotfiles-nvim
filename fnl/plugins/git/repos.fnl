@@ -6,8 +6,8 @@
 (defonce- git-path
   (let [uname (vim.fn.system "uname -n")]
     (if (= uname "Kat-Arch\n")
-      "~/Programs_and_Stuff/Git_Repos/"
-      "~/Git\\ Repos/")))
+      "/home/kat/Programs_and_Stuff/Git_Repos/"
+      "/home/kat/Git Repos/")))
 
 ;; Key -- Key value table of repo directories
 ;; structure:
@@ -60,7 +60,7 @@
 ;; FN -- get status of a repo
 ;; @repo -- indexed repo from a specified table
 (defn status [repo] "Get the status of a repo"
-      (let [status (vim.fn.system (string.format "git -C %s status" repo))]
+      (let [status (vim.fn.system (string.format "git -C \"%s\" status" repo))]
         status))
 
 ;; FN -- get a directories for repos
