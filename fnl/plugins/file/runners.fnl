@@ -57,40 +57,67 @@ It notifies the user if a test is empty, but still goes to the empty file anyway
           :edit (edit test-file))))
 
 ;; FN -- jump to the compiled file if it exists based on split type
+;; @from-dir -- extension we are compiling from
 ;; @split-type -- how we want to open the file
 ;; @ext -- file extension for compiled file
 ;; @compile-dir -- directory for compiled file
 ;; -- compile-dir is for when a dir is specified
 ;; -- if nil, then assumed that compiled file is in same dir
-(defn ->compiled [split-type ext compile-dir]
+(defn ->compiled [split-type from-dir ext compile-dir]
       "Jump to the compiled file based on directory path.
 If path is nil, it is assumed that the compiled file should be in the same dir as the source.
 If no file was found, simply warn the user as it is unneeded to go to an empty file."
       (->root) ; jumping to a compiled file assumes I'm in a project
-      (let [dir-root (let [dir (vim.fn.expand "%:h")]
-                       (if (= dir ".") ""
-                           (-> dir
-                               (string.gsub ".-/(.*)" "%1")
-                               (.. "/"))))
-            file-name (vim.fn.expand "%:t:r")
+      (let [file-name (let [name (vim.fn.fnamemodify (vim.fn.expand "%") ":.:r")]
+                        (if (not= (name:gsub "(.-)(/)(.*)" "%1") from-dir)
+                          name
+                          (name:gsub "(.-)(/)(.*)" "%3")))
             full-file-name (vim.fn.expand "%:t")
             current-dir (vim.fn.getcwd)
             compiled-file (if compile-dir
-                              (string.format "%s/%s/%s%s.%s" current-dir
-                                             compile-dir dir-root file-name ext)
-                              (string.format "%s/%s%s.%s" current-dir dir-root
-                                             file-name ext))
-            compiled-dir (if compile-dir
-                             (string.format "%s/%s" current-dir compile-dir)
-                             (string.format "%s" current-dir))]
+                              (string.format "%s/%s/%s.%s" current-dir
+                                             compile-dir file-name ext)
+                              (string.format "%s/%s.%s" current-dir
+                                             file-name ext))]
         ;; I want to know if no compiled file exists and only jump if it does
         ;; Good thing to add skeleton/template support here if needed
         (if (= (vim.fn.filewritable compiled-file) 0)
-            (vim.notify (.. "No compiled file found for '" full-file-name 
-                            "' in:"
-                            compiled-dir)
+            (vim.notify (.. "No compiled file found for '" full-file-name
+                            "' at:\n"
+                            compiled-file)
                         vim.log.levels.WARN)
             (match split-type
               :vsplit (vsplit compiled-file)
               :split (split compiled-file)
               :edit (edit compiled-file)))))
+
+;; FN -- jump to the sourced file if it exists based on split type
+;; @from-dir -- extension we are sourcing from
+;; @split-type -- how we want to open the file
+;; @ext -- file extension for sourced file
+;; @source-dir -- directory for sourced file
+;; -- source-dir is for when a dir is specified
+;; -- if nil, then assumed that sourced file is in same dir
+(defn <-compiled [from-dir ext source-dir]
+      "Jump from a compiled file"
+      (->root) ; jumping from a compiled file assumes I'm in a project
+      (let [file-name (let [name (vim.fn.fnamemodify (vim.fn.expand "%") ":.:r")]
+                        (if (not= (name:gsub "(.-)(/)(.*)" "%1") from-dir)
+                          name
+                          (name:gsub "(.-)(/)(.*)" "%3")))
+            full-file-name (vim.fn.expand "%:t")
+            current-dir (vim.fn.getcwd)
+            sourced-file (if source-dir
+                           (string.format "%s/%s/%s.%s" current-dir
+                                          source-dir file-name ext)
+                           (string.format "%s/%s.%s" current-dir
+                                          file-name ext))]
+        ;; I want to know if no sourced file exists and only jump if it does
+        ;; Good thing to add skeleton/template support here if needed
+        (if (= (vim.fn.filewritable sourced-file) 0)
+            (vim.notify (.. "No source file found for '" full-file-name 
+                            "' at:\n"
+                            sourced-file
+                            "\nIs this a Fennel project?")
+                        vim.log.levels.WARN)
+            (edit sourced-file))))
