@@ -19,9 +19,9 @@
       (set git-preview.repo-type.current repo) ; feed entries into fzf
       (fn func [fzf-cb]
         (var i 1)
-        ; format entry so that it has an index
-        ; item -> 1. item
-        ; this is then what you see in fzf
+        ;; format entry so that it has an index
+        ;; item -> 1. item
+        ;; this is then what you see in fzf
         (each [_ e (ipairs (git-preview.contents))]
           (fzf-cb (: "%d. %s" :format i e.text))
           (set i (+ i 1)))
@@ -49,9 +49,9 @@ Previews with dirbuf"
       (set dir-preview.contents-type.current-dir true) ; make sure we have the correct repo type in mind
       (fn func [fzf-cb] ; feed entries into fzf
         (var i 1)
-        ; format entry so that it has an index
-        ; item -> 1. item
-        ; this is then what you see in fzf
+        ;; format entry so that it has an index
+        ;; item -> 1. item
+        ;; this is then what you see in fzf
         (each [_ e (ipairs (dir-preview.contents))]
           (fzf-cb (: "%d. %s" :format i e.text))
           (set i (+ i 1)))

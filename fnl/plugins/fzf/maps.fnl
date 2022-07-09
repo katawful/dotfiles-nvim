@@ -12,27 +12,28 @@
 
 ;;; Maps for fzf
 
-;; String -- leader sub key for fzf
+;; String -- fzf leader subkey
 (def- fzf-leader :<leader>f)
 
 (nno- (.. fzf-leader :f) (fn []
-                          (launcher.files)) "Open FZF file window"
-      {:silent true})
+                           (launcher.files))
+      "Open FZF file window" {:silent true})
 
 (nno- (.. fzf-leader :b) (fn []
                            (launcher.buffers))
       "Open FZF buffer window" {:silent true})
 
 (nno- (.. fzf-leader "'") (fn []
-                            (launcher.marks)) "Open FZF marks window"
-      {:silent true})
+                            (launcher.marks))
+      "Open FZF marks window" {:silent true})
 
 (nno- (.. fzf-leader :g) (fn []
                            (launcher.live-grep))
       "Open FZF live grep window" {:silent true})
 
-(nno- (.. fzf-leader :G) (fn []
-                           (launcher.live-grep {:continue_last_search true}))
+(nno- (.. fzf-leader :G)
+      (fn []
+        (launcher.live-grep {:continue_last_search true}))
       "Open FZF live grep window with last search string" {:silent true})
 
 (nno- :z= (fn []
@@ -53,8 +54,9 @@
         (launcher.files {:cwd :/home/kat/.config/nvim}))
       "Open FZF window of Neovim config directory" {:silent true})
 
-(nno- (.. fzf-leader :d) (fn []
-                            (launcher.open-preview repos.dotfiles))
+(nno- (.. fzf-leader :d)
+      (fn []
+        (launcher.open-preview repos.dotfiles))
       "Open a FZF window of dotfiles, going to a floating fugitive window"
       {:silent true})
 
@@ -64,7 +66,8 @@
       "Open a FZF window of Neovim plugins, going to a floating fugitive window"
       {:silent true})
 
-(nno- (.. fzf-leader :r) (fn []
-                            (launcher.open-preview repos.git-repos))
+(nno- (.. fzf-leader :r)
+      (fn []
+        (launcher.open-preview repos.git-repos))
       "Open a FZF window of git repos, going to a floating fugitive window"
       {:silent true})

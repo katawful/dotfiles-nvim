@@ -1,7 +1,6 @@
-(module obse
-        {require-macros [katcros-fnl.macros.nvim.api.options.macros
-                         katcros-fnl.macros.nvim.api.maps.macros]
-         autoload {autoclose plugins.insert.autoclose}})
+(module obse {require-macros [katcros-fnl.macros.nvim.api.options.macros
+                              katcros-fnl.macros.nvim.api.maps.macros]
+              autoload {autoclose plugins.insert.autoclose}})
 
 (setl- tabstop 2)
 (setl- shiftwidth 2)

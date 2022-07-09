@@ -16,7 +16,8 @@
        ; get current line
        (def currCharacter (currLine:sub (+ col 1) (+ col 1)))
        ; get current character
-       (if (= (tostring bracket) (tostring currCharacter)) ; if current character is the bracket then return <Right>
+       (if (= (tostring bracket) (tostring currCharacter))
+           ; if current character is the bracket then return <Right>
            (do
              ; we need to use the termcode directly, else <Right> prints literally
              (set result :<Right>))

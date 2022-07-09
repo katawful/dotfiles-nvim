@@ -117,9 +117,9 @@
 (update-variables)
 
 (let [startify (def-aug- :startifyResize)]
-  (aug- startify (auc- [:VimResized :WinEnter] "*"
-                       (fn []
-                         (runners.kat-start-delay 1))
+  (aug- startify (auc- [:VimResized :WinEnter :VimEnter :WinNew :WinLeave] "*"
+                       (fn [args]
+                         (runners.kat-start-delay 0 args.buf))
                        "Update startify on window changes")))
 
 ;; Call maps and user commands

@@ -14,6 +14,7 @@
 ;; name {:dir directory
 ;;       :desc descrpition
 ;;       :name name}
+;; fnlfmt: skip
 (defonce dotfiles {:neovim {:dir "~/.config/nvim"
                             :desc "Personal Neovim configs"
                             :name " Neovim Configs"}
@@ -27,6 +28,7 @@
                              :desc "Configs for the polybar WM bar"
                              :name "Polybar Configs"}})
 
+;; fnlfmt: skip
 (defonce neovim-plugins {:katdotnvim {:dir (.. git-path "katdotnvim/")
                                       :desc "My colorscheme, built with Aniseed"
                                       :name :kat.nvim}
@@ -43,6 +45,7 @@
                                     :desc "Syntax files for Oblivion"
                                     :name :obse.vim}})
 
+;; fnlfmt: skip
 (defonce git-repos
          {:oblivion-lang-ref {:dir (.. git-path "oblivion-lang-ref/")
                               :desc "Language reference for Oblivion"
