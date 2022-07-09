@@ -24,19 +24,19 @@
 ;; <leader>jcc
 (nno- jump.compile-edit
       (fn []
-        (jump.->compiled :edit :lua :lua))
+        (jump.->compiled :edit :fnl :lua :lua))
       "Jump to compiled fennel file in directory")
 
 ;; <leader>jcv
 (nno- jump.compile-vsplit
       (fn []
-        (jump.->compiled :vsplit :lua :lua))
+        (jump.->compiled :vsplit :fnl :lua :lua))
       "Jump to compiled fennel file directory in vsplit")
 
 ;; <leader>jcs
 (nno- jump.compile-split
       (fn []
-        (jump.->compiled :split :lua :lua))
+        (jump.->compiled :split :fnl :lua :lua))
       "Jump to compiled fennel file in directory in split")
 
 (setl- foldexpr "nvim_treesitter#foldexpr()")
