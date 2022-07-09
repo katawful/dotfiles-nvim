@@ -21,20 +21,21 @@
             (+ iter 1))
           output)))
 
-(defn kat-start-delay [time#]
+(defn callback [buf]
+      (if (= vim.b.current_syntax :startify)
+          (do
+            (configs.update-variables)
+            ((. vim.fn "startify#insane_in_the_membrane") 0))))
+
+(defn kat-start-delay [time# buf]
       (if (= vim.b.current_syntax :startify)
           (do
             (if (or (> configs.padding.last 0)
-                    (not= configs.padding.last (configs.padding-size)))
+                    (= configs.padding.last (configs.padding-size)))
                 (let [timer (vim.loop.new_timer)]
                   (timer:start time# 0
                                (vim.schedule_wrap (fn []
-                                                    (if (= vim.b.current_syntax
-                                                           :startify)
-                                                        (do
-                                                          (configs.update-variables)
-                                                          ((. vim.fn
-                                                              "startify#insane_in_the_membrane") 0)))))))))))
+                                                    (callback buf)))))))))
 
 (defn kat-start [split]
       (match split
