@@ -2,12 +2,16 @@
 
 ;;; Module that deals with git repos
 
+;; String -- home path acquired from environment
+(defonce- home-path vim.env.HOME)
+
 ;; String -- path for git repo based on machine
 (defonce- git-path
   (let [uname (vim.fn.system "uname -n")]
     (if (= uname "Kat-Arch\n")
-      "/home/kat/Programs_and_Stuff/Git_Repos/"
-      "/home/kat/Git Repos/")))
+      (.. home-path "/Programs_and_Stuff/Git_Repos/")
+      (.. home-path "/Git Repos/"))))
+
 
 ;; Key -- Key value table of repo directories
 ;; structure:
@@ -15,16 +19,16 @@
 ;;       :desc descrpition
 ;;       :name name}
 ;; fnlfmt: skip
-(defonce dotfiles {:neovim {:dir "/home/kat/.config/nvim"
+(defonce dotfiles {:neovim {:dir (.. home-path "/.config/nvim")
                             :desc "Personal Neovim configs"
                             :name " Neovim Configs"}
-                   :i3 {:dir "/home/kat/.config/i3"
+                   :i3 {:dir (.. home-path "/.config/i3")
                         :desc "Scripts and config file for i3 window manager"
                         :name "i3 Configs"}
-                   :rofi {:dir "/home/kat/.config/rofi"
+                   :rofi {:dir (.. home-path "/.config/rofi")
                           :desc "Configuration for the rofi menu"
                           :name "rofi Configs"}
-                   :polybar {:dir "/home/kat/.config/polybar"
+                   :polybar {:dir (.. home-path "/.config/polybar")
                              :desc "Configs for the polybar WM bar"
                              :name "Polybar Configs"}})
 
