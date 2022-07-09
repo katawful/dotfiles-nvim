@@ -15,16 +15,16 @@
 ;;       :desc descrpition
 ;;       :name name}
 ;; fnlfmt: skip
-(defonce dotfiles {:neovim {:dir "~/.config/nvim"
+(defonce dotfiles {:neovim {:dir "/home/kat/.config/nvim"
                             :desc "Personal Neovim configs"
                             :name " Neovim Configs"}
-                   :i3 {:dir "~/.config/i3"
+                   :i3 {:dir "/home/kat/.config/i3"
                         :desc "Scripts and config file for i3 window manager"
                         :name "i3 Configs"}
-                   :rofi {:dir "~/.config/rofi"
+                   :rofi {:dir "/home/kat/.config/rofi"
                           :desc "Configuration for the rofi menu"
                           :name "rofi Configs"}
-                   :polybar {:dir "~/.config/polybar"
+                   :polybar {:dir "/home/kat/.config/polybar"
                              :desc "Configs for the polybar WM bar"
                              :name "Polybar Configs"}})
 
