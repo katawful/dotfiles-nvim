@@ -1,36 +1,43 @@
-(module fennel-con
-        {require-macros [katcros-fnl.macros.nvim.api.options.macros
-                         katcros-fnl.macros.nvim.api.maps.macros]})
-
-(defn vsplit [file] (vim.cmd :vsplit) (vim.cmd (.. "edit " file)))
-
-(defn split [file] (vim.cmd :split) (vim.cmd (.. "edit " file)))
-
-(defn edit [file] (vim.cmd (.. "edit " file)))
-
-(defn jump->test [split-type]
-      (let [dir-root (vim.fn.expand "%:h")
-            file-name (vim.fn.expand "%:t:r")
-            current-dir (vim.fn.getcwd)
-            test-file (.. current-dir :/test/ dir-root "/" file-name :-test.fnl)]
-        (match split-type
-          :vsplit (vsplit test-file)
-          :split (split test-file)
-          :edit (edit test-file))))
+(module fennel-con {require-macros [katcros-fnl.macros.nvim.api.options.macros
+                                    katcros-fnl.macros.nvim.api.maps.macros]
+                    autoload {jump plugins.file.runners}})
 
 ; make button
 (nno- :<F9> ":make!<CR>" "Run make")
-(nno- :<leader>tt (fn []
-                    (jump->test :edit)
-                    "Jump to test"))
 
-(nno- :<leader>tv (fn []
-                    (jump->test :vsplit)
-                    "Jump to test in a vsplit"))
+;; <leader>jtt
+(nno- jump.test-edit (fn []
+                       (jump.->test :edit :-test.fnl))
+      "Jump to aniseed test")
 
-(nno- :<leader>ts (fn []
-                    (jump->test :split)
-                    "Jump to test in a split"))
+;; <leader>jtv
+(nno- jump.test-vsplit
+      (fn []
+        (jump.->test :vsplit :-test.fnl))
+      "Jump to aniseed test in a vsplit")
+
+;; <leader>jts
+(nno- jump.test-split (fn []
+                        (jump.->test :split :-test.fnl))
+      "Jump to aniseed test in a split")
+
+;; <leader>jcc
+(nno- jump.compile-edit
+      (fn []
+        (jump.->compiled :edit :lua :lua))
+      "Jump to compiled fennel file in directory")
+
+;; <leader>jcv
+(nno- jump.compile-vsplit
+      (fn []
+        (jump.->compiled :vsplit :lua :lua))
+      "Jump to compiled fennel file directory in vsplit")
+
+;; <leader>jcs
+(nno- jump.compile-split
+      (fn []
+        (jump.->compiled :split :lua :lua))
+      "Jump to compiled fennel file in directory in split")
 
 (setl- foldexpr "nvim_treesitter#foldexpr()")
 (setl- foldmethod :expr)
