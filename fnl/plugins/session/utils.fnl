@@ -7,10 +7,11 @@
 
 ;; FN -- fix session name
 ;; @name -- name to fix
-;; -- all lowercase and no emoji/nerdfont
-;; -- no non-english support tho
 (defn fix-name [name]
-  "Fixes session name that comes from a different source"
+  "Fixes session name that comes from a different source
+Removes all multibyte strings, at the cost of English only characters
+Makes sure to remove leading hypen
+Converts spaces to hyphens"
   (let [tbl []]
     (for [i 1 (name:len)]
       (let [char (name:sub i i)]
@@ -23,30 +24,35 @@
         (table.remove name-tbl 1))
       (s.join name-tbl))))
 
-;; FN -- get a name for the session
-;; -- searches through my git repos first, if not it gets an input request
-(defn get-name []
-  "Get a name for the session"
-  (let [cur-dir (.. (vim.loop.cwd) "/")
-        pre-dir-name {}]
+;; FN -- generates a table of needed information for sessions
+(defn generate$ []
+  "Generate the needed information for the user for a session
+Parses tables from plugins.git.repos for names I use, making sure to fix them
+Asks for input if a matched directory was not found
+Asks for input for last thing done for this session"
+  (let [cur-dir (.. (vim.loop.cwd) "/") ; added a / to the end so we could always find cur-dir
+        session {}]
     (each [_ v (pairs repos.dotfiles)]
       (if (cur-dir:find v.dir)
         (do
-          (tset pre-dir-name :dir v.dir)
-          (tset pre-dir-name :name (fix-name v.name)))))
+          (tset session :dir v.dir)
+          (tset session :name (fix-name v.name)))))
     (each [_ v (pairs repos.neovim-plugins)]
       (if (cur-dir:find v.dir)
         (do
-          (tset pre-dir-name :dir v.dir)
-          (tset pre-dir-name :name (fix-name v.name)))))
+          (tset session :dir v.dir)
+          (tset session :name (fix-name v.name)))))
     (each [_ v (pairs repos.git-repos)]
       (if (cur-dir:find v.dir)
         (do
-          (tset pre-dir-name :dir v.dir)
-          (tset pre-dir-name :name (fix-name v.name)))))
-    (if (not pre-dir-name.dir)
+          (tset session :dir v.dir)
+          (tset session :name (fix-name v.name)))))
+    (if (not session.dir)
       (do
-        (tset pre-dir-name :dir cur-dir)
+        (tset session :dir cur-dir)
         (vim.ui.input {:prompt
                        "Enter a session name: "}
-                      (fn [input] (tset pre-dir-name :name input)))))))
+                      (fn [input] (tset session :name (fix-name input))))))
+    (vim.ui.input {:prompt "Describe the last thing you were doing: "}
+                  (fn [input] (tset session :last input)))
+    session))
