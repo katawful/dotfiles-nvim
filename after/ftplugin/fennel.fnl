@@ -1,6 +1,6 @@
 (module fennel-con {require-macros [katcros-fnl.macros.nvim.api.options.macros
                                     katcros-fnl.macros.nvim.api.maps.macros]
-                    autoload {jump plugins.file.runners}})
+                    autoload {jump plugins.file.jump}})
 
 ; make button
 (nno- :<F9> ":make!<CR>" "Run make")

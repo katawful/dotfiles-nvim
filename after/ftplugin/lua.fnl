@@ -2,7 +2,7 @@
                              katcros-fnl.macros.nvim.api.maps.macros]
              autoload {autoclose plugins.insert.autoclose
                        indent plugins.insert.indent
-                       jump plugins.file.runners}})
+                       jump plugins.file.jump}})
 
 ; ; enclose word
 (ino- "(" "()<Left>" {:buffer true})

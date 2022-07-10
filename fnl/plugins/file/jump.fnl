@@ -1,4 +1,4 @@
-(module plugins.file.runners)
+(module plugins.file.jump)
 
 ;;; Module for handling file specific runners
 ;;; Things like: jump to test, jump to compile, reverse jump, etc...
