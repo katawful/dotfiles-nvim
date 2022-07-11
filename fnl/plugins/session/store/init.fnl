@@ -40,15 +40,17 @@ Checks if session already exists and updates it"
        new {}]
    (when stored
      (each [k v (pairs stored)]
-       (if (= session.name k)
-         (tset new k session) ; update with new values if exist
+       (if (= session.name v.name)
+         (tset new k session) ; update with new name value if exist
+         (and (= session.dir v.dir) (not= session.name v.name))
+         (tset new session.name session) ; update with different name value, but same dir
          (tset new k v)))) ; add non-matching values unadulterated
    ;; check through output sessions table to see if we didn't add new session
-   (if (not= (a.get new session.name) session.name)
+   (if (not= (a.get new.name session.name) session.name)
      (tset new session.name session))
    new))
 
-(defn store! []
+(defn file! [sessions]
  "Stores session table as a fnl file to a specified location
 Is a literal file, reconstructed upon each store
 Checks if file exists first before starting"
@@ -56,8 +58,6 @@ Checks if file exists first before starting"
    (do
      (a.spit stored-file (.. header (string.format tbl "")))
      (format.file! stored-file))
-   (let [contents (.. header (string.format tbl (-> (util.generate$)
-                                                    (update)
-                                                    (a.str))))]
+   (let [contents (.. header (string.format tbl sessions))]
      (a.spit stored-file contents)
      (format.file! stored-file))))
