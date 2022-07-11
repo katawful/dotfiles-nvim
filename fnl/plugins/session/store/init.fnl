@@ -48,6 +48,9 @@ Checks if session already exists and updates it"
    ;; check through output sessions table to see if we didn't add new session
    (if (not= (a.get new.name session.name) session.name)
      (tset new session.name session))
+   ;; make sure to remove a deleted session
+   (if (= session.mark :delete)
+     (tset new session.name nil))
    new))
 
 (defn file! [sessions]

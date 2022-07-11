@@ -60,7 +60,11 @@
              {:default (fn [selected _]
                          (let [index (session-preview.get-index (. selected 1))
                                contents (. (session-preview.contents) index)]
-                           (session.load! contents)))})
+                           (session.load! contents)))
+              :ctrl-d (fn [selected _]
+                         (let [index (session-preview.get-index (. selected 1))
+                               contents (. (session-preview.contents) index)]
+                           (session.delete! contents)))})
       ((coroutine.wrap (fn []
                          (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Prompt❯ "
                                                                       :previewer session-preview.module-tab

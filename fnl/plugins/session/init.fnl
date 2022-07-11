@@ -12,6 +12,13 @@
   (let [file (.. session.dir session-file)]
     (vim.cmd (.. "mksession! " file))))
 
+(defn delete! [session]
+  (let [new-session session
+        file (.. session.dir session-file)]
+    (set new-session.mark :delete)
+    (store.file! (-> new-session (store.update) (a.str)))
+    (os.remove file)))
+
 (defn load! [session] "Load a session file"
   (let [file (.. session.dir session-file)]
     (if (= (vim.fn.filereadable file) 1)
@@ -21,7 +28,7 @@
       (vim.notify (.. "Session file for '" session.name "' not found")
                   vim.log.levels.ERROR))))
 
-(defn create [session] "Creates a new session, stores it and writes the session file"
+(defn create! [session] "Creates a new session, stores it and writes the session file"
   (let [sessions (-> session (store.update) (a.str))]
     (store.file! sessions)
     (write! session)))
