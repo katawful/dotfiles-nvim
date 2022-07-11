@@ -36,7 +36,7 @@
                                        vim.log.levels.INFO)
                            (git.open$ contents.dir)))})
       ((coroutine.wrap (fn []
-                         (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Prompt❯ "
+                         (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Repos❯ "
                                                                       :previewer git-preview.module-tab
                                                                       : actions
                                                                       :fzf_opts {:--delimiter "."
@@ -66,7 +66,7 @@
                                contents (. (session-preview.contents) index)]
                            (session.delete! contents)))})
       ((coroutine.wrap (fn []
-                         (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Prompt❯ "
+                         (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Sessions❯ "
                                                                       :previewer session-preview.module-tab
                                                                       : actions
                                                                       :fzf_opts {:--delimiter "."
@@ -124,7 +124,7 @@ Previews with dirbuf"
                           (vim.cmd "vsplit")
                           (dirbuf-open contents.dir)))})
       ((coroutine.wrap (fn []
-                         (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Prompt❯ "
+                         (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Directories❯ "
                                                                       :previewer dir-preview.module-tab
                                                                       : actions
                                                                       :fzf_opts {:--delimiter "."
