@@ -26,7 +26,7 @@
 ;; String -- relative stored file path
 (defonce stored-file-lua (.. config-path "lua/plugins/session/stored.lua"))
 
-(defn last-store [] "Get the last stored sessions table
+(defn last [] "Get the last stored sessions table
 Because I am using a Fennel file to store all of this information,
 as opposed to a data file like JSON, I have to both compile the Fennel file
 with Aniseed and source the compiled Lua file with an Ex command"
@@ -36,7 +36,7 @@ with Aniseed and source the compiled Lua file with an Ex command"
 
 (defn update [session] "Update sessions table with session provided
 Checks if session already exists and updates it"
- (let [stored (last-store)
+ (let [stored (last)
        new {}]
    (when stored
      (each [k v (pairs stored)]

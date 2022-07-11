@@ -4,6 +4,8 @@
                    configs plugins.fzf.config
                    git-preview plugins.fzf.git.preview
                    dir-preview plugins.fzf.directory.preview
+                   session-preview plugins.fzf.session.preview
+                   session plugins.session.init
                    git plugins.fzf.git.init
                    repos plugins.git.repos}
          require-macros [katcros-fnl.macros.nvim.api.maps.macros
@@ -36,6 +38,32 @@
       ((coroutine.wrap (fn []
                          (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Prompt❯ "
                                                                       :previewer git-preview.module-tab
+                                                                      : actions
+                                                                      :fzf_opts {:--delimiter "."
+                                                                                 :--nth :3..}}
+                                                                     func)]
+                           ((. (. (require :fzf-lua) :actions) :act) actions
+                                                                     selected {}))))))
+
+(defn search-sessions []
+  "Search sessions stored"
+      (fn func [fzf-cb]
+        (var i 1)
+        ;; format entry so that it has an index
+        ;; item -> 1. item
+        ;; this is then what you see in fzf
+        (each [_ e (ipairs (session-preview.contents))]
+          (fzf-cb (: "%d. %s" :format i e.text))
+          (set i (+ i 1)))
+        (fzf-cb nil))
+      (local actions
+             {:default (fn [selected _]
+                         (let [index (session-preview.get-index (. selected 1))
+                               contents (. (session-preview.contents) index)]
+                           (session.load! contents)))})
+      ((coroutine.wrap (fn []
+                         (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Prompt❯ "
+                                                                      :previewer session-preview.module-tab
                                                                       : actions
                                                                       :fzf_opts {:--delimiter "."
                                                                                  :--nth :3..}}
