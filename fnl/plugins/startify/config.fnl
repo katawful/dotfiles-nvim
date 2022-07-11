@@ -110,7 +110,8 @@
              {:h [" Search help tags" :KatFZFOpenHelpTags]}
              {:d [" Search dotfile repos" :KatFZFGetDotfiles]}
              {:n [" Search Neovim repos" :KatFZFGetNeovimPlugins]}
-             {:g [" Search git repos" :KatFZFGetGitRepos]}])
+             {:g [" Search git repos" :KatFZFGetGitRepos]}
+             {:S [" Open sessions" :KatSessionSearch]}])
       (let- g :startify_custom_header
             ((. vim.fn "startify#center") vim.g.ascii)))
 
