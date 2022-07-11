@@ -43,6 +43,9 @@
 ;; Key -- options for nvim-fzf plugin
 (defonce fzf-nvim-opts {:border :rounded})
 
+;; Setup -- register fzf-lua for vim.ui.select
+(opt- :fzf-lua :register_ui_select)
+
 ;; Call maps and user commands
 (require :plugins.fzf.commands)
 (require :plugins.fzf.maps)
