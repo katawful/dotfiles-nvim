@@ -1,8 +1,8 @@
 (module plugins.fzf.session.preview
-  {autoload {preview plugins.fzf.preview
-             configs plugins.fzf.configs
-             store plugins.session.store
-             s aniseed.string}})
+        {autoload {preview plugins.fzf.preview
+                   configs plugins.fzf.configs
+                   store plugins.session.store
+                   s aniseed.string}})
 
 ;;; Previewer for sessions
 
@@ -42,8 +42,7 @@
 (defn populate_preview_buf [self entry-str]
       "Populate preview window with session information"
       (let [entry (self:parse_entry entry-str)
-            data (parse-data entry.last)
-            ; line-count (data-length entry.last)]
+            data (parse-data entry.last) ; line-count (data-length entry.last)]
             line-count 1]
         (set self.preview_bufloaded true)
         (vim.api.nvim_buf_set_lines self.preview_bufnr 0 line-count false data)

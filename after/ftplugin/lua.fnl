@@ -28,6 +28,6 @@
 (setg- expandtab true)
 
 ;; <leader>jcc
-(nno- jump.compile-edit (fn []
-                          (jump.<-compiled :lua :fnl :fnl))
-      "Jump back to a source file")
+(nno- jump.compile-edit
+      (fn []
+        (jump.<-compiled :lua :fnl :fnl)) "Jump back to a source file")

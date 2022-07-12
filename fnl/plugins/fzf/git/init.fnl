@@ -35,11 +35,11 @@
                                                 "Close fugitive window with just q"
                                                 {:buffer fug-buf})
                                           (nno- :<Esc>
-                                               (fn []
-                                                 (vim.api.nvim_win_close fug-win
-                                                                         true))
-                                               "Close fugitive window with just <Esc>"
-                                               {:buffer fug-buf})
+                                                (fn []
+                                                  (vim.api.nvim_win_close fug-win
+                                                                          true))
+                                                "Close fugitive window with just <Esc>"
+                                                {:buffer fug-buf})
                                           (let [fug-floatwin (def-aug- :fugitiveFloatwin)]
                                             (aug- fug-floatwin
                                                   (auc- :BufLeave nil

@@ -6,18 +6,17 @@
 (defonce- home-path vim.env.HOME)
 
 ;; String -- path for git repo based on machine
-(defonce- git-path
-  (let [uname (vim.fn.system "uname -n")]
-    (if (= uname "Kat-Arch\n")
-      (.. home-path "/Programs_and_Stuff/Git_Repos/")
-      (.. home-path "/Git Repos/"))))
-
+(defonce- git-path (let [uname (vim.fn.system "uname -n")]
+                     (if (= uname "Kat-Arch\n")
+                         (.. home-path :/Programs_and_Stuff/Git_Repos/)
+                         (.. home-path "/Git Repos/"))))
 
 ;; Key -- Key value table of repo directories
 ;; structure:
 ;; name {:dir directory
 ;;       :desc descrpition
 ;;       :name name}
+
 ;; fnlfmt: skip
 (defonce dotfiles {:neovim {:dir (.. home-path "/.config/nvim")
                             :desc "Personal Neovim configs"

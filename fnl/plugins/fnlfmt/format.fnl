@@ -46,17 +46,17 @@ Runs plugins.fnlfmt.curl.fnlfmt!"
             (vim.loop.fs_close temp-file)))))
 
 (defn file! [file] "Formats a specific file"
-  (if (= (vim.fn.filereadable (.. vim.env.HOME
-                                  "/.config/nvim/fnl/plugins/fnlfmt/fnlfmt.fnl"))
-         1)
-    (let [fnlfmt (require :plugins.fnlfmt.fnlfmt)
-          old-file (vim.loop.fs_open file :r+ 438)
-          temp-file (vim.loop.fs_open (.. file :-bak) :w+ 438)]
-      (vim.loop.fs_write temp-file (fnlfmt.format-file file {}) 0)
-      (vim.loop.fs_unlink file)
-      (vim.loop.fs_close old-file)
-      (vim.loop.fs_rename (.. file :-bak) file)
-      (vim.loop.fs_unlink (.. file :-bak))
-      (vim.loop.fs_close temp-file))
-    (vim.notify "fnlfmt not found, no fixing implemented atm"
-                vim.log.levels.ERROR)))
+      (if (= (vim.fn.filereadable (.. vim.env.HOME
+                                      :/.config/nvim/fnl/plugins/fnlfmt/fnlfmt.fnl))
+             1)
+          (let [fnlfmt (require :plugins.fnlfmt.fnlfmt)
+                old-file (vim.loop.fs_open file :r+ 438)
+                temp-file (vim.loop.fs_open (.. file :-bak) :w+ 438)]
+            (vim.loop.fs_write temp-file (fnlfmt.format-file file {}) 0)
+            (vim.loop.fs_unlink file)
+            (vim.loop.fs_close old-file)
+            (vim.loop.fs_rename (.. file :-bak) file)
+            (vim.loop.fs_unlink (.. file :-bak))
+            (vim.loop.fs_close temp-file))
+          (vim.notify "fnlfmt not found, no fixing implemented atm"
+                      vim.log.levels.ERROR)))

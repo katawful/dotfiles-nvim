@@ -7,12 +7,14 @@
 (defonce leader-jump :<leader>j)
 
 ;; define leader keys for test jumping
+
 ;; fnlfmt: skip
 (def test-edit (.. leader-jump "tt"))
 (def test-split (.. leader-jump :ts))
 (def test-vsplit (.. leader-jump :tv))
 
 ;; define leader keys for compiled file jumping
+
 ;; fnlfmt: skip
 (def compile-edit (.. leader-jump "cc"))
 (def compile-split (.. leader-jump :cs))
@@ -49,8 +51,7 @@ It notifies the user if a test is empty, but still goes to the empty file anyway
         ;; Good thing to add skeleton/template support here if needed
         (if (= (vim.fn.filewritable test-file) 0)
             (vim.notify (.. "No test found for '" file-name
-                            "',creating a new test in:"
-                            truncated-test-file)))
+                            "',creating a new test in:" truncated-test-file)))
         (match split-type
           :vsplit (vsplit test-file)
           :split (split test-file)
@@ -70,20 +71,20 @@ If no file was found, simply warn the user as it is unneeded to go to an empty f
       (->root) ; jumping to a compiled file assumes I'm in a project
       (let [file-name (let [name (vim.fn.fnamemodify (vim.fn.expand "%") ":.:r")]
                         (if (not= (name:gsub "(.-)(/)(.*)" "%1") from-dir)
-                          name
-                          (name:gsub "(.-)(/)(.*)" "%3")))
+                            name
+                            (name:gsub "(.-)(/)(.*)" "%3")))
             full-file-name (vim.fn.expand "%:t")
             current-dir (vim.fn.getcwd)
             compiled-file (if compile-dir
                               (string.format "%s/%s/%s.%s" current-dir
                                              compile-dir file-name ext)
-                              (string.format "%s/%s.%s" current-dir
-                                             file-name ext))]
+                              (string.format "%s/%s.%s" current-dir file-name
+                                             ext))]
         ;; I want to know if no compiled file exists and only jump if it does
         ;; Good thing to add skeleton/template support here if needed
         (if (= (vim.fn.filewritable compiled-file) 0)
-            (vim.notify (.. "No compiled file found for '" full-file-name
-                            "' at:\n"
+            (vim.notify (.. "No compiled file found for '" full-file-name "' at:
+"
                             compiled-file)
                         vim.log.levels.WARN)
             (match split-type
@@ -98,26 +99,23 @@ If no file was found, simply warn the user as it is unneeded to go to an empty f
 ;; @source-dir -- directory for sourced file
 ;; -- source-dir is for when a dir is specified
 ;; -- if nil, then assumed that sourced file is in same dir
-(defn <-compiled [from-dir ext source-dir]
-      "Jump from a compiled file"
-      (->root) ; jumping from a compiled file assumes I'm in a project
+(defn <-compiled [from-dir ext source-dir] "Jump from a compiled file" (->root)
+      ; jumping from a compiled file assumes I'm in a project
       (let [file-name (let [name (vim.fn.fnamemodify (vim.fn.expand "%") ":.:r")]
                         (if (not= (name:gsub "(.-)(/)(.*)" "%1") from-dir)
-                          name
-                          (name:gsub "(.-)(/)(.*)" "%3")))
+                            name
+                            (name:gsub "(.-)(/)(.*)" "%3")))
             full-file-name (vim.fn.expand "%:t")
             current-dir (vim.fn.getcwd)
             sourced-file (if source-dir
-                           (string.format "%s/%s/%s.%s" current-dir
-                                          source-dir file-name ext)
-                           (string.format "%s/%s.%s" current-dir
-                                          file-name ext))]
+                             (string.format "%s/%s/%s.%s" current-dir
+                                            source-dir file-name ext)
+                             (string.format "%s/%s.%s" current-dir file-name
+                                            ext))]
         ;; I want to know if no sourced file exists and only jump if it does
         ;; Good thing to add skeleton/template support here if needed
         (if (= (vim.fn.filewritable sourced-file) 0)
-            (vim.notify (.. "No source file found for '" full-file-name 
-                            "' at:\n"
-                            sourced-file
-                            "\nIs this a Fennel project?")
+            (vim.notify (.. "No source file found for '" full-file-name
+                            "' at:\n" sourced-file "\nIs this a Fennel project?")
                         vim.log.levels.WARN)
             (edit sourced-file))))
