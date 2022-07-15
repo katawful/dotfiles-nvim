@@ -14,7 +14,7 @@
 ;; autosave-interval -- time, in seconds that autosaves should update
 (def handles {:autosave-interval 300 :save-on-hold true :save? true})
 
-(defn find [] "Get session from loaded save, or make a new one
+(defn find [input] "Get session from loaded save, or make a new one
 If a session with the current name is found, also check if there's a session
 file. If so, just continue saving as is. If one isn't found, go through the
 normal creation process" (jump.->root)
@@ -32,7 +32,11 @@ normal creation process" (jump.->root)
                         (vim.fn.fnamemodify cur-dir ":t")))
                 (tset stored-session 1 tbl))))
         (if (?. stored-session 1)
-            (. stored-session 1)
+            (do
+              (when input
+                (vim.ui.input {:prompt "Describe the last thing you were doing: "}
+                              (fn [input] (tset (. stored-session 1) :last input)))
+                (. stored-session 1)))
             (do
               (vim.ui.input {:prompt "Create a session to save? (y/N)"}
                             (fn [input]
@@ -53,15 +57,16 @@ normal creation process" (jump.->root)
                                     (tset stored-session 1 nil)))))
               (?. stored-session 1)))))
 
-(defn save! [] "Save a session, creating a new one if desired.
+(defn save! [input] "Save a session, creating a new one if desired.
 Important to note that this is dependent upon handles.save-on-hold.
 This will usually only be set to false if I decline to create a new session during
 the autosave process."
       (if (not (util.empty?))
-        (let [session# (find)]
+        (let [session# (find input)]
           (when handles.save?
             (do
-              (session.write! session#)
+              (if input (session.create! session#)
+                (session.write! session#))
               ;; the window from vim.notify was getting saved
               ;; simply run it later, it's not that important
               (vim.fn.timer_start 500
