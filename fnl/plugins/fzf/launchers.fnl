@@ -63,7 +63,8 @@
               :ctrl-d (fn [selected _]
                         (let [index (session-preview.get-index (. selected 1))
                               contents (. (session-preview.contents) index)]
-                          (session.delete! contents)))})
+                          (session.delete! contents)
+                          (search-sessions)))})
       ((coroutine.wrap (fn []
                          (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Sessions❯ "
                                                                       :previewer session-preview.module-tab
