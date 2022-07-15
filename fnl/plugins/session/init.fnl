@@ -34,17 +34,17 @@
                         vim.log.levels.ERROR))))
 
 (defn load<-name [name] "Loads a session from a name"
-  (let [sessions (-> (json.<-file)
-                     (json.decode))]
-    (each [_ session# (pairs sessions)]
-      (if (= session#.name name)
-        (load! session#)
-        (vim.notify (.. "Session " name " not found") vim.log.levels.ERROR)))))
+      (let [sessions (-> (json.<-file)
+                         (json.decode))]
+        (each [_ session# (pairs sessions)]
+          (if (= session#.name name)
+              (load! session#)
+              (vim.notify (.. "Session " name " not found")
+                          vim.log.levels.ERROR)))))
 
 (defn create! [session]
       "Creates a new session, stores it and writes the session file"
-      (store.file! (store.update session))
-      (write! session))
+      (store.file! (store.update session)) (write! session))
 
 (require :plugins.session.commands)
 (require :plugins.session.au)

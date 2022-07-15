@@ -16,26 +16,26 @@
 
 (command- :KatSessionLoad
           (fn [args]
-            (session.load<-name args.args))
-          {:nargs 1})
+            (session.load<-name args.args)) {:nargs 1})
 
-(command- :KatSessionSave
-          (fn [args] 
-            (match args.args 
-              :autosave (do
-                         (set save.handles.save? true)
-                         (set save.handles.save-on-hold true))
-              _ (do (set save.handles.save-on-hold false)
-                  (set save.handles.save? true)))
-            (au.cursor-hold)
-            (save.save!)) "Save a session, create if not found. Arg option 'autosave'"
+(command- :KatSessionSave (fn [args]
+                            (match args.args
+                              :autosave (do
+                                          (set save.handles.save? true)
+                                          (set save.handles.save-on-hold true))
+                              _ (do
+                                  (set save.handles.save-on-hold false)
+                                  (set save.handles.save? true)))
+                            (au.cursor-hold)
+                            (save.save!))
+          "Save a session, create if not found. Arg option 'autosave'"
           {:nargs "?"})
 
 (command- :KatSessionAutosaveEnd
           (fn []
-            (save.autosave!) "End the autosaving of sessions"))
+            (save.autosave!)
+            "End the autosaving of sessions"))
 
 (command- :KatSessionCursorHold
           (fn []
-            (save.cursor-hold))
-          "Start cursor-hold process")
+            (save.cursor-hold)) "Start cursor-hold process")

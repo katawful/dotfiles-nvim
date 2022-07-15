@@ -166,7 +166,8 @@
                                             ; :after :katdotnvim
                                             :commit :fcbd6ee548e8e8ce0e409d0727bd198d2ff17098})
                                      (Plug {1 :antoinemadec/FixCursorHold.nvim
-                                            :config (fn [] (require :plugins.cursorhold.config))}))
+                                            :config (fn []
+                                                      (require :plugins.cursorhold.config))}))
                                  ; :config (fn []
                                  ;           ; ((. (require :tabby) :setup {})))}))
                                  ;           (require :plugins.tabby.config))}))

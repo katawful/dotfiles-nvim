@@ -55,16 +55,19 @@
           (fzf-cb (: "%d. %s" :format i e.text))
           (set i (+ i 1)))
         (fzf-cb nil))
-      (local actions
-             {:default (fn [selected _]
-                         (let [index (session-preview.get-index (. selected 1))
-                               contents (. (session-preview.contents) index)]
-                           (session.load! contents)))
-              :ctrl-d (fn [selected _]
-                        (let [index (session-preview.get-index (. selected 1))
-                              contents (. (session-preview.contents) index)]
-                          (session.delete! contents)
-                          (search-sessions)))})
+      (local actions {:default (fn [selected _]
+                                 (let [index (session-preview.get-index (. selected
+                                                                           1))
+                                       contents (. (session-preview.contents)
+                                                   index)]
+                                   (session.load! contents)))
+                      :ctrl-d (fn [selected _]
+                                (let [index (session-preview.get-index (. selected
+                                                                          1))
+                                      contents (. (session-preview.contents)
+                                                  index)]
+                                  (session.delete! contents)
+                                  (search-sessions)))})
       ((coroutine.wrap (fn []
                          (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Sessions❯ "
                                                                       :previewer session-preview.module-tab

@@ -19,7 +19,7 @@
 (defonce tbl "(defn sessions []\n%s\n )")
 
 ;; String -- relative config path
-(defonce config-path (.. (vim.loop.os_getenv "HOME") :/.config/nvim/))
+(defonce config-path (.. (vim.loop.os_getenv :HOME) :/.config/nvim/))
 
 ;; String -- relative stored file path
 (defonce stored-file (.. config-path :fnl/plugins/session/stored.fnl))
@@ -31,8 +31,10 @@
 Because I am using a Fennel file to store all of this information,
 as opposed to a data file like JSON, I have to both compile the Fennel file
 with Aniseed and source the compiled Lua file with an Ex command"
-      (vim.schedule_wrap (fn [] (c.file stored-file stored-file-lua)))
-      (vim.schedule_wrap (fn [] (vim.cmd (.. "source " stored-file-lua))))
+      (vim.schedule_wrap (fn []
+                           (c.file stored-file stored-file-lua)))
+      (vim.schedule_wrap (fn []
+                           (vim.cmd (.. "source " stored-file-lua))))
       ((. (require :plugins.session.stored) :sessions)))
 
 (defn update [session] "Update sessions table with session provided
