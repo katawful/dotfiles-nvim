@@ -16,6 +16,9 @@ and set it to nil before doing so. Deletes augroup by name doing so."
                           (save.cursor-hold))
                         "Session autosave process on cursor hold")))
           (do
-            (vim.fn.timer_stop save.handles.init-save-timer)
+            (when save.handles.init-save-timer
+              (vim.fn.timer_stop save.handles.init-save-timer))
             (set save.handles.init-save-timer nil)
-            (vim.api.nvim_del_augroup_by_name :katSession))))
+            (let [augroup (pcall vim.api.nvim_get_autocmds {:group "katSession"})]
+              (when augroup
+                (vim.api.nvim_del_augroup_by_name :katSession))))))
