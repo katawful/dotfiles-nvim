@@ -48,4 +48,5 @@
 
 (require :plugins.session.commands)
 (require :plugins.session.au)
+(require :plugins.session.maps)
 (au.cursor-hold)
