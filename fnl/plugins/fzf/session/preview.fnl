@@ -2,6 +2,7 @@
         {autoload {preview plugins.fzf.preview
                    configs plugins.fzf.configs
                    store plugins.session.store
+                   json plugins.session.json
                    s aniseed.string}})
 
 ;;; Previewer for sessions
@@ -21,7 +22,8 @@
 
 (defn contents [] "Get the sessions"
       (let [output []]
-        (each [_ session (pairs (store.last))]
+        (each [_ session (pairs (-> (json.<-file)
+                                    (json.decode)))]
           (table.insert output
                         {:text session.name
                          :name session.name

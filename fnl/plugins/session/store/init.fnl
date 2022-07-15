@@ -2,6 +2,7 @@
         {autoload {a aniseed.core
                    c aniseed.compile
                    util plugins.session.utils
+                   json plugins.session.json
                    format plugins.fnlfmt.format}})
 
 ;;; Handles storing session information to a file
@@ -18,7 +19,7 @@
 (defonce tbl "(defn sessions []\n%s\n )")
 
 ;; String -- relative config path
-(defonce config-path (.. vim.env.HOME :/.config/nvim/))
+(defonce config-path (.. (vim.loop.os_getenv "HOME") :/.config/nvim/))
 
 ;; String -- relative stored file path
 (defonce stored-file (.. config-path :fnl/plugins/session/stored.fnl))
@@ -30,8 +31,8 @@
 Because I am using a Fennel file to store all of this information,
 as opposed to a data file like JSON, I have to both compile the Fennel file
 with Aniseed and source the compiled Lua file with an Ex command"
-      (c.file stored-file stored-file-lua)
-      (vim.cmd (.. "source " stored-file-lua))
+      (vim.schedule_wrap (fn [] (c.file stored-file stored-file-lua)))
+      (vim.schedule_wrap (fn [] (vim.cmd (.. "source " stored-file-lua))))
       ((. (require :plugins.session.stored) :sessions)))
 
 (defn update [session] "Update sessions table with session provided
@@ -56,10 +57,6 @@ Checks if session already exists and updates it"
 (defn file! [sessions] "Stores session table as a fnl file to a specified location
 Is a literal file, reconstructed upon each store
 Checks if file exists first before starting"
-      (if (= (vim.fn.filereadable stored-file) 0)
-          (do
-            (a.spit stored-file (.. header (string.format tbl "")))
-            (format.file! stored-file))
-          (let [contents (.. header (string.format tbl sessions))]
-            (a.spit stored-file contents)
-            (format.file! stored-file))))
+      (json.->file! (json.encode sessions)))
+
+; (file! (update (util.generate$)))
