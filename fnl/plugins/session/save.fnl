@@ -41,15 +41,15 @@ normal creation process"
                     (fn [input]
                        (match input
                          :y (do (set handles.save? true)
-                                (set save.handles.save-on-hold true)
+                                (set handles.save-on-hold true)
                              (let [new-session (util.generate$)]
                                (session.create! new-session)
                                (tset stored-session 1 new-session)))
                          :n (do (set handles.save? false)
-                              (set save.handles.save-on-hold false)
+                              (set handles.save-on-hold false)
                               (tset stored-session 1 nil))
                          _ (do (set handles.save? false)
-                             (set save.handles.save-on-hold false)
+                             (set handles.save-on-hold false)
                              (tset stored-session 1 nil)))))
        (?. stored-session 1)))))
 

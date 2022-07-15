@@ -37,7 +37,8 @@ with Aniseed and source the compiled Lua file with an Ex command"
 
 (defn update [session] "Update sessions table with session provided
 Checks if session already exists and updates it"
-      (let [stored (last)
+      (let [stored (-> (json.<-file)
+                       (json.decode))
             new {}]
         (when stored
           (each [k v (pairs stored)]
