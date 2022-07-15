@@ -12,7 +12,7 @@
 ;; save-on-hold -- enable save on cursor hold?
 ;; save? -- do we want to save at all?
 ;; autosave-interval -- time, in seconds that autosaves should update
-(def handles {:autosave-interval 300 :save-on-hold true :save? true})
+(def handles {:autosave-interval 180 :save-on-hold true :save? true})
 
 (defn find [input] "Get session from loaded save, or make a new one
 If a session with the current name is found, also check if there's a session
@@ -32,11 +32,12 @@ normal creation process" (jump.->root)
                         (vim.fn.fnamemodify cur-dir ":t")))
                 (tset stored-session 1 tbl))))
         (if (?. stored-session 1)
-            (do
-              (when input
-                (vim.ui.input {:prompt "Describe the last thing you were doing: "}
-                              (fn [input] (tset (. stored-session 1) :last input)))
-                (. stored-session 1)))
+            (if input
+                (do
+                  (vim.ui.input {:prompt "Describe the last thing you were doing: "}
+                                (fn [input] (tset (. stored-session 1) :last input)))
+                  (. stored-session 1))
+                (. stored-session 1))
             (do
               (vim.ui.input {:prompt "Create a session to save? (y/N)"}
                             (fn [input]
