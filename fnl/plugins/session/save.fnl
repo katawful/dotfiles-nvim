@@ -26,11 +26,13 @@ normal creation process" (jump.->root)
           ;; gotta make sure that we are getting the right directory
           (let [dir (if (= (tbl.dir:sub -1) "/")
                         (tbl.dir:sub 1 -2)
-                        tbl.dir)]
-            (if (and (dir:match cur-dir)
-                     (: (vim.fn.fnamemodify dir ":t") :match
-                        (vim.fn.fnamemodify cur-dir ":t")))
-                (tset stored-session 1 tbl))))
+                        tbl.dir)
+                dir-tail (vim.fn.fnamemodify dir ":t")
+                cur-dir-tail (vim.fn.fnamemodify cur-dir ":t")]
+            (if (and (= dir cur-dir)
+                     (= dir-tail cur-dir-tail))
+              (do
+                (tset stored-session 1 tbl)))))
         (if (?. stored-session 1)
             (if input
                 (do
