@@ -27,15 +27,6 @@
                                   (set save.handles.save-on-hold false)
                                   (set save.handles.save? true)))
                             (au.cursor-hold)
-                            (save.save!))
+                            (save.save! true))
           "Save a session, create if not found. Arg option 'autosave'"
           {:nargs "?"})
-
-(command- :KatSessionAutosaveEnd
-          (fn []
-            (save.autosave!)
-            "End the autosaving of sessions"))
-
-(command- :KatSessionCursorHold
-          (fn []
-            (save.cursor-hold)) "Start cursor-hold process")
