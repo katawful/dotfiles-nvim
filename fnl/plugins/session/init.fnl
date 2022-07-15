@@ -37,7 +37,7 @@
     (each [_ session# (pairs sessions)]
       (if (= session#.name name)
         (load! session#)
-        (vim.notify (.. "Session " name " not found" vim.log.levels.ERROR))))))
+        (vim.notify (.. "Session " name " not found") vim.log.levels.ERROR)))))
 
 (defn create! [session]
       "Creates a new session, stores it and writes the session file"
