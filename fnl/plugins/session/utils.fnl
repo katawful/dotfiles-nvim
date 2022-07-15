@@ -54,3 +54,10 @@ Asks for input for last thing done for this session"
                       (fn [input]
                         (tset session :last input)))
         session))
+
+(defn empty? [] "Is the current Neovim session empty?
+We don't want to deal with sessions when we just booted up Neovim"
+ (let [buffers (vim.api.nvim_exec "buffers" true)]
+   (if (= (length buffers) 0)
+     true
+     false)))

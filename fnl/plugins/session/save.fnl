@@ -12,7 +12,7 @@
 ;; save-on-hold -- enable save on cursor hold?
 ;; save? -- do we want to save at all?
 ;; autosave-interval -- time, in seconds that autosaves should update
-(def handles {:autosave-interval 60 :save-on-hold true :save? true})
+(def handles {:autosave-interval 300 :save-on-hold true :save? true})
 
 (defn find [] "Get session from loaded save, or make a new one
 If a session with the current name is found, also check if there's a session
@@ -57,19 +57,21 @@ normal creation process" (jump.->root)
 Important to note that this is dependent upon handles.save-on-hold.
 This will usually only be set to false if I decline to create a new session during
 the autosave process."
-      (let [session# (find)]
-        (when handles.save?
-          (do
-            (session.write! session#)
-            ;; the window from vim.notify was getting saved
-            ;; simply run it later, it's not that important
-            (vim.fn.timer_start 500
-                                (fn []
-                                  (vim.notify (.. "Saving session '"
-                                                  session#.name "'")))
-                                {:repeat 0})))))
+      (if (not (util.empty?))
+        (let [session# (find)]
+          (when handles.save?
+            (do
+              (session.write! session#)
+              ;; the window from vim.notify was getting saved
+              ;; simply run it later, it's not that important
+              (vim.fn.timer_start 500
+                                  (fn []
+                                    (vim.notify (.. "Saving session '"
+                                                    session#.name "'")))
+                                  {:repeat 0}))))
+        (vim.notify "Neovim is empty, not saving")))
 
-(defn cursor-hold [aug]
+(defn cursor-hold []
       "Process for how cursor hold should be run.
 We need to check if we even have a session to save, creating one if no.
 Use a predefined timer so we don't go through this with each hold.
