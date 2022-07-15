@@ -6,3 +6,5 @@
 ;; Setup -- setup table for tabby
 ((. (require :tabby) :setup) {:tabline (. (require :tabby.presets)
                                           :active_wins_at_tail)})
+
+; ((. (require :tabby) :setup) {}) 
