@@ -3,7 +3,8 @@
                    util plugins.session.utils
                    json plugins.session.json
                    au plugins.session.au
-                   a aniseed.core}})
+                   a aniseed.core}
+         require-macros [katcros-fnl.macros.nvim.api.options.macros]})
 
 ;;; Primary session management
 
@@ -26,6 +27,7 @@
         (if (= (vim.fn.filereadable file) 1)
             (do
               (vim.cmd (.. "silent! source " file))
+              (set- :cmdheight 2)
               (vim.notify (.. "Loading session: '" session.name "' in cwd: "
                               session.dir)))
             (vim.notify (.. "Session file for '" session.name "' not found")

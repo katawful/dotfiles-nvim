@@ -60,8 +60,12 @@ the autosave process."
   (let [session# (find)]
     (when handles.save?
       (do
-        (vim.notify (.. "Saving session '" session#.name "'"))
-        (session.write! session#)))))
+        (session.write! session#)
+        ;; the window from vim.notify was getting saved
+        ;; simply run it later, it's not that important
+        (vim.fn.timer_start 500
+          (fn [] (vim.notify (.. "Saving session '" session#.name "'")))
+          {:repeat 0})))))
 
 (defn cursor-hold [aug] "Process for how cursor hold should be run.
 We need to check if we even have a session to save, creating one if no.
