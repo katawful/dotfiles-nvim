@@ -30,17 +30,17 @@ Asks for input for last thing done for this session"
             ; added a / to the end so we could always find cur-dir
             session {}]
         (each [_ v (pairs repos.dotfiles)]
-          (if (cur-dir:find v.dir)
+          (if (= cur-dir v.dir)
               (do
                 (tset session :dir v.dir)
                 (tset session :name (fix-name v.name)))))
         (each [_ v (pairs repos.neovim-plugins)]
-          (if (cur-dir:find v.dir)
+          (if (= cur-dir v.dir)
               (do
                 (tset session :dir v.dir)
                 (tset session :name (fix-name v.name)))))
         (each [_ v (pairs repos.git-repos)]
-          (if (cur-dir:find v.dir)
+          (if (= cur-dir v.dir)
               (do
                 (tset session :dir v.dir)
                 (tset session :name (fix-name v.name)))))
