@@ -23,13 +23,16 @@
                           (os.remove file)))
 
 (defn load! [session] "Load a session file"
-      (let [file (.. session.dir "/" session-file)]
+      (let [session-dir (if (= (session.dir:sub -1 -1) "/")
+                          (session.dir:sub 1 -2)
+                          session.dir)
+            file (.. session-dir "/" session-file)]
         (if (= (vim.fn.filereadable file) 1)
             (do
               (vim.cmd (.. "silent! source " file))
               (set- :cmdheight 2)
               (vim.notify (.. "Loading session: '" session.name "' in cwd: "
-                              session.dir)))
+                              session-dir)))
             (vim.notify (.. "Session file for '" session.name "' not found")
                         vim.log.levels.ERROR))))
 
