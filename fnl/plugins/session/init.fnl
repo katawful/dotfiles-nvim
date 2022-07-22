@@ -1,15 +1,17 @@
 (module plugins.session.init
         {autoload {store plugins.session.store.init
+                   repos plugins.git.repos
                    util plugins.session.utils
                    json plugins.session.json
                    au plugins.session.au
+                   sys system
                    a aniseed.core}
          require-macros [katcros-fnl.macros.nvim.api.options.macros]})
 
 ;;; Primary session management
 
 ;; String -- actual session file name
-(defonce session-file :.katsession.vim)
+(defonce session-file (.. "." (string.lower sys.name) :.katsession.vim))
 
 (defn write! [session]
       (let [file (.. session.dir "/" session-file)]
@@ -22,10 +24,25 @@
                           (store.file! (store.update new-session))
                           (os.remove file)))
 
+(defn modify! [session-dir] "Modify a session to match to whatever path needed"
+  (let [file (.. session-dir "/" session-file)
+        git-root (. sys.git-path 1)]
+    (with-open [handle (io.open file :r)]
+      (print (vim.inspect (handle:read)))
+      (let [data (handle:read "*a")]
+        (print (string.gsub data (.. "~" (git-root:gsub " " "\\ ")) "test"))))))
+
 (defn load! [session] "Load a session file"
-      (let [session-dir (if (= (session.dir:sub -1 -1) "/")
-                          (session.dir:sub 1 -2)
-                          session.dir)
+      (let [fixed-session-dir (if (= (session.dir:sub -1 -1) "/")
+                                (session.dir:sub 1 -2)
+                                session.dir)
+            session-dir (if (fixed-session-dir:find sys.git-path)
+                          fixed-session-dir
+                          (do (let [tail (vim.fn.fnamemodify fixed-session-dir ":t")
+                                    git-path (if (= (sys.git-path -1 -1) "/")
+                                               (sys.git-path 1 -2)
+                                               sys.git-path)]
+                                (.. git-path "/" tail))))
             file (.. session-dir "/" session-file)]
         (if (= (vim.fn.filereadable file) 1)
             (do

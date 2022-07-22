@@ -1,15 +1,7 @@
-(module plugins.git.repos)
+(module plugins.git.repos
+  {autoload {sys system}})
 
 ;;; Module that deals with git repos
-
-;; String -- home path acquired from environment
-(defonce- home-path vim.env.HOME)
-
-;; String -- path for git repo based on machine
-(defonce- git-path (let [uname (vim.fn.system "uname -n")]
-                     (if (= uname "Kat-Arch\n")
-                         (.. home-path :/Programs_and_Stuff/Git_Repos/)
-                         (.. home-path "/Git Repos/"))))
 
 ;; Key -- Key value table of repo directories
 ;; structure:
@@ -18,48 +10,48 @@
 ;;       :name name}
 
 ;; fnlfmt: skip
-(defonce dotfiles {:neovim {:dir (.. home-path "/.config/nvim")
+(defonce dotfiles {:neovim {:dir (.. sys.home-path "/.config/nvim")
                             :desc "Personal Neovim configs"
                             :name " Neovim Configs"}
-                   :i3 {:dir (.. home-path "/.config/i3")
+                   :i3 {:dir (.. sys.home-path "/.config/i3")
                         :desc "Scripts and config file for i3 window manager"
                         :name "i3 Configs"}
-                   :rofi {:dir (.. home-path "/.config/rofi")
+                   :rofi {:dir (.. sys.home-path "/.config/rofi")
                           :desc "Configuration for the rofi menu"
                           :name "rofi Configs"}
-                   :polybar {:dir (.. home-path "/.config/polybar")
+                   :polybar {:dir (.. sys.home-path "/.config/polybar")
                              :desc "Configs for the polybar WM bar"
                              :name "Polybar Configs"}})
 
 ;; fnlfmt: skip
-(defonce neovim-plugins {:katdotnvim {:dir (.. git-path "katdotnvim/")
+(defonce neovim-plugins {:katdotnvim {:dir (.. sys.git-path "katdotnvim/")
                                       :desc "My colorscheme, built with Aniseed"
                                       :name :kat.nvim}
-                         :kreative {:dir (.. git-path "kreative/")
+                         :kreative {:dir (.. sys.git-path "kreative/")
                                     :desc "Colorscheme backend, analagous to pywal"
                                     :name :Kreative}
-                         :obluavim {:dir (.. git-path "obluavim/")
+                         :obluavim {:dir (.. sys.git-path "obluavim/")
                                     :desc "Filetype plugin for Oblivion"
                                     :name :Obluavim}
-                         :katcros-fnl {:dir (.. git-path "katcros-fnl/")
+                         :katcros-fnl {:dir (.. sys.git-path "katcros-fnl/")
                                        :desc "Fennel macros primarily for Neovim"
                                        :name :katcros-fnl}
-                         :obse.vim {:dir (.. git-path "obse.vim/")
+                         :obse.vim {:dir (.. sys.git-path "obse.vim/")
                                     :desc "Syntax files for Oblivion"
                                     :name :obse.vim}})
 
 ;; fnlfmt: skip
 (defonce git-repos
-         {:oblivion-lang-ref {:dir (.. git-path "oblivion-lang-ref/")
+         {:oblivion-lang-ref {:dir (.. sys.git-path "oblivion-lang-ref/")
                               :desc "Language reference for Oblivion"
                               :name "Oblivon Language Reference"}
-          :tree-sitter-obse {:dir (.. git-path "tree-sitter-obse/")
+          :tree-sitter-obse {:dir (.. sys.git-path "tree-sitter-obse/")
                              :desc "Tree-sitter grammar for Oblivion"
                              :name "Tree-sitter OBSE"}
-          :oblivion-git {:dir (.. git-path "oblivion-git/")
+          :oblivion-git {:dir (.. sys.git-path "oblivion-git/")
                          :desc "Plugin files"
                          :name "Oblivion Plugins"}
-          :katawful.github.io {:dir (.. git-path "katawful.github.io/")
+          :katawful.github.io {:dir (.. sys.git-path "katawful.github.io/")
                                :desc "Website hosted by GitHub"
                                :name "katawful.github.io"}})
 
