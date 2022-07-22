@@ -1,11 +1,21 @@
 (module plugins.neorg.config
-        {require-macros [katcros-fnl.macros.lispism.macros]})
+        {autoload {sys system}
+         require-macros [katcros-fnl.macros.lispism.macros]})
 
 ;;; Configs for Neorg
 ;;; https://github.com/nvim-neorg/neorg
 
 ;; String -- Leader for neorg
 (def neorg_leader :<Leader>n)
+
+;; Key -- Workspaces for neorg
+(defonce workspaces {:blog (.. sys.home-path "/Documents/neorg/Blog")
+                     :fennel (.. sys.home-path "/Documents/neorg/Fennel")
+                     :oblivion (.. sys.home-path "/Documents/neorg/Oblivion")
+                     :personal (.. sys.home-path "/Documents/neorg/Personal")
+                     :programming (.. sys.home-path "/Documents/neorg/Programming")
+                     :obl-ref (.. sys.home-path "/Programs_and_Stuff/Git_Repos/oblivion-lang-ref")
+                     :wood (.. sys.home-path "/Documents/neorg/Woodworking")})
 
 ;; Setup -- setup table for neorg
 (opt- :neorg :setup
@@ -14,13 +24,7 @@
               :core.export {}
               :core.export.markdown {}
               :core.keybinds {:config {:neorg_leader :<Leader>n}}
-              :core.norg.dirman {:config {:workspaces {:blog "~/Documents/neorg/Blog"
-                                                       :fennel "~/Documents/neorg/Fennel"
-                                                       :oblivion "~/Documents/neorg/Oblivion"
-                                                       :personal "~/Documents/neorg/Personal"
-                                                       :programming "~/Documents/neorg/Programming"
-                                                       :obl-ref "~/Programs_and_Stuff/Git_Repos/oblivion-lang-ref/src"
-                                                       :wood "~/Documents/neorg/Woodworking"}
+              :core.norg.dirman {:config {:workspaces workspaces
                                           :index :main.norg
                                           :autodetect true
                                           :autochdir true}}
