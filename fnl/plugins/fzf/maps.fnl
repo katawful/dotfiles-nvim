@@ -19,6 +19,10 @@
                            (launcher.files))
       "Open FZF file window" {:silent true})
 
+(nno- (.. fzf-leader :F) (fn []
+                           (launcher.resume))
+      "Open FZF file window with last search string" {:silent true})
+
 (nno- (.. fzf-leader :b) (fn []
                            (launcher.buffers))
       "Open FZF buffer window" {:silent true})
@@ -44,10 +48,19 @@
                            (launcher.help-tags))
       "Open FZF help tags window" {:silent true})
 
+(nno- (.. fzf-leader :H) (fn []
+                           (launcher.resume))
+      "Open FZF help tags window" {:silent true})
+
 (nno- (.. fzf-leader :o)
       (fn []
         (launcher.files {:cwd :/home/kat/Documents/neorg}))
       "Open FZF window of neorg files" {:silent true})
+
+(nno- (.. fzf-leader :O)
+      (fn []
+        (launcher.resume {:cwd :/home/kat/Documents/neorg}))
+      "Open FZF window of neorg files with last search string" {:silent true})
 
 (nno- (.. fzf-leader :c)
       (fn []
@@ -71,3 +84,8 @@
         (launcher.open-preview repos.git-repos))
       "Open a FZF window of git repos, going to a floating fugitive window"
       {:silent true})
+
+(nno- (.. fzf-leader :s)
+      (fn []
+        (launcher.search-sessions repos.git-repos))
+      "Open a FZF window of sessions" {:silent true})

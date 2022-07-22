@@ -137,6 +137,8 @@
 ;; FN -- launchers built into fzf.lua
 (defn files [opts] ((. (require :fzf-lua) :files) opts))
 
+(defn resume [opts] (fzf-lua.resume opts))
+
 (defn buffers [opts] ((. (require :fzf-lua) :buffers) opts))
 
 (defn marks [opts] ((. (require :fzf-lua) :marks) opts))
