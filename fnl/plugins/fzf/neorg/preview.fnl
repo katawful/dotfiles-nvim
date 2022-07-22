@@ -1,9 +1,9 @@
 (module plugins.fzf.neorg.previewer
-  {autoload {preview plugins.fzf.preview
-             neorg-config plugins.neorg.config
-             configs plugins.fzf.configs
-             a aniseed.core
-             s aniseed.string}})
+        {autoload {preview plugins.fzf.preview
+                   neorg-config plugins.neorg.config
+                   configs plugins.fzf.configs
+                   a aniseed.core
+                   s aniseed.string}})
 
 ;;; Previewer for neorg
 
@@ -25,17 +25,14 @@
 (defn contents [] "Get Neorg workspaces"
       (let [output []]
         (each [name dir (pairs neorg-config.workspaces)]
-          (table.insert output {:text name
-                                :name name
-                                :dir dir}))
+          (table.insert output {:text name : name : dir}))
         output))
 
 (defn parse_entry [self entry-str] "Get content at specified index"
       (let [index (get-index entry-str)]
         (. (contents) index)))
 
-(defn slurp [path] "Slurp a file"
-  (a.slurp (.. path "/main.norg")))
+(defn slurp [path] "Slurp a file" (a.slurp (.. path :/main.norg)))
 
 (defn parse-data [path] "Get rid of newlines so it can be output"
       (s.split (slurp path) "\n"))
@@ -49,6 +46,6 @@ Seems to be broken in kitty for some reason."
       (let [entry (self:parse_entry entry-str)]
         (vim.api.nvim_buf_call self.preview_bufnr
                                (fn []
-                                 (vim.cmd (.. "edit " entry.dir "/main.norg"))
-                                 (vim.cmd "redraw")))
+                                 (vim.cmd (.. "edit " entry.dir :/main.norg))
+                                 (vim.cmd :redraw)))
         (self.win:update_scrollbar)))

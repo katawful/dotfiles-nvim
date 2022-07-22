@@ -25,23 +25,25 @@
                           (os.remove file)))
 
 (defn modify! [session-dir] "Modify a session to match to whatever path needed"
-  (let [file (.. session-dir "/" session-file)
-        git-root (. sys.git-path 1)]
-    (with-open [handle (io.open file :r)]
-      (print (vim.inspect (handle:read)))
-      (let [data (handle:read "*a")]
-        (print (string.gsub data (.. "~" (git-root:gsub " " "\\ ")) "test"))))))
+      (let [file (.. session-dir "/" session-file)
+            git-root (. sys.git-path 1)]
+        (with-open [handle (io.open file :r)]
+          (print (vim.inspect (handle:read)))
+          (let [data (handle:read :*a)]
+            (print (string.gsub data (.. "~" (git-root:gsub " " "\\ ")) :test))))))
 
 (defn load! [session] "Load a session file"
       (let [fixed-session-dir (if (= (session.dir:sub -1 -1) "/")
-                                (session.dir:sub 1 -2)
-                                session.dir)
+                                  (session.dir:sub 1 -2)
+                                  session.dir)
             session-dir (if (fixed-session-dir:find sys.git-path)
-                          fixed-session-dir
-                          (do (let [tail (vim.fn.fnamemodify fixed-session-dir ":t")
+                            fixed-session-dir
+                            (do
+                              (let [tail (vim.fn.fnamemodify fixed-session-dir
+                                                             ":t")
                                     git-path (if (= (sys.git-path -1 -1) "/")
-                                               (sys.git-path 1 -2)
-                                               sys.git-path)]
+                                                 (sys.git-path 1 -2)
+                                                 sys.git-path)]
                                 (.. git-path "/" tail))))
             file (.. session-dir "/" session-file)]
         (if (= (vim.fn.filereadable file) 1)

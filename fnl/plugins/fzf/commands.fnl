@@ -52,13 +52,11 @@
 
 (command- :KatFZFSearchDirectory
           (fn []
-            (launcher.search-dirs))
-          "Search through current directory")
+            (launcher.search-dirs)) "Search through current directory")
 
 (command- :KatFZFGetSessions
           (fn []
-            (launcher.search-sessions))
-          "Search through sessions")
+            (launcher.search-sessions)) "Search through sessions")
 
 (command- :KatFZFSearchNeorgWorkspaces
           (fn []

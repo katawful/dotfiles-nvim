@@ -56,13 +56,12 @@
           (fzf-cb (: "%d. %s" :format i e.text))
           (set i (+ i 1)))
         (fzf-cb nil))
-      (local actions {:default (fn [selected _]
-                                 (let [index (neorg-preview.get-index (. selected
-                                                                           1))
-                                       contents (. (neorg-preview.contents)
-                                                   index)]
-                                   (print (vim.inspect contents.name))
-                                   (vim.cmd (.. "Neorg workspace " contents.name))))})
+      (local actions
+             {:default (fn [selected _]
+                         (let [index (neorg-preview.get-index (. selected 1))
+                               contents (. (neorg-preview.contents) index)]
+                           (print (vim.inspect contents.name))
+                           (vim.cmd (.. "Neorg workspace " contents.name))))})
       ((coroutine.wrap (fn []
                          (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Workspaces❯ "
                                                                       :previewer neorg-preview.module-tab

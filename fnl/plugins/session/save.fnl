@@ -29,15 +29,15 @@ normal creation process" (jump.->root)
                         tbl.dir)
                 dir-tail (vim.fn.fnamemodify dir ":t")
                 cur-dir-tail (vim.fn.fnamemodify cur-dir ":t")]
-            (if (and (= dir cur-dir)
-                     (= dir-tail cur-dir-tail))
-              (do
-                (tset stored-session 1 tbl)))))
+            (if (and (= dir cur-dir) (= dir-tail cur-dir-tail))
+                (do
+                  (tset stored-session 1 tbl)))))
         (if (?. stored-session 1)
             (if input
                 (do
                   (vim.ui.input {:prompt "Describe the last thing you were doing: "}
-                                (fn [input] (tset (. stored-session 1) :last input)))
+                                (fn [input]
+                                  (tset (. stored-session 1) :last input)))
                   (. stored-session 1))
                 (. stored-session 1))
             (do
@@ -65,19 +65,18 @@ Important to note that this is dependent upon handles.save-on-hold.
 This will usually only be set to false if I decline to create a new session during
 the autosave process."
       (if (not (util.empty?))
-        (let [session# (find input)]
-          (when handles.save?
-            (do
-              (if input (session.create! session#)
-                (session.write! session#))
-              ;; the window from vim.notify was getting saved
-              ;; simply run it later, it's not that important
-              (vim.fn.timer_start 500
-                                  (fn []
-                                    (vim.notify (.. "Saving session '"
-                                                    session#.name "'")))
-                                  {:repeat 0}))))
-        (vim.notify "Neovim is empty, not saving")))
+          (let [session# (find input)]
+            (when handles.save?
+              (do
+                (if input (session.create! session#) (session.write! session#))
+                ;; the window from vim.notify was getting saved
+                ;; simply run it later, it's not that important
+                (vim.fn.timer_start 500
+                                    (fn []
+                                      (vim.notify (.. "Saving session '"
+                                                      session#.name "'")))
+                                    {:repeat 0}))))
+          (vim.notify "Neovim is empty, not saving")))
 
 (defn cursor-hold []
       "Process for how cursor hold should be run.

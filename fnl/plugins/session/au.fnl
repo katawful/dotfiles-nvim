@@ -19,6 +19,6 @@ and set it to nil before doing so. Deletes augroup by name doing so."
             (when save.handles.init-save-timer
               (vim.fn.timer_stop save.handles.init-save-timer))
             (set save.handles.init-save-timer nil)
-            (let [augroup (pcall vim.api.nvim_get_autocmds {:group "katSession"})]
+            (let [augroup (pcall vim.api.nvim_get_autocmds {:group :katSession})]
               (when augroup
                 (vim.api.nvim_del_augroup_by_name :katSession))))))

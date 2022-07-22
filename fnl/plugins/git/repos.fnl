@@ -1,5 +1,4 @@
-(module plugins.git.repos
-  {autoload {sys system}})
+(module plugins.git.repos {autoload {sys system}})
 
 ;;; Module that deals with git repos
 

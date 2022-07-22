@@ -9,13 +9,15 @@
 (def neorg_leader :<Leader>n)
 
 ;; Key -- Workspaces for neorg
-(defonce workspaces {:blog (.. sys.home-path "/Documents/neorg/Blog")
-                     :fennel (.. sys.home-path "/Documents/neorg/Fennel")
-                     :oblivion (.. sys.home-path "/Documents/neorg/Oblivion")
-                     :personal (.. sys.home-path "/Documents/neorg/Personal")
-                     :programming (.. sys.home-path "/Documents/neorg/Programming")
-                     :obl-ref (.. sys.home-path "/Programs_and_Stuff/Git_Repos/oblivion-lang-ref")
-                     :wood (.. sys.home-path "/Documents/neorg/Woodworking")})
+(defonce workspaces
+         {:blog (.. sys.home-path :/Documents/neorg/Blog)
+          :fennel (.. sys.home-path :/Documents/neorg/Fennel)
+          :oblivion (.. sys.home-path :/Documents/neorg/Oblivion)
+          :personal (.. sys.home-path :/Documents/neorg/Personal)
+          :programming (.. sys.home-path :/Documents/neorg/Programming)
+          :obl-ref (.. sys.home-path
+                       :/Programs_and_Stuff/Git_Repos/oblivion-lang-ref)
+          :wood (.. sys.home-path :/Documents/neorg/Woodworking)})
 
 ;; Setup -- setup table for neorg
 (opt- :neorg :setup
@@ -24,7 +26,7 @@
               :core.export {}
               :core.export.markdown {}
               :core.keybinds {:config {:neorg_leader :<Leader>n}}
-              :core.norg.dirman {:config {:workspaces workspaces
+              :core.norg.dirman {:config {: workspaces
                                           :index :main.norg
                                           :autodetect true
                                           :autochdir true}}
