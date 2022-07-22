@@ -2,7 +2,11 @@
 
 (setl- tabstop 2)
 (setl- shiftwidth 2)
+(setl- textwidth 100)
+(setl- expandtab true)
+(setl- spell true)
 (setl- listchars "tab:  ,extends:>,precedes:<")
 (setl- wrap false)
 (setl- foldexpr "nvim_treesitter#foldexpr()")
 (setl- foldmethod :expr)
+(setl- concealcursor :n)
