@@ -111,7 +111,8 @@
              {:d [" Search dotfile repos" :KatFZFGetDotfiles]}
              {:n [" Search Neovim repos" :KatFZFGetNeovimPlugins]}
              {:g [" Search git repos" :KatFZFGetGitRepos]}
-             {:S [" Open sessions" :KatSessionSearch]}])
+             {:S [" Open sessions" :KatSessionSearch]}
+             {:N [" Open Neorg Workspace" :KatFZFSearchNeorgWorkspaces]}])
       (let- g :startify_custom_header
             ((. vim.fn "startify#center") vim.g.ascii)))
 
