@@ -5,6 +5,7 @@
                    git-preview plugins.fzf.git.preview
                    dir-preview plugins.fzf.directory.preview
                    session-preview plugins.fzf.session.preview
+                   neorg-preview plugins.fzf.neorg.preview
                    session plugins.session.init
                    git plugins.fzf.git.init
                    repos plugins.git.repos}
@@ -38,6 +39,33 @@
       ((coroutine.wrap (fn []
                          (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Repos❯ "
                                                                       :previewer git-preview.module-tab
+                                                                      : actions
+                                                                      :fzf_opts {:--delimiter "."
+                                                                                 :--nth :3..}}
+                                                                     func)]
+                           ((. (. (require :fzf-lua) :actions) :act) actions
+                                                                     selected {}))))))
+
+(defn search-neorg-workspaces [] "Search Neorg workspaces"
+      (fn func [fzf-cb]
+        (var i 1)
+        ;; format entry so that it has an index
+        ;; item -> 1. item
+        ;; this is then what you see in fzf
+        (each [_ e (ipairs (neorg-preview.contents))]
+          (fzf-cb (: "%d. %s" :format i e.text))
+          (set i (+ i 1)))
+        (fzf-cb nil))
+      (local actions {:default (fn [selected _]
+                                 (let [index (neorg-preview.get-index (. selected
+                                                                           1))
+                                       contents (. (neorg-preview.contents)
+                                                   index)]
+                                   (print (vim.inspect contents.name))
+                                   (vim.cmd (.. "Neorg workspace " contents.name))))})
+      ((coroutine.wrap (fn []
+                         (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Workspaces❯ "
+                                                                      :previewer neorg-preview.module-tab
                                                                       : actions
                                                                       :fzf_opts {:--delimiter "."
                                                                                  :--nth :3..}}

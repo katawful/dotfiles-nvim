@@ -89,3 +89,7 @@
       (fn []
         (launcher.search-sessions repos.git-repos))
       "Open a FZF window of sessions" {:silent true})
+
+(nno- (.. fzf-leader :w)
+      (fn []
+        (launcher.search-neorg-workspaces)))

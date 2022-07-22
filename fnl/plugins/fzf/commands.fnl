@@ -49,3 +49,19 @@
           (fn []
             (launcher.open-preview repos.git-repos))
           "Get other git repositories")
+
+(command- :KatFZFSearchDirectory
+          (fn []
+            (launcher.search-dirs))
+          "Search through current directory")
+
+(command- :KatFZFGetSessions
+          (fn []
+            (launcher.search-sessions))
+          "Search through sessions")
+
+(command- :KatFZFSearchNeorgWorkspaces
+          (fn []
+            (vim.cmd "silent! NeorgStart silent=true")
+            (launcher.search-neorg-workspaces))
+          "Search through Neorg workspaces")
