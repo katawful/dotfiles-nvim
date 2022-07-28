@@ -37,7 +37,7 @@
                                      ;; fnlfmt: skip
                                      ;; fennel dev  ; REPL tools
                                      (Plug {1 :Olical/conjure
-                                            :tag :v4.35.1
+                                            :tag :v4.37.0
                                             :config (fn []
                                                       (require :plugins.conjure.config))})
                                      ;; fnlfmt: skip ; (Plug {1 :bakpakin/fennel.vim ;        :ft :fennel}) ; enhanced regex syntax highlight
