@@ -5,7 +5,7 @@
 
 (defonce color (vim.loop.new_timer))
 
-(defonce check (* 60 1000))
+(defonce check (* 300 1000))
 
 (defn set-colors []
   (color:start check check
