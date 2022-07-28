@@ -16,6 +16,21 @@
 (defn- dirbuf-open [dir] "Open dir with dirbuf"
        ((. (require :dirbuf) :open) dir))
 
+;; FN -- launchers built into fzf.lua
+(defn files [opts] ((. (require :fzf-lua) :files) opts))
+
+(defn resume [opts] (fzf-lua.resume opts))
+
+(defn buffers [opts] ((. (require :fzf-lua) :buffers) opts))
+
+(defn marks [opts] ((. (require :fzf-lua) :marks) opts))
+
+(defn live-grep [opts] ((. (require :fzf-lua) :live_grep) opts))
+
+(defn spell-suggest [opts] ((. (require :fzf-lua) :spell_suggest) opts))
+
+(defn help-tags [opts] ((. (require :fzf-lua) :help_tags) opts))
+
 ;; FN -- open a preview of git repos
 ;; @repo -- repo table to preview
 (defn open-preview [repo] ; make sure we have the correct repo type in mind
@@ -37,12 +52,12 @@
                                        vim.log.levels.INFO)
                            (git.open$ contents.dir)))})
       ((coroutine.wrap (fn []
-                         (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Repos❯ "
-                                                                      :previewer git-preview.module-tab
-                                                                      : actions
-                                                                      :fzf_opts {:--delimiter "."
-                                                                                 :--nth :3..}}
-                                                                     func)]
+                         (let [selected ((. (require :fzf-lua) :fzf) func
+                                         {:prompt "Repos❯ "
+                                          :previewer git-preview.module-tab
+                                          : actions
+                                          :fzf_opts {:--delimiter "."
+                                                     :--nth :3..}})]
                            ((. (. (require :fzf-lua) :actions) :act) actions
                                                                      selected {}))))))
 
@@ -60,15 +75,15 @@
              {:default (fn [selected _]
                          (let [index (neorg-preview.get-index (. selected 1))
                                contents (. (neorg-preview.contents) index)]
-                           (print (vim.inspect contents.name))
                            (vim.cmd (.. "Neorg workspace " contents.name))))})
+
       ((coroutine.wrap (fn []
-                         (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Workspaces❯ "
-                                                                      :previewer neorg-preview.module-tab
-                                                                      : actions
-                                                                      :fzf_opts {:--delimiter "."
-                                                                                 :--nth :3..}}
-                                                                     func)]
+                         (let [selected ((. (require :fzf-lua) :fzf) func
+                                         {:prompt "Workspaces❯ "
+                                          :previewer neorg-preview.module-tab
+                                          : actions
+                                          :fzf_opts {:--delimiter "."
+                                                     :--nth :3..}})]
                            ((. (. (require :fzf-lua) :actions) :act) actions
                                                                      selected {}))))))
 
@@ -96,12 +111,12 @@
                                   (session.delete! contents)
                                   (search-sessions)))})
       ((coroutine.wrap (fn []
-                         (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Sessions❯ "
-                                                                      :previewer session-preview.module-tab
-                                                                      : actions
-                                                                      :fzf_opts {:--delimiter "."
-                                                                                 :--nth :3..}}
-                                                                     func)]
+                         (let [selected ((. (require :fzf-lua) :fzf) func
+                                         {:prompt "Sessions❯ "
+                                          :previewer session-preview.module-tab
+                                          : actions
+                                          :fzf_opts {:--delimiter "."
+                                                     :--nth :3..}})]
                            ((. (. (require :fzf-lua) :actions) :act) actions
                                                                      selected {}))))))
 
@@ -152,26 +167,11 @@
                           (vim.cmd :vsplit)
                           (dirbuf-open contents.dir)))})
       ((coroutine.wrap (fn []
-                         (let [selected ((. (require :fzf-lua) :fzf) {:prompt "Directories❯ "
-                                                                      :previewer dir-preview.module-tab
-                                                                      : actions
-                                                                      :fzf_opts {:--delimiter "."
-                                                                                 :--nth :3..}}
-                                                                     func)]
+                         (let [selected ((. (require :fzf-lua) :fzf) func
+                                         {:prompt "Directories❯ "
+                                          :previewer dir-preview.module-tab
+                                          : actions
+                                          :fzf_opts {:--delimiter "."
+                                                     :--nth :3..}})]
                            ((. (. (require :fzf-lua) :actions) :act) actions
                                                                      selected {}))))))
-
-;; FN -- launchers built into fzf.lua
-(defn files [opts] ((. (require :fzf-lua) :files) opts))
-
-(defn resume [opts] (fzf-lua.resume opts))
-
-(defn buffers [opts] ((. (require :fzf-lua) :buffers) opts))
-
-(defn marks [opts] ((. (require :fzf-lua) :marks) opts))
-
-(defn live-grep [opts] ((. (require :fzf-lua) :live_grep) opts))
-
-(defn spell-suggest [opts] ((. (require :fzf-lua) :spell_suggest) opts))
-
-(defn help-tags [opts] ((. (require :fzf-lua) :help_tags) opts))
