@@ -24,7 +24,7 @@
 
 ((. (require :packer) :startup) {1 (fn [use]
                                      ;; bootstrap stuff
-                                     (Plug "~/Programs_and_Stuff/Git_Repos/katcros-fnl/")
+                                     (Plug "~/Git Repos/katcros-fnl/")
                                      ; (Plug "katawful/katcros-fnl")
                                      (Plug :wbthomason/packer.nvim) ; plugin manager
                                      (Plug :Olical/aniseed) ; fennel environment
@@ -72,8 +72,9 @@
                                      ; :config (fn [] ;           (require :plug/lspconfig_con) ;           (_G.install_servers))})
                                      ;; aesthetics
                                      (Plug :katawful/kat.vim) ; vimscript colorscheme
-                                     (Plug {1 "~/Programs_and_Stuff/Git_Repos/katdotnvim/"
+                                     (Plug {1 "~/Git Repos/katdotnvim/"
                                             :config (fn []
+                                                      ((. (require :plugins.colors.time) :set-colors))
                                                       ((. (require :plugins.colors.scheme)
                                                           :set*)))})
                                      ;; fnlfmt: skip ; :config (fn []  ;           (require :plug/tabby_con))}) ; (Plug :akinsho/nvim-bufferline.lua) ; buffer/tabline
@@ -91,7 +92,7 @@
                                                       (require :plugins.indent-blankline.config))})
                                      ;; fnlfmt: skip ; fill in paragraph lines ; (Plug {1 :startup-nvim/startup.nvim ;        :config (fn [] ;                  (require :plug/startup-con))})
                                      ; (Plug {1 :mhinz/vim-startify ;        :config (fn [] ;                  (require :plug/startify))}); vim startscreen
-                                     (Plug {1 "~/Programs_and_Stuff/Git_Repos/vim-startify/"
+                                     (Plug {1 "~/Git Repos/vim-startify/"
                                             :config (fn []
                                                       (require :plugins.startify.config))})
                                      ; vim startscreen
@@ -102,8 +103,8 @@
                                             :config (fn []
                                                       (require :plugins.latex.config))})
                                      ;; fnlfmt: skip ; LaTeX tools  ; (Plug {1 :katawful/Obli-Vim ;        :ft :obse}) ; oblivion script syntax and tools ; (Plug {1 :katawful/obse.vim ; Oblivion syntax ;        :ft :obse})
-                                     (Plug "~/Programs_and_Stuff/Git_Repos/obse.vim")
-                                     (Plug "~/Programs_and_Stuff/Git_Repos/obluavim")
+                                     (Plug "~/Git Repos/obse.vim")
+                                     (Plug "~/Git Repos/obluavim")
                                      (Plug {1 :katawful/Obli-Vim-Docs
                                             :ft :obse})
                                      ; OBSE docs
@@ -117,9 +118,9 @@
                                             :config (fn []
                                                       (require :plugins.wilder.config))})
                                      ; completion for command line and search
-                                     (Plug "~/Programs_and_Stuff/Git_Repos/syntax-test")
+                                     (Plug "~/Git Repos/syntax-test")
                                      ; syntax tester
-                                     (Plug "~/Programs_and_Stuff/Git_Repos/kreative")
+                                     (Plug "~/Git Repos/kreative")
                                      ;; fnlfmt: skip ; syntax tester  ; (Plug {1 :hrsh7th/nvim-cmp  ;        :config (fn []  ;                  (require :plug/nvim-cmp_con))}) 
                                      ; nvim-cmp
                                      (Plug :vim-scripts/bnf.vim)
@@ -130,7 +131,10 @@
                                             :run "./install --all"})
                                      ;; fnlfmt: skip ; main FZF binary ; (Plug {1 :junegunn/fzf.vim  ;        :config (fn []  ;                  (require :plug/fzf_con))})   
                                      ; bindings for FZF in vim
-                                     (Plug {1 :elihunter173/dirbuf.nvim
+                                     ;; (Plug {1 :elihunter173/dirbuf.nvim
+                                     ;;        :config (fn []
+                                     ;;                  (require :plugins.dirbuf.config))})
+                                     (Plug {1 "~/Git Repos/dirbuf.nvim"
                                             :config (fn []
                                                       (require :plugins.dirbuf.config))})
                                      (Plug {1 :ibhagwan/fzf-lua
@@ -148,7 +152,7 @@
                                             :config (fn []
                                                       (require :plugins.vimwiki.config))})
                                      ;; fnlfmt: skip ; personal wiki  
-                                     ;; (Plug {1 "~/Programs_and_Stuff/Git_Repos/neorg"
+                                     ;; (Plug {1 "~/Git Repos/neorg"
                                      ;;        :config (fn []  
                                      ;;                  (require :plugins.neorg.config))
                                      ;;        :requires :nvim-lua/plenary.nvim}) 
@@ -158,10 +162,10 @@
                                             :config (fn []
                                                       (require :plugins.neorg.config))
                                             :requires :nvim-lua/plenary.nvim})
-                                     ;; fnlfmt: skip ; beta personal wiki  ; (Plug {1 "~/Programs_and_Stuff/Git_Repos/neorg"
+                                     ;; fnlfmt: skip ; beta personal wiki  ; (Plug {1 "~/Git Repos/neorg"
                                      ;        :branch :code-regex-fallback  ;        :requires :nvim-lua/plenary.nvim}) 
                                      ; beta personal wiki
-                                     (Plug :psliwka/termcolors.nvim) ; (Plug "~/Programs_and_Stuff/Git_Repos/test-fennel/"))
+                                     (Plug :psliwka/termcolors.nvim) ; (Plug "~/Git Repos/test-fennel/"))
                                      (Plug {1 :nanozuki/tabby.nvim
                                             ; :after :katdotnvim
                                             :commit :fcbd6ee548e8e8ce0e409d0727bd198d2ff17098})
