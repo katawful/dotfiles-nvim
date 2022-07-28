@@ -34,7 +34,7 @@ ensure("lewis6991", "impatient.nvim")
 require("impatient")
 ensure("wbthomason", "packer.nvim")
 
-local_ensure("~/Programs_and_Stuff/Git_Repos/katcros-fnl/", "katcros-fnl")
+local_ensure("~/Git\\ Repos/katcros-fnl/", "katcros-fnl")
 ensure("Olical", "aniseed")
 
 -- require("au")
