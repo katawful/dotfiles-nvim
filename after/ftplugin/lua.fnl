@@ -21,11 +21,11 @@
 (ino- :<CR> (fn []
               (indent.curly)) {:buffer true :expr true})
 
-(setl- foldexpr "nvim_treesitter#foldexpr()")
-(setl- foldmethod :expr)
-(setl- ts 4)
-(setl- sw 4)
-(setg- expandtab true)
+(set-opts-auto {foldexpr "nvim_treesitter#foldexpr()"
+                foldmethod :expr
+                tabstop 4
+                shiftwidth 4
+                expandtab true})
 
 ;; <leader>jcc
 (nno- jump.compile-edit

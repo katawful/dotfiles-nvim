@@ -5,5 +5,5 @@
 ;;; https://github.com/hrsh7th/nvim-cmp
 
 (def- cmp (require :cmp))
-(set- completeopt "menu,menuone,noselect")
+(set-opt completeopt "menu,menuone,noselect")
 (cmp.setup {:sources (cmp.config.sources {1 {:name :neorg}} {1 {:name :buffer}})})

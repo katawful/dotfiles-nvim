@@ -1,12 +1,12 @@
 (module neorg {require-macros [katcros-fnl.macros.nvim.api.options.macros]})
 
-(setl- tabstop 2)
-(setl- shiftwidth 2)
-(setl- textwidth 100)
-(setl- expandtab true)
-(setl- spell true)
-(setl- listchars "tab:  ,extends:>,precedes:<")
-(setl- wrap false)
-(setl- foldexpr "nvim_treesitter#foldexpr()")
-(setl- foldmethod :expr)
-(setl- concealcursor :n)
+(set-opts-auto {tabstop 2
+                shiftwidth 2
+                expandtab true
+                textwidth 100
+                spell true
+                listchars {:tab "  "
+                           :extends ">"
+                           :precedes "<"}
+                wrap false
+                concealcursor :nvc})

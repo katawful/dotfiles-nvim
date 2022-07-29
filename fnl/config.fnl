@@ -1,42 +1,52 @@
 (module core {require-macros [katcros-fnl.macros.nvim.api.options.macros]})
 
-(set- foldenable false)
-(set- mouse :a)
-(set- number true)
-(set- relativenumber true)
-(set- modeline true)
-(set- undofile true)
-(set- hidden false)
+;; System
+(set-opts {mouse :nvi
+           number true
+           relativenumber true
+           modeline true
+           undofile true
+           hidden false
+           updatetime 100
+           cmdheight 2
+           title true})
 
-(set- foldmethod :syntax)
-(setl- foldtext
-       "substitute(getline(v:foldstart),'\t',repeat(' ',&tabstop),'g').'  '.trim(getline(v:foldend))")
+(set-opt clipboard :unnamedplus :append)
 
-(set- foldcolumn :3)
+;; Fold
+(set-opts {foldenable false
+           foldmethod :syntax
+           foldtext "substitute(getline(v:foldstart),'\t',repeat(' ',&tabstop),'g').'  '.trim(getline(v:foldend))"
+           foldcolumn :3})
 
-(set- updatetime 100)
-(set- cmdheight 2)
-(set- list true)
-(set- listchars "tab:  ,trail:■,extends:>,precedes:<")
-(seta- clipboard :unnamedplus)
+;; List
+(set-opt list true)
+(set-opt listchars {:tab "  "
+                    :trail "■"
+                    :extends ">"
+                    :precedes "<"})
 
-(setl- tabstop 2)
-(setl- shiftwidth 2)
-(setl- expandtab true)
+;; Tab
+(set-opts {tabstop 2
+           shiftwidth 2
+           expandtab true})
 
-(set- conceallevel 2)
-(set- breakindent true)
-(set- linebreak true)
-(set- showbreak "=>")
+;; Conceal
+(set-opt conceallevel 2)
 
-(set- inccommand :nosplit)
-(set- title true)
+;; Break
+(set-opts {breakindent true
+           linebreak true
+           showbreak "=>"})
 
-(setr- nrformats :octal)
+
+(set-opt inccommand :nosplit)
+
+(set-opt nrformats :octal :remove)
 
 (vim.diagnostic.config {:virtual_text false})
 
-(set- guifont "FiraCode Nerd Font Mono:h11,MesloLGS NF:h11,DejavuSans:h11")
+(set-opt guifont "FiraCode Nerd Font Mono:h11,MesloLGS NF:h11,DejavuSans:h11")
 ; (set- guifont "MesloLGS NF:h11")
 ; (set- guifont "FiraCode Nerd Font:h11")
 (if (= vim.g.neovide true)

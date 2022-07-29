@@ -3,8 +3,8 @@
             autoload {autoclose plugins.insert.autoclose
                       indent plugins.insert.indent}})
 
-(setl- tabstop 2)
-(setl- shiftwidth 2)
+(set-opts-auto {tabstop 2
+                shiftwidth 2})
 
 ; ; enclose word
 (ino- "(" "()<Left>" {:buffer true})

@@ -18,10 +18,10 @@
   (aug- terminal
         (auc- :TermOpen "*"
               (fn []
-                (setl- number false)
-                (setl- relativenumber false)
-                (setl- spell false)
-                (setl- bufhidden :hide))
+                (set-opts-auto {number false
+                                relativenumber false
+                                spell false
+                                bufhidden :hide}))
               "No number, relativenumber, & spell. Bufhidden")))
 
 ;; AUG -- suffix addition
@@ -31,7 +31,7 @@
     (let [ext (vim.fn.expand "%:e")]
       (aug- suffix (auc- :FileType ext
                          (fn []
-                           (setl- suffixesadd (.. "." ext)))
+                           (set-local-opt suffixesadd (.. "." ext)))
                          "Add suffixes to all files"))))
 
   (aug- suffix (auc- :BufEnter "*" suffix-add-run

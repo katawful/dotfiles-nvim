@@ -39,5 +39,5 @@
         (jump.->compiled :split :fnl :lua :lua))
       "Jump to compiled fennel file in directory in split")
 
-(setl- foldexpr "nvim_treesitter#foldexpr()")
-(setl- foldmethod :expr)
+(set-opts-auto {foldexpr "nvim_treesitter#foldexpr()"
+                foldmethod :expr})

@@ -49,7 +49,7 @@
         (if (= (vim.fn.filereadable file) 1)
             (do
               (vim.cmd (.. "silent! source " file))
-              (set- :cmdheight 2)
+              (set-opt cmdheight 2)
               (vim.notify (.. "Loading session: '" session.name "' in cwd: "
                               session-dir)))
             (vim.notify (.. "Session file for '" session.name "' not found")
