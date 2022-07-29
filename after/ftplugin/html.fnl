@@ -1,4 +1,3 @@
 (module html {require-macros [katcros-fnl.macros.nvim.api.options.macros]})
 
-(set-opts-auto {tabstop 2
-                shiftwidth 2})
+(set-opts-auto {tabstop 2 shiftwidth 2})

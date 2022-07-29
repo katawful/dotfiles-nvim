@@ -2,8 +2,7 @@
                              katcros-fnl.macros.nvim.api.maps.macros]
              autoload {git-command plugins.git.commands}})
 
-(set-opts-auto {spell true
-                updatetime 500})
+(set-opts-auto {spell true updatetime 500})
 
 (nno- :<leader>O ":VimtexCompileOutput<CR>" "Compile and output TeX file"
       {:buffer true :silent true})

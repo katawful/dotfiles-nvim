@@ -83,7 +83,8 @@ If no file was found, simply warn the user as it is unneeded to go to an empty f
         ;; I want to know if no compiled file exists and only jump if it does
         ;; Good thing to add skeleton/template support here if needed
         (if (= (vim.fn.filewritable compiled-file) 0)
-            (vim.notify (.. "No compiled file found for '" full-file-name "' at:\n"
+            (vim.notify (.. "No compiled file found for '" full-file-name "' at:
+"
                             compiled-file)
                         vim.log.levels.WARN)
             (match split-type

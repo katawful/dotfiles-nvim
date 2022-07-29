@@ -53,11 +53,11 @@
                            (git.open$ contents.dir)))})
       ((coroutine.wrap (fn []
                          (let [selected ((. (require :fzf-lua) :fzf) func
-                                         {:prompt "Repos❯ "
-                                          :previewer git-preview.module-tab
-                                          : actions
-                                          :fzf_opts {:--delimiter "."
-                                                     :--nth :3..}})]
+                                                                     {:prompt "Repos❯ "
+                                                                      :previewer git-preview.module-tab
+                                                                      : actions
+                                                                      :fzf_opts {:--delimiter "."
+                                                                                 :--nth :3..}})]
                            ((. (. (require :fzf-lua) :actions) :act) actions
                                                                      selected {}))))))
 
@@ -76,14 +76,13 @@
                          (let [index (neorg-preview.get-index (. selected 1))
                                contents (. (neorg-preview.contents) index)]
                            (vim.cmd (.. "Neorg workspace " contents.name))))})
-
       ((coroutine.wrap (fn []
                          (let [selected ((. (require :fzf-lua) :fzf) func
-                                         {:prompt "Workspaces❯ "
-                                          :previewer neorg-preview.module-tab
-                                          : actions
-                                          :fzf_opts {:--delimiter "."
-                                                     :--nth :3..}})]
+                                                                     {:prompt "Workspaces❯ "
+                                                                      :previewer neorg-preview.module-tab
+                                                                      : actions
+                                                                      :fzf_opts {:--delimiter "."
+                                                                                 :--nth :3..}})]
                            ((. (. (require :fzf-lua) :actions) :act) actions
                                                                      selected {}))))))
 
@@ -112,11 +111,11 @@
                                   (search-sessions)))})
       ((coroutine.wrap (fn []
                          (let [selected ((. (require :fzf-lua) :fzf) func
-                                         {:prompt "Sessions❯ "
-                                          :previewer session-preview.module-tab
-                                          : actions
-                                          :fzf_opts {:--delimiter "."
-                                                     :--nth :3..}})]
+                                                                     {:prompt "Sessions❯ "
+                                                                      :previewer session-preview.module-tab
+                                                                      : actions
+                                                                      :fzf_opts {:--delimiter "."
+                                                                                 :--nth :3..}})]
                            ((. (. (require :fzf-lua) :actions) :act) actions
                                                                      selected {}))))))
 
@@ -168,10 +167,10 @@
                           (dirbuf-open contents.dir)))})
       ((coroutine.wrap (fn []
                          (let [selected ((. (require :fzf-lua) :fzf) func
-                                         {:prompt "Directories❯ "
-                                          :previewer dir-preview.module-tab
-                                          : actions
-                                          :fzf_opts {:--delimiter "."
-                                                     :--nth :3..}})]
+                                                                     {:prompt "Directories❯ "
+                                                                      :previewer dir-preview.module-tab
+                                                                      : actions
+                                                                      :fzf_opts {:--delimiter "."
+                                                                                 :--nth :3..}})]
                            ((. (. (require :fzf-lua) :actions) :act) actions
                                                                      selected {}))))))

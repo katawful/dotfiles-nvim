@@ -21,24 +21,16 @@
 
 ;; List
 (set-opt list true)
-(set-opt listchars {:tab "  "
-                    :trail "■"
-                    :extends ">"
-                    :precedes "<"})
+(set-opt listchars {:tab "  " :trail "■" :extends ">" :precedes "<"})
 
 ;; Tab
-(set-opts {tabstop 2
-           shiftwidth 2
-           expandtab true})
+(set-opts {tabstop 2 shiftwidth 2 expandtab true})
 
 ;; Conceal
 (set-opt conceallevel 2)
 
 ;; Break
-(set-opts {breakindent true
-           linebreak true
-           showbreak "=>"})
-
+(set-opts {breakindent true linebreak true showbreak "=>"})
 
 (set-opt inccommand :nosplit)
 

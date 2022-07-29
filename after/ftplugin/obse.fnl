@@ -2,8 +2,8 @@
                               katcros-fnl.macros.nvim.api.maps.macros]
               autoload {autoclose plugins.insert.autoclose}})
 
-(set-opts-auto {tabstop 2
-                shiftwidth 2})
+(set-opts-auto {tabstop 2 shiftwidth 2})
+
 (let- g :ov_sync_time 1)
 (let- g :ov_window_style :double)
 ; (nno- :<LocalLeader>s :caw :buffer)

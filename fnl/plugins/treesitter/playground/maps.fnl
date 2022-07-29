@@ -4,5 +4,5 @@
 ;;; Maps for playground
 
 ; show highlight
-(nno- :<Leader>h "<Cmd>TSHighlightCapturesUnderCursor<CR>"
+(nno- :<Leader>h :<Cmd>TSHighlightCapturesUnderCursor<CR>
       "Show highlight under cursor")

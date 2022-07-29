@@ -5,8 +5,6 @@
                 expandtab true
                 textwidth 100
                 spell true
-                listchars {:tab "  "
-                           :extends ">"
-                           :precedes "<"}
+                listchars {:tab "  " :extends ">" :precedes "<"}
                 wrap false
                 concealcursor :nvc})
