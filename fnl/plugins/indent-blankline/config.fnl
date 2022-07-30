@@ -4,9 +4,13 @@
 ;;; Configs for indent_blankline
 ;;; https://github.com/lukas-reineke/indent-blankline.nvim
 
-(let- :g :indent_blankline_use_treesitter true)
-(let- :g :indent_blankline_show_current_context true)
-(let- :g :indent_blankline_filetype_exclude
-      [:text :terminal :startify :help :calendar :startup :norg])
-
-(let- :g :indent_blankline_buftype_exclude [:terminal])
+(set-vars g {:indent_blankline_use_treesitter true
+             :indent_blankline_show_current_context true
+             :indent_blankline_buftype_exclude [:terminal]
+             :indent_blankline_filetype_exclude [:text
+                                                 :terminal
+                                                 :startify
+                                                 :help
+                                                 :calendar
+                                                 :startup
+                                                 :norg]})

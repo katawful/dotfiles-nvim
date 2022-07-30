@@ -4,6 +4,6 @@
 ;;; Configs for Ultisnips
 ;;; https://github.com/SirVer/ultisnips
 
-(let- g :UltiSnipsExpandTrigger :<tab>)
-(let- g :UltiSnipsJumpForwardTrigger :<tab>)
-(let- g :UltiSnipsJumpBackwardsTrigger :<s-tab>)
+(set-vars g {:UltiSnipsExpandTrigger :<tab>
+             :UltiSnipsJumpForwardTrigger :<tab>
+             :UltiSnipsJumpBackwardsTrigger :<s-tab>})

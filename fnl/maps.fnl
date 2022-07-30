@@ -3,8 +3,7 @@
                          katcros-fnl.macros.nvim.api.options.macros]})
 
 (nm- :<Space> :<Nop> "Set space to no operation")
-(let- :g :mapleader " ")
-(let- :g :maplocalleader ",")
+(set-vars g {:mapleader " " :maplocalleader ","})
 
 ; i didn't like \ as local leader
 

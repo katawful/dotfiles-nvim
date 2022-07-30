@@ -43,9 +43,9 @@
 ; (set- guifont "FiraCode Nerd Font:h11")
 (if (= vim.g.neovide true)
     (do
-      (let- :g :neovide_cursor_animation_length 0.02)
-      (let- :g :neovide_cursor_trail_length 2)
-      (let- :g :neovide_cursor_vfx_mode :railgun)
-      (let- :g :neovide_cursor_vfx_opacity 100)
-      (let- :g :neovide_cursor_vfx_particle_density 20)
-      (let- :g :neovide_cursor_vfx_particle_speed 10)))
+      (set-vars g {:neovide_cursor_animation_length 0.02
+                   :neovide_cursor_trail_length 2
+                   :neovide_cursor_vfx_mode :railgun
+                   :neovide_cursor_vfx_opacity 100
+                   :neovide_cursor_vfx_particle_density 20
+                   :neovide_cursor_vfx_particle_speed 10})))

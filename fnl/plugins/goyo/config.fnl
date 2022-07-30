@@ -5,7 +5,7 @@
 ;;; Configs for Goyo
 ;;; https://github.com/junegunn/goyo.vim
 
-(let- g :goyo_width 120)
+(set-var g :goyo_width 120)
 
 ;; Call maps
 (require :plugins.goyo.maps)

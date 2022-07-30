@@ -4,8 +4,8 @@
 
 (set-opts-auto {tabstop 2 shiftwidth 2})
 
-(let- g :ov_sync_time 1)
-(let- g :ov_window_style :double)
+(set-var g :ov_sync_time 1)
+(set-var g :ov_window_style :double)
 ; (nno- :<LocalLeader>s :caw :buffer)
 
 ; enclose word

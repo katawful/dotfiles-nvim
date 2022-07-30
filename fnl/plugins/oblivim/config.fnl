@@ -4,5 +4,4 @@
 ;;; Configs for Obli-Vim
 ;;; https://github.com/katawful/Obli-Vim
 
-(let- g :ov_window_style :double)
-(let- g :ov_sync_time 1)
+(set-vars g {:ov_window_style :double :ov_sync_time 1})

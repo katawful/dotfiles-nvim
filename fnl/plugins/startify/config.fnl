@@ -79,42 +79,53 @@
       "                ░░▓▓▓▓▓▓▓▓                ▒▒▓▓▓▓▓▓░░ "])
 
 (defn update-variables [] (set padding.last (padding-size))
-      (let- g :startify_lists
-            [{:type :commands
-              :header [(.. (whitespace-size (padding-size)) :Commands)]}
-             {:type :files
-              :header [(.. (whitespace-size (padding-size))
-                           "Recent Global Files")]}
-             {:type :dir
-              :header [(.. (whitespace-size (padding-size)) "Recent Files in: "
-                           (vim.fn.getcwd))]}
-             {:type startShowCurrRepo
-              :header [(.. (whitespace-size (padding-size)) "Commits in: "
-                           (vim.fn.getcwd))]}
-             {:type :sessions
-              :header [(.. (whitespace-size (padding-size)) :Sessions)]}
-             {:type :bookmarks
-              :header [(.. (whitespace-size (padding-size)) :Bookmarks)]}])
-      (let- g :startify_padding_left (padding-size))
-      (let- g :startify_files_number 5)
-      (let- g :startify_bookmarks
-            [{:i "~/.config/nvim/fnl/init.fnl"}
-             {:z "~/.zshrc"}
-             {:c "~/.config/i3/config"}])
-      (let- g :startify_fortune_use_unicode 1)
-      (let- g :startify_commands
-            [{:s [" Search for directory" :KatFZFSearchDir]}
-             {:f [" Search for file" :KatFZFOpenFile]}
-             {:b [" Search for buffer" :KatFZFOpenBuffer]}
-             {:m [" Search for marks" :KatFZFOpenMarks]}
-             {:h [" Search help tags" :KatFZFOpenHelpTags]}
-             {:d [" Search dotfile repos" :KatFZFGetDotfiles]}
-             {:n [" Search Neovim repos" :KatFZFGetNeovimPlugins]}
-             {:g [" Search git repos" :KatFZFGetGitRepos]}
-             {:S [" Open sessions" :KatSessionSearch]}
-             {:N [" Open Neorg Workspace" :KatFZFSearchNeorgWorkspaces]}])
-      (let- g :startify_custom_header
-            ((. vim.fn "startify#center") vim.g.ascii)))
+      (set-vars g
+                {:startify_lists [{:type :commands
+                                   :header [(.. (whitespace-size (padding-size))
+                                                :Commands)]}
+                                  {:type :files
+                                   :header [(.. (whitespace-size (padding-size))
+                                                "Recent Global Files")]}
+                                  {:type :dir
+                                   :header [(.. (whitespace-size (padding-size))
+                                                "Recent Files in: "
+                                                (vim.fn.getcwd))]}
+                                  {:type startShowCurrRepo
+                                   :header [(.. (whitespace-size (padding-size))
+                                                "Commits in: " (vim.fn.getcwd))]}
+                                  {:type :sessions
+                                   :header [(.. (whitespace-size (padding-size))
+                                                :Sessions)]}
+                                  {:type :bookmarks
+                                   :header [(.. (whitespace-size (padding-size))
+                                                :Bookmarks)]}]
+                 :startify_padding_left (padding-size)
+                 :startify_files_number 5
+                 :startify_bookmarks [{:i "~/.config/nvim/fnl/init.fnl"}
+                                      {:z "~/.zshrc"}
+                                      {:c "~/.config/i3/config"}]
+                 :startify_fortune_use_unicode 1
+                 :startify_commands [{:s [" Search for directory"
+                                          :KatFZFSearchDir]}
+                                     {:f [" Search for file"
+                                          :KatFZFOpenFile]}
+                                     {:b [" Search for buffer"
+                                          :KatFZFOpenBuffer]}
+                                     {:m [" Search for marks"
+                                          :KatFZFOpenMarks]}
+                                     {:h [" Search help tags"
+                                          :KatFZFOpenHelpTags]}
+                                     {:d [" Search dotfile repos"
+                                          :KatFZFGetDotfiles]}
+                                     {:n [" Search Neovim repos"
+                                          :KatFZFGetNeovimPlugins]}
+                                     {:g [" Search git repos"
+                                          :KatFZFGetGitRepos]}
+                                     {:S [" Open sessions"
+                                          :KatSessionSearch]}
+                                     {:N [" Open Neorg Workspace"
+                                          :KatFZFSearchNeorgWorkspaces]}]
+                 :startify_custom_header ((. vim.fn "startify#center") vim.g.ascii)}))
 
 (update-variables)
 
