@@ -1,3 +1,3 @@
 (module vim {require-macros [katcros-fnl.macros.nvim.api.options.macros]})
 
-(set-opt-auto foldmethod :market)
+(set-opt-auto foldmethod :marker)
