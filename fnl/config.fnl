@@ -48,4 +48,9 @@
                    :neovide_cursor_vfx_mode :railgun
                    :neovide_cursor_vfx_opacity 100
                    :neovide_cursor_vfx_particle_density 20
-                   :neovide_cursor_vfx_particle_speed 10})))
+                   :neovide_cursor_vfx_particle_speed 10
+                   :neovide_remember_window_size false
+                   :neovide_remember_window_position false})))
+
+(match sys.name
+  "Kat-Arch" (set-var g :neovide_transparency 0.9))
