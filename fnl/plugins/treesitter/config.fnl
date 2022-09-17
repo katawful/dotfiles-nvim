@@ -23,6 +23,9 @@
 
 ;; Seq -- sequential table of languages
 (def- languages [:query
+                 :clojure
+                 :zig
+                 :python
                  :norg
                  :norg_meta
                  :norg_table
