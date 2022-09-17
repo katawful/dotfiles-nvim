@@ -3,5 +3,5 @@
 
 ;;; Commands for git
 
-(defn lazy-update [] (com- Git "add -u") (com- Git "commit -m 'update'")
-      (com- Git push))
+(defn lazy-update [] (do-command Git "add -u")
+      (do-command Git "commit -m 'update'") (do-command Git :push))

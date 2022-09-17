@@ -1,4 +1,5 @@
-(module core {require-macros [katcros-fnl.macros.nvim.api.options.macros]})
+(module core {autoload {sys system}
+              require-macros [katcros-fnl.macros.nvim.api.options.macros]})
 
 ;; System
 (set-opts {mouse :nvi
@@ -9,7 +10,8 @@
            hidden false
            updatetime 100
            cmdheight 2
-           title true})
+           title true
+           termguicolors true})
 
 (set-opt clipboard :unnamedplus :append)
 
@@ -20,8 +22,8 @@
            foldcolumn :3})
 
 ;; List
-(set-opt list true)
-(set-opt listchars {:tab "  " :trail "■" :extends ">" :precedes "<"})
+(set-opts {list true
+           listchars {:tab "  " :trail "■" :extends ">" :precedes "<"}})
 
 ;; Tab
 (set-opts {tabstop 2 shiftwidth 2 expandtab true})
