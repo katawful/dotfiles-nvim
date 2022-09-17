@@ -15,14 +15,15 @@
 ;; Setup -- setup table for fzf.lua
 ;; https://github.com/ibhagwan/fzf-lua
 (opt- :fzf-lua :setup
-      {:winopts {:border :rounded
+      {:winopts {:border [" " " " " " " " " " " " " " " "]
                  :hl {:normal :MsgArea
-                      :border :MsgArea
+                      :border :ModeMsg
                       :cursor :Visual
                       :cursorline :Visual
                       :title :Title
                       :scrollbar_f :PmenuThumb
-                      :scrollbar_e :PmenuSbar}}
+                      :scrollbar_e :PmenuSbar}
+                 :preview {:scrollbar :float}}
        :fzf_colors {:prompt {1 :fg 2 :Title}
                     :hl+ {1 :bg 2 :Error}
                     :hl {1 :bg 2 :WarningMsg}
@@ -31,8 +32,9 @@
                     :bg+ {1 :bg 2 :Visual}
                     :fg {1 :bg 2 :Visual}}
        :files {:actions {:ctrl-x actions.file_split
-                         :ctrl-y (fn [selected]
-                                   (print (. selected 1)))}}
+                         :ctrl-y actions.file_sel_to_qf}}
+       :grep {:actions {:ctrl-x actions.file_split
+                        :ctrl-y actions.file_edit_or_qf}}
        :buffers {:actions {:ctrl-x actions.buf_split :ctrl-d actions.buf_del}}})
 
 ;; String -- fzf executable path
