@@ -6,27 +6,27 @@
 
 (def nvim-lsp (require :lspconfig))
 (defn on-attach [client bufnr] (set- omnifunc "v:lua.vim.lsp.omnifunc")
-      (nno- :gD "<cmd>lua vim.lsp.buf.declaration()<CR>" {:silent true})
-      (nno- :gd "<cmd>lua vim.lsp.buf.definition()<CR>" {:silent true})
-      (nno- :K "<cmd>lua vim.lsp.buf.hover()<CR>" {:silent true})
-      (nno- :gi "<cmd>lua vim.lsp.buf.implementation()<CR>" {:silent true})
-      (nno- :<C-k> "<cmd>lua vim.lsp.buf.signature_help()<CR>" {:silent true})
-      (nno- :<leader>wa "<cmd>lua vim.lsp.buf.add_workleader_folder()<CR>"
+      (nno- :gD vim.lsp.buf.declaration {:silent true})
+      (nno- :gd vim.lsp.buf.definition {:silent true})
+      (nno- :K vim.lsp.buf.hover {:silent true})
+      (nno- :gi vim.lsp.buf.implementation {:silent true})
+      (nno- :<C-k> vim.lsp.buf.signature_help {:silent true})
+      (nno- :<leader>wa vim.lsp.buf.add_workspace_folder
             {:silent true})
-      (nno- :<leader>wr "<cmd>lua vim.lsp.buf.remove_workleader_folder()<CR>"
+      (nno- :<leader>wr vim.lsp.buf.remove_workspace_folder
             {:silent true})
       (nno- :<leader>wl
-            "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workleader_folders()))<CR>"
+            (fn [] (print (vim.inspect (vim.lsp.buf.list_workspace_folders))))
             {:silent true})
-      (nno- :<leader>D "<cmd>lua vim.lsp.buf.type_definition()<CR>"
+      (nno- :<leader>D vim.lsp.buf.type_definition
             {:silent true})
-      (nno- :<leader>rn "<cmd>lua vim.lsp.buf.rename()<CR>" {:silent true})
-      (nno- :<leader>ca "<cmd>lua vim.lsp.buf.code_action()<CR>" {:silent true})
-      (nno- :gr "<cmd>lua vim.lsp.buf.references()<CR>" {:silent true})
-      (nno- :<leader>E "<cmd>lua vim.diagnostic.open_float(0)<CR>"
+      (nno- :<leader>rn vim.lsp.buf.rename {:silent true})
+      (nno- :<leader>ca vim.lsp.buf.code_action {:silent true})
+      (nno- :gr vim.lsp.buf.references {:silent true})
+      (nno- :<leader>E (fn [] (vim.diagnostic.open_float 0))
             {:silent true})
-      (nno- "[d" "<cmd>lua vim.diagnostic.goto_prev()<CR>" {:silent true})
-      (nno- "]d" "<cmd>lua vim.diagnostic.goto_next()<CR>" {:silent true})
-      (nno- :<leader>Q "<cmd>lua vim.diagnostic.set_loclist()<CR>"
+      (nno- "[d" vim.diagnostic.goto_prev {:silent true})
+      (nno- "]d" vim.diagnostic.goto_next {:silent true})
+      (nno- :<leader>Q vim.diagnostic.setloclist
             {:silent true})
-      (nno- :<leader>F "<cmd>lua vim.lsp.buf.formatting()<CR>" {:silent true}))
+      (nno- :<leader>F vim.lsp.buf.formatting {:silent true}))
