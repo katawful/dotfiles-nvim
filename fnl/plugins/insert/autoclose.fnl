@@ -16,27 +16,30 @@
        ; get current line
        (def currCharacter (currLine:sub (+ col 1) (+ col 1)))
        ; get current character
-       (if (= (tostring bracket) (tostring currCharacter)) 
-         ;; if current character is the bracket then return <Right>
+       (if (= (tostring bracket) (tostring currCharacter))
+           ;; if current character is the bracket then return <Right>
            (do
              ; we need to use the termcode directly, else <Right> prints literally
              (set result :<Right>))
            (do
              (set result (tostring bracket)))) result)
 
-(defn- opener-closer [bracket]
-  "Open and close a bracket"
-  (let [cursor (vim.api.nvim_win_get_cursor 0)
-        position {:row "" :col ""}
-        line (vim.api.nvim_get_current_line)
-        result [""]]
-   (each [k v (pairs cursor)]
-     (match k 1 (set position.row (+ 1 v)) 2 (set position.col (+ 1 v))))
-   (let [char (line:sub position.col position.col)]
-      (if (= bracket char)
-        (do (tset result 1 :<Right>))
-        (do (tset result 1 (.. bracket bracket "<Left>"))))
-      (. result 1))))
+(defn- opener-closer [bracket] "Open and close a bracket"
+       (let [cursor (vim.api.nvim_win_get_cursor 0)
+             position {:row "" :col ""}
+             line (vim.api.nvim_get_current_line)
+             result [""]]
+         (each [k v (pairs cursor)]
+           (match k
+             1 (set position.row (+ 1 v))
+             2 (set position.col (+ 1 v))))
+         (let [char (line:sub position.col position.col)]
+           (if (= bracket char)
+               (do
+                 (tset result 1 :<Right>))
+               (do
+                 (tset result 1 (.. bracket bracket :<Left>))))
+           (. result 1))))
 
 ;;; Public
 ;; FN -- self named, called for the ending bracket needed

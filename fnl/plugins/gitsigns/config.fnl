@@ -1,4 +1,4 @@
 (module plugins.gitsigns.config
-  {require-macros [katcros-fnl.macros.lispism.macros]})
+        {require-macros [katcros-fnl.macros.lispism.macros]})
 
 (opt- :gitsigns :setup)

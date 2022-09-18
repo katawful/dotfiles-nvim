@@ -1,5 +1,6 @@
-(module core {autoload {sys system}
-              require-macros [katcros-fnl.macros.nvim.api.options.macros]})
+(module config
+        {autoload {sys system}
+         require-macros [katcros-fnl.macros.nvim.api.options.macros]})
 
 ;; System
 (set-opts {mouse :nvi
@@ -55,4 +56,4 @@
                    :neovide_remember_window_position false})))
 
 (match sys.name
-  "Kat-Arch" (set-var g :neovide_transparency 0.9))
+  :Kat-Arch (set-var g :neovide_transparency 0.9))

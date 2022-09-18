@@ -3,8 +3,9 @@
                          katcros-fnl.macros.nvim.api.colors.macros]})
 
 (defn change-kitty [back color] "Change out kitty scheme"
-  (let [name (string.format "Kitty-%s-%s" color back)]
-    (vim.fn.system (string.format "kitty +kitten themes --reload-in=all %s" name))))
+      (let [name (string.format "Kitty-%s-%s" color back)]
+        (vim.fn.system (string.format "kitty +kitten themes --reload-in=all %s"
+                                      name))))
 
 (defn set* [] (let [timeLocal (tonumber (vim.fn.strftime "%H"))
                     background vim.o.background

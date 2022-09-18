@@ -11,22 +11,20 @@
       (nno- :K vim.lsp.buf.hover {:silent true})
       (nno- :gi vim.lsp.buf.implementation {:silent true})
       (nno- :<C-k> vim.lsp.buf.signature_help {:silent true})
-      (nno- :<leader>wa vim.lsp.buf.add_workspace_folder
-            {:silent true})
-      (nno- :<leader>wr vim.lsp.buf.remove_workspace_folder
-            {:silent true})
+      (nno- :<leader>wa vim.lsp.buf.add_workspace_folder {:silent true})
+      (nno- :<leader>wr vim.lsp.buf.remove_workspace_folder {:silent true})
       (nno- :<leader>wl
-            (fn [] (print (vim.inspect (vim.lsp.buf.list_workspace_folders))))
+            (fn []
+              (print (vim.inspect (vim.lsp.buf.list_workspace_folders))))
             {:silent true})
-      (nno- :<leader>D vim.lsp.buf.type_definition
-            {:silent true})
+      (nno- :<leader>D vim.lsp.buf.type_definition {:silent true})
       (nno- :<leader>rn vim.lsp.buf.rename {:silent true})
       (nno- :<leader>ca vim.lsp.buf.code_action {:silent true})
       (nno- :gr vim.lsp.buf.references {:silent true})
-      (nno- :<leader>E (fn [] (vim.diagnostic.open_float 0))
+      (nno- :<leader>E (fn []
+                         (vim.diagnostic.open_float 0))
             {:silent true})
       (nno- "[d" vim.diagnostic.goto_prev {:silent true})
       (nno- "]d" vim.diagnostic.goto_next {:silent true})
-      (nno- :<leader>Q vim.diagnostic.setloclist
-            {:silent true})
+      (nno- :<leader>Q vim.diagnostic.setloclist {:silent true})
       (nno- :<leader>F vim.lsp.buf.formatting {:silent true}))

@@ -2,7 +2,8 @@
                               katcros-fnl.macros.nvim.api.utils.macros
                               katcros-fnl.macros.nvim.api.autocommands.macros
                               katcros-fnl.macros.nvim.api.options.macros]
-              autoload {c aniseed.compile s aniseed.string
+              autoload {c aniseed.compile
+                        s aniseed.string
                         render katdotnvim.utils.export.render}})
 
 ; call global settings
@@ -25,8 +26,7 @@
 ((. (require :packer) :startup) {1 (fn [use]
                                      ;;; bootstrap stuff
                                      ;; macros
-                                     (Plug "~/Git Repos/katcros-fnl/")
-                                     ; (Plug "katawful/katcros-fnl")
+                                     (Plug "~/Git Repos/katcros-fnl/") ; (Plug "katawful/katcros-fnl")
                                      ;; plugin manager
                                      (Plug :wbthomason/packer.nvim)
                                      ;; fennel environment
@@ -83,7 +83,8 @@
                                      ;; lua colorscheme
                                      (Plug {1 "~/Git Repos/katdotnvim/"
                                             :config (fn []
-                                                      ((. (require :plugins.colors.time) :set-colors))
+                                                      ((. (require :plugins.colors.time)
+                                                          :set-colors))
                                                       ((. (require :plugins.colors.scheme)
                                                           :set*)))})
                                      ;; statusline
@@ -133,7 +134,6 @@
                                                       (require :plugins.wilder.config))})
                                      ;; syntax tester
                                      (Plug "~/Git Repos/syntax-test")
-                                     ; syntax tester
                                      ;; colorscheme generator
                                      (Plug "~/Git Repos/kreative")
                                      (Plug :vim-scripts/bnf.vim)
@@ -162,9 +162,9 @@
                                      (Plug {1 :antoinemadec/FixCursorHold.nvim
                                             :config (fn []
                                                       (require :plugins.cursorhold.config))})
-                                    (Plug {1 :kyazdani42/nvim-tree.lua
-                                           :config (fn []
-                                                     (require :plugins.nvim-tree.config))}))
+                                     (Plug {1 :kyazdani42/nvim-tree.lua
+                                            :config (fn []
+                                                      (require :plugins.nvim-tree.config))}))
                                  :config {:display {:open_fn (. (require :packer.util)
                                                                 :float)}
                                           :compile_path (.. (vim.fn.stdpath :config)

@@ -1,6 +1,5 @@
 (module plugins.lsp.config
-        {autoload {maps plugins.lsp.maps
-                   sys system}
+        {autoload {maps plugins.lsp.maps sys system}
          require-macros [katcros-fnl.macros.nvim.api.maps.macros
                          katcros-fnl.macros.nvim.api.options.macros
                          katcros-fnl.macros.lispism.macros]})
@@ -37,12 +36,13 @@
 
 (opt- :mason-lspconfig :setup {:ensure_installed [:zls]})
 
-((. (. (require :lspconfig) :zls) :setup) 
- {:on_attach maps.on-attach
-  :settings {:zls {:enable_unused_variable_warnings true
-                   :enable_inlay_hints true
-                   :zig_lib_path (.. sys.home-path "/.local/bin/ziglang/zig/lib")
-                   :zig_exe_path (.. sys.home-path "/.local/bin/ziglang/zig")}}})
+((. (. (require :lspconfig) :zls) :setup) {:on_attach maps.on-attach
+                                           :settings {:zls {:enable_unused_variable_warnings true
+                                                            :enable_inlay_hints true
+                                                            :zig_lib_path (.. sys.home-path
+                                                                              :/.local/bin/ziglang/zig/lib)
+                                                            :zig_exe_path (.. sys.home-path
+                                                                              :/.local/bin/ziglang/zig)}}})
 
 ;; Call maps
 ; (require :plugins.lsp.maps)
