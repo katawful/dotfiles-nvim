@@ -1,0 +1,14 @@
+@document.meta
+title: main
+description: 
+authors: kat
+categories: config docs
+created: 2022-10-11
+updated: 2022-10-11
+version: 0.0.15
+@end
+
+* Neovim Configs
+  These are my Neovim configs, written literally in Neorg.
+
+  -> {:init:}[Initialization]
