@@ -4,11 +4,11 @@ description: Initialization of config files
 authors: kat
 categories: config docs
 created: 2022-10-11
-updated: 2022-10-13
+updated: 2022-10-14
 version: 0.0.15
 tangle: [
-  ./init.lua
-  ./fnl/init.fnl
+  /home/kat/.config/nvim/init.lua
+  /home/kat/.config/nvim/fnl/init.fnl
 ]
 @end
 
