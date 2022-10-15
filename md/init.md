@@ -91,10 +91,10 @@ The modules in `require` need to be loaded anyways to load in said configs.
 
 ### System Config Files
 
-[Autocommands](#fnlaufnl)
-[System-wide Configs](#fnlconfigfnl)
-[Maps](#fnlmapsfnl)
-[System-wide variables](#fnlsystemfnl)
+[Autocommands](../fnl/au.fnl)   
+[System-wide Configs](../fnl/config.fnl)   
+[Maps](../fnl/maps.fnl)   
+[System-wide variables](../fnl/system.fnl)   
 
 ```fennel
 (defn checkForCompile [] (let [file (io.open :/home/kat/.config/nvim/lua/packer_compiled.lua
