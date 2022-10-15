@@ -17,25 +17,17 @@ tangle: [
   this.
 
   @code lua
-  local execute = vim.api.nvim_command
-  local fn = vim.fn
-  local fmt = string.format
-  @end
-  
-  These are just simple renames to help clear up the bootstrap.
-
-  @code lua
-  local packer_path = fn.stdpath("data") .. "/site/pack"
+  local packer_path = vim.fn.stdpath("data") .. "/site/pack"
   @end
 
   Get the packer.nvim path. This will be used to simplify paths within the bootstrap.
 
   @code lua
   function ensure (user, repo)
-    local install_path = fmt("%s/packer/start/%s", packer_path, repo, repo)
-    if fn.empty(fn.glob(install_path)) > 0 then
-      execute(fmt("!git clone https://github.com/%s/%s %s", user, repo, install_path))
-      execute(fmt("packadd %s", repo))
+    local install_path = string.format("%s/packer/start/%s", packer_path, repo, repo)
+    if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+      vim.api.nvim_command(string.format("!git clone https://github.com/%s/%s %s", user, repo, install_path))
+      vim.api.nvim_command(string.format("packadd %s", repo))
     end
   end
   @end
@@ -45,11 +37,11 @@ tangle: [
 
   @code lua
   function local_ensure (dir, repo)
-      local install_path = fmt("%s/packer/start/%s", packer_path, repo)
-      local pack_path = fmt("%s/packer/start/", packer_path)
-      fn.system(fmt("rm -r %s", install_path))
-      fn.system(fmt("ln -s %s %s", dir, pack_path))
-      execute(fmt("packadd %s", repo))
+      local install_path = string.format("%s/packer/start/%s", packer_path, repo)
+      local pack_path = string.format("%s/packer/start/", packer_path)
+      vim.fn.system(string.format("rm -r %s", install_path))
+      vim.fn.system(string.format("ln -s %s %s", dir, pack_path))
+      vim.api.nvim_command(string.format("packadd %s", repo))
   end
   @end
 
@@ -97,19 +89,21 @@ tangle: [
                                 katcros-fnl.macros.nvim.api.options.macros]
                 autoload {c aniseed.compile
                           s aniseed.string
-                          render katdotnvim.utils.export.render}})
+                          render katdotnvim.utils.export.render}
+                require {: au
+                         : config
+                         : maps
+                         sys system}})
   @end
 
-  This is the header for this module.
+  This is the header for this module. We use `autoload` for stuff we want to use within the module.
+  The modules in `require` need to be loaded anyways to load in said configs.
 
-  @code fennel
-  (require :au)
-  (require :config)
-  (require :maps)
-  (require :system)
-  @end
-
-  These are the system level configs.
+*** System Config Files
+    -> {@ ../fnl/au.fnl}[Autocommands]
+    -> {@ ../fnl/config.fnl}[System-wide Configs]
+    -> {@ ../fnl/maps.fnl}[Maps]
+    -> {@ ../fnl/system.fnl}[System-wide variables]
 
   @code fennel
   (defn checkForCompile [] (let [file (io.open :/home/kat/.config/nvim/lua/packer_compiled.lua
@@ -135,313 +129,329 @@ tangle: [
    Here we are defining a sequential table of plugins that can be loaded by packer.nvim later. This
    is done for easier management of all the plugins.
  
-   @code fennel
-   (table.insert plugins "~/Git Repos/katcros-fnl/")
-   (table.insert plugins :wbthomason/packer.nvim)
-   (table.insert plugins :Olical/aniseed)
-   (table.insert plugins :lewis6991/impatient.nvim)
-   @end
- 
-   These are the plugins we loaded in with the {* Bootstrap}[bootstrap], they're updated with
-   packer.nvim.
- 
-   @code fennel
-   (table.insert plugins {1 :rcarriga/nvim-notify
-                          :config (fn [] (set vim.notify (require :notify))
-                                    (vim.notify.setup {:stages :slide}))})
-   @end
- 
-   {https://github.com/rcarriga/nvim-notify}[nvim-notify] is a notification manager. It takes over
-   `vim.notify`.
- 
-   @code fennel
-   (table.insert plugins {1 :Olical/conjure
-                          :branch :develop
-                          :config (fn [] (require :plugins.conjure.config))})
-   @end
- 
-   {https://github.com/Olical/conjure}[Conjure] is an interactive evaluation plugin. It hooks into
-   various REPLs for ease of use.
- 
-   @code fennel
-   (table.insert plugins {1 :nvim-treesitter/nvim-treesitter
-                          :run ":TSUpdate"
-                          :config (fn [] (require :plugins.treesitter.config))})
-   @end
- 
-   {https://github.com/nvim-treesitter/nvim-treesitter}[nvim-treesitter] is an abstraction layer for
-   tree-sitter that hooks tree-sitter parsers into Neovim.
- 
-   @code fennel
-   (table.insert plugins {1 :nvim-treesitter/playground
-                          :config (fn [] (require :plugins.treesitter.playground.config))})
-   @end
- 
-   {https://github.com/nvim-treesitter/playground}[treesitter-playground] is a test plugin for
-   tree-sitter.
- 
-   @code fennel
-   (table.insert plugins {1 :p00f/nvim-ts-rainbow
-                          :config (fn [] (require :plugins.treesitter.rainbow.config))})
-   @end
- 
-   {https://github.com/p00f/nvim-ts-rainbow}[ts-rainbow] colors parentheses for tree-sitter equipped
-   languages.
- 
-   @code fennel
-   (table.insert plugins {1 :romgrk/nvim-treesitter-context
-                          :config (fn [] (require :plugins.treesitter.context.config))})
-   @end
- 
-   {https://github.com/nvim-treesitter/nvim-treesitter-context}[treesitter-context] shows code
-   context within blocks
- 
-   #tangle.none
-   @code fennel
-   (table.insert plugins {1 :nvim-treesitter/nvim-tree-docs
-                          :config (fn [] (require :plugins.treesitter.docs.config))})
-   @end
- 
-   {https://github.com/nvim-treesitter/nvim-tree-docs}[nvim-tree-docs] creates docs for supported
-   languages. Currently don't use.
- 
-   #tangle.none
-   @code fennel
-   (table.insert plugins {1 :SmiteshP/nvim-gps
-                          :config (fn [] (require :plugins.nvim-gps.config))})
-   @end
- 
-   {https://github.com/SmiteshP/nvim-gps}[nvim-gps] shows position in statusline. Currently don't
-   use.
- 
-   @code fennel
-   (table.insert plugins {1 :lewis6991/gitsigns.nvim
-                          :config (fn [] (require :plugins.gitsigns.config))})
-   @end
- 
-   {https://github.com/lewis6991/gitsigns.nvim/}[gitsigns.nvim] shows git status in files in various
-   ways.
- 
-   @code fennel
-   (table.insert plugins :katawful/kat.vim)
-   (table.insert plugins {1 "~/Git Repos/katdotnvim/"
-                          :config (fn [] ((. (require :plugins.colors.time) :set-colors))
-                                    ((. (require :plugins.colors.scheme) :set*)))})
-   @end
- 
-   These are my colorschemes.
- 
-   @code fennel
-   (table.insert plugins {1 :nvim-lualine/lualine.nvim
-                          :config (fn [] (require :plugins.lualine.config))})
-   @end
- 
-   {https://github.com/nvim-lualine/lualine.nvim}[lualine.nvim] is a statusline plugin.
- 
-   @code fennel
-   (table.insert plugins {1 :junegunn/goyo.vim
-                          :config (fn [] (require :plugins.goyo.config))})
-   @end
- 
-   {https://github.com/junegunn/goyo.vim}[goyo.vim] is a distraction free writing view.
- 
-   @code fennel
-   (table.insert plugins :kyazdani42/nvim-web-devicons)
-   @end
- 
-   {https://github.com/nvim-tree/nvim-web-devicons}[nvim-web-devicons] is devicon support for Neovim.
- 
-   @code fennel
-   (table.insert plugins {1 :lukas-reineke/indent-blankline.nvim
-                          :config (fn [] (require :plugins.indent-blankline.config))})
-   @end
- 
-   {https://github.com/lukas-reineke/indent-blankline.nvim}[indent-blankline] shows indentation as
-   virtual text.
- 
-   @code fennel
-   (table.insert plugins {1 "~/Git Repos/vim-startify/"
-                          :config (fn [] (require :plugins.startify.config))})
-   @end
- 
-   {https://github.com/mhinz/vim-startify}[vim-startify] is a start-page plugin.
- 
-   @code fennel
-   (table.insert plugins :andweeb/presence.nvim)
-   @end
- 
-   {https://github.com/andweeb/presence.nvim}[presence.nvim] shows Neovim status for Discord.
- 
-   @code fennel
-   (table.insert plugins {1 :eraserhd/parinfer-rust
-                          :run "cargo build --release"})
-   @end
- 
-   {https://github.com/eraserhd/parinfer-rust}[parinfer-rust] is a rust based parinfer plugin for
-   LISPs. Requires `cargo` to be installed.
- 
-   @code fennel
-   (table.insert plugins {1 :lervag/vimtex
-                          :config (fn [] (require :plugins.latex.config))})
-   @end
- 
-   {https://github.com/lervag/vimtex}[VimTeX] is a LaTeX filetype plugin.
- 
-   @code fennel
-   (table.insert plugins "~/Git Repos/obse.vim")
-   @end
- 
-   {https://github.com/katawful/obse.vim}[obse.vim] is a syntax plugin for Oblivion.
- 
-   @code fennel
-   (table.insert plugins "~/Git Repos/obluavim")
-   @end
- 
-   {https://github.com/katawful/obluavim}[obluavim] is my in-progress filetype plugin for Oblivion.
- 
-   @code fennel
-   (table.insert plugins {1 :katawful/Obli-Vim-Docs
-                          :ft :obse})
-   @end
- 
-   {https://github.com/katawful/Obli-Vim-Docs}[Obli-Vim-Docs] are OBSE docs built as Vim help files.
- 
-   @code fennel
-   (table.insert plugins {1 :SirVer/ultisnips
-                          :config (fn [] (require :plugins.ultisnips.config))})
-   @end
- 
-   {https://github.com/SirVer/ultisnips}[UltiSnips] is a snippet plugin. Require python and pynvim
-   (python-neovim on Arch).
- 
-   @code fennel
-   (table.insert plugins :tpope/vim-commentary)
-   @end
- 
-   {https://github.com/tpope/vim-commentary}[vim-commentary] is a comment editing plugin.
- 
-   @code fennel
-   (table.insert plugins {1 :gelguy/wilder.nvim
-                          :config (fn [] (require :plugins.wilder.config))})
-   @end
- 
-   {https://github.com/gelguy/wilder.nvim}[wilder.nvim] is a completion plugin for command-line and
-   search.
- 
-   @code fennel
-   (table.insert plugins "~/Git Repos/syntax-test")
-   @end
- 
-   This is a tiny syntax plugin for me to look at various hl groups. It's only installed with
-   packer.nvim to make management easier.
- 
-   @code fennel
-   (table.insert plugins "~/Git Repos/kreative")
-   @end
- 
-   {https://github.com/katawful/kreative}[Kreative] is a 16 color GUI colorscheme generator plugin
-   that I made.
- 
-   @code fennel
-   (table.insert plugins :vim-scripts/bnf.vim)
-   @end
- 
-   {https://github.com/vim-scripts/bnf.vim}[bnf.vim] is a syntax plugin for BNF files.
- 
-   @code fennel
-   (table.insert plugins :killphi/vim-ebnf)
-   @end
- 
-   {https://github.com/killphi/vim-ebnf}[vim-ebnf] is a syntax plugin for EBNF files.
- 
-   @code fennel
-   (table.insert plugins {1 :junegunn/fzf
-                          :run "./install --all"})
-   @end
- 
-   {https://github.com/junegunn/fzf}[FZF] is a command-line fuzzy finder.
- 
-   @code fennel
-   (table.insert plugins {1 "~/Git Repos/dirbuf.nvim"
-                          :config (fn [] (require :plugins.dirbuf.config))})
-   @end
- 
-   {https://github.com/elihunter173/dirbuf.nvim}[dirbuf.nvim] is a dired-like file manager.
- 
-   @code fennel
-   (table.insert plugins {1 :ibhagwan/fzf-lua
-                          :requires :vijaymarupudi/nvim-fzf
-                          :config (fn [] (require :plugins/fzf/config))})
-   @end
- 
-   {https://github.com/ibhagwan/fzf-lua}[fzf-lua] is a binding for FZF.
- 
-   @code fennel
-   (table.insert plugins {1 :tpope/vim-fugitive
-                          :config (fn [] (require :plugins.fugitive.config))})
-   @end
- 
-   {https://github.com/tpope/vim-fugitive}[vim-fugitive] is a Git management plugin.
- 
-   @code fennel
-   (table.insert plugins :airblade/vim-rooter)
-   @end
- 
-   {https://github.com/airblade/vim-rooter}[vim-rooter] is a root directory finder/manager.
- 
-   @code fennel
-   (table.insert plugins {1 :nvim-neorg/neorg
-                          :config (fn [] (require :plugins.neorg.config))
-                          :requires :nvim-lua/plenary.nvim})
-   @end
- 
-   {https://github.com/nvim-neorg/neorg}[Neorg] is a markup language and organization plugin.
- 
-   @code fennel
-   (table.insert plugins {1 :nanozuki/tabby.nvim
-                          :config (fn [] (require :plugins.tabby.config))})
-   @end
- 
-   {https://github.com/nanozuki/tabby.nvim}[tabby.nvim] is a tabline plugin.
- 
-   #tangle.none
-   @code fennel
-   (table.insert plugins {1 :kyazdani42/nvim-tree.lua
-                          :config (fn [] (require :plugins.nvim-tree.config))})
-   @end
- 
-   {https://github.com/nvim-tree/nvim-tree.lua}[nvim-tree.lua] is a file manager. Currently do not
-   use.
- 
-   #tangle.none
-   @code fennel
-   (table.insert plugins {1 :David-Kunz/markid
-                          :config (fn [] (require :plugins.markid.config))})
-   @end
- 
-   {https://github.com/David-Kunz/markid}[markid] colors symbols based on scope. Currently do not
-   use.
- 
-   @code fennel
-   (table.insert plugins {1 :neovim/nvim-lspconfig})
-   @end
- 
-   {https://github.com/neovim/nvim-lspconfig}[nvim-lspconfig] configures LSPs.
- 
-   @code fennel
-   (table.insert plugins :williamboman/mason-lspconfig.nvim)
-   @end
- 
-   {https://github.com/williamboman/mason-lspconfig.nvim}[mason-lspconfig.nvim] uses mason.nvim to
-   hook into nvim-lspconfig.
- 
-   @code fennel
-   (table.insert plugins {1 :williamboman/mason.nvim
-                          :config (fn [] (require :plugins.lsp.config))})
-   @end
- 
-   {https://github.com/williamboman/mason.nvim}[mason.nvim] installs LSPs.
- 
+*** Bootstrapped Plugins
+    @code fennel
+    (table.insert plugins "~/Git Repos/katcros-fnl/")
+    (table.insert plugins :wbthomason/packer.nvim)
+    (table.insert plugins :Olical/aniseed)
+    (table.insert plugins :lewis6991/impatient.nvim)
+    @end
+
+    These are the plugins we loaded in with the {* Bootstrapping}[bootstrap], they're updated with
+    packer.nvim.
+ 
+
+*** Treesitter
+    @code fennel
+    (table.insert plugins {1 :nvim-treesitter/nvim-treesitter
+                           :run ":TSUpdate"
+                           :config (fn [] (require :plugins.treesitter.config))})
+    @end
+  
+    {https://github.com/nvim-treesitter/nvim-treesitter}[nvim-treesitter] is an abstraction layer for
+    tree-sitter that hooks tree-sitter parsers into Neovim.
+  
+    @code fennel
+    (table.insert plugins {1 :nvim-treesitter/playground
+                           :config (fn [] (require :plugins.treesitter.playground.config))})
+    @end
+  
+    {https://github.com/nvim-treesitter/playground}[treesitter-playground] is a test plugin for
+    tree-sitter.
+  
+    @code fennel
+    (table.insert plugins {1 :p00f/nvim-ts-rainbow
+                           :config (fn [] (require :plugins.treesitter.rainbow.config))})
+    @end
+  
+    {https://github.com/p00f/nvim-ts-rainbow}[ts-rainbow] colors parentheses for tree-sitter equipped
+    languages.
+  
+    @code fennel
+    (table.insert plugins {1 :romgrk/nvim-treesitter-context
+                           :config (fn [] (require :plugins.treesitter.context.config))})
+    @end
+  
+    {https://github.com/nvim-treesitter/nvim-treesitter-context}[treesitter-context] shows code
+    context within blocks
+  
+    #tangle.none
+    @code fennel
+    (table.insert plugins {1 :nvim-treesitter/nvim-tree-docs
+                           :config (fn [] (require :plugins.treesitter.docs.config))})
+    @end
+  
+    {https://github.com/nvim-treesitter/nvim-tree-docs}[nvim-tree-docs] creates docs for supported
+    languages. Currently don't use.
+  
+    #tangle.none
+    @code fennel
+    (table.insert plugins {1 :SmiteshP/nvim-gps
+                           :config (fn [] (require :plugins.nvim-gps.config))})
+    @end
+  
+    {https://github.com/SmiteshP/nvim-gps}[nvim-gps] shows position in statusline. Currently don't
+    use.
+
+*** Fluff
+    @code fennel
+    (table.insert plugins {1 :rcarriga/nvim-notify
+                           :config (fn [] (set vim.notify (require :notify))
+                                     (vim.notify.setup {:stages :slide}))})
+    @end
+  
+    {https://github.com/rcarriga/nvim-notify}[nvim-notify] is a notification manager. It takes over
+    `vim.notify`.
+
+    @code fennel
+    (table.insert plugins :katawful/kat.vim)
+    (table.insert plugins {1 "~/Git Repos/katdotnvim/"
+                           :config (fn [] ((. (require :plugins.colors.time) :set-colors))
+                                     ((. (require :plugins.colors.scheme) :set*)))})
+    @end
+  
+    These are my colorschemes.
+  
+    @code fennel
+    (table.insert plugins {1 :nvim-lualine/lualine.nvim
+                           :config (fn [] (require :plugins.lualine.config))})
+    @end
+  
+    {https://github.com/nvim-lualine/lualine.nvim}[lualine.nvim] is a statusline plugin.
+  
+    @code fennel
+    (table.insert plugins {1 :junegunn/goyo.vim
+                           :config (fn [] (require :plugins.goyo.config))})
+    @end
+  
+    {https://github.com/junegunn/goyo.vim}[goyo.vim] is a distraction free writing view.
+  
+    @code fennel
+    (table.insert plugins :kyazdani42/nvim-web-devicons)
+    @end
+  
+    {https://github.com/nvim-tree/nvim-web-devicons}[nvim-web-devicons] is devicon support for Neovim.
+  
+    @code fennel
+    (table.insert plugins {1 :lukas-reineke/indent-blankline.nvim
+                           :config (fn [] (require :plugins.indent-blankline.config))})
+    @end
+  
+    {https://github.com/lukas-reineke/indent-blankline.nvim}[indent-blankline] shows indentation as
+    virtual text.
+  
+    @code fennel
+    (table.insert plugins {1 "~/Git Repos/vim-startify/"
+                           :config (fn [] (require :plugins.startify.config))})
+    @end
+  
+    {https://github.com/mhinz/vim-startify}[vim-startify] is a start-page plugin.
+  
+    @code fennel
+    (table.insert plugins {1 :gelguy/wilder.nvim
+                           :config (fn [] (require :plugins.wilder.config))})
+    @end
+  
+    {https://github.com/gelguy/wilder.nvim}[wilder.nvim] is a completion plugin for command-line and
+    search.
+  
+    @code fennel
+    (table.insert plugins "~/Git Repos/syntax-test")
+    @end
+  
+    This is a tiny syntax plugin for me to look at various hl groups. It's only installed with
+    packer.nvim to make management easier.
+  
+    @code fennel
+    (table.insert plugins "~/Git Repos/kreative")
+    @end
+  
+    {https://github.com/katawful/kreative}[Kreative] is a 16 color GUI colorscheme generator plugin
+    that I made.
+  
+    @code fennel
+    (table.insert plugins {1 :nanozuki/tabby.nvim
+                           :config (fn [] (require :plugins.tabby.config))})
+    @end
+  
+    {https://github.com/nanozuki/tabby.nvim}[tabby.nvim] is a tabline plugin.
+
+    #tangle.none
+    @code fennel
+    (table.insert plugins {1 :David-Kunz/markid
+                           :config (fn [] (require :plugins.markid.config))})
+    @end
+  
+    {https://github.com/David-Kunz/markid}[markid] colors symbols based on scope. Currently do not
+    use.
+ 
+*** Git
+    @code fennel
+    (table.insert plugins {1 :lewis6991/gitsigns.nvim
+                           :config (fn [] (require :plugins.gitsigns.config))})
+    @end
+  
+    {https://github.com/lewis6991/gitsigns.nvim/}[gitsigns.nvim] shows git status in files in various
+    ways.
+  
+    @code fennel
+    (table.insert plugins {1 :tpope/vim-fugitive
+                           :config (fn [] (require :plugins.fugitive.config))})
+    @end
+  
+    {https://github.com/tpope/vim-fugitive}[vim-fugitive] is a Git management plugin.
+
+*** Editing
+    @code fennel
+    (table.insert plugins {1 :Olical/conjure
+                           :branch :develop
+                           :config (fn [] (require :plugins.conjure.config))})
+    @end
+  
+    {https://github.com/Olical/conjure}[Conjure] is an interactive evaluation plugin. It hooks into
+    various REPLs for ease of use.
+  
+    @code fennel
+    (table.insert plugins {1 :eraserhd/parinfer-rust
+                           :run "cargo build --release"})
+    @end
+  
+    {https://github.com/eraserhd/parinfer-rust}[parinfer-rust] is a rust based parinfer plugin for
+    LISPs. Requires `cargo` to be installed.
+  
+    @code fennel
+    (table.insert plugins {1 :lervag/vimtex
+                           :config (fn [] (require :plugins.latex.config))})
+    @end
+  
+    {https://github.com/lervag/vimtex}[VimTeX] is a LaTeX filetype plugin.
+  
+    @code fennel
+    (table.insert plugins "~/Git Repos/obse.vim")
+    @end
+  
+    {https://github.com/katawful/obse.vim}[obse.vim] is a syntax plugin for Oblivion.
+  
+    @code fennel
+    (table.insert plugins "~/Git Repos/obluavim")
+    @end
+  
+    {https://github.com/katawful/obluavim}[obluavim] is my in-progress filetype plugin for Oblivion.
+  
+    @code fennel
+    (table.insert plugins {1 :katawful/Obli-Vim-Docs
+                           :ft :obse})
+    @end
+  
+    {https://github.com/katawful/Obli-Vim-Docs}[Obli-Vim-Docs] are OBSE docs built as Vim help files.
+  
+    @code fennel
+    (table.insert plugins :vim-scripts/bnf.vim)
+    @end
+  
+    {https://github.com/vim-scripts/bnf.vim}[bnf.vim] is a syntax plugin for BNF files.
+  
+    @code fennel
+    (table.insert plugins :killphi/vim-ebnf)
+    @end
+  
+    {https://github.com/killphi/vim-ebnf}[vim-ebnf] is a syntax plugin for EBNF files.
+  
+    @code fennel
+    (table.insert plugins {1 :SirVer/ultisnips
+                           :config (fn [] (require :plugins.ultisnips.config))})
+    @end
+  
+    {https://github.com/SirVer/ultisnips}[UltiSnips] is a snippet plugin. Require python and pynvim
+    (python-neovim on Arch).
+  
+    @code fennel
+    (table.insert plugins :tpope/vim-commentary)
+    @end
+  
+    {https://github.com/tpope/vim-commentary}[vim-commentary] is a comment editing plugin.
+
+*** LSP
+    @code fennel
+    (table.insert plugins {1 :neovim/nvim-lspconfig})
+    @end
+  
+    {https://github.com/neovim/nvim-lspconfig}[nvim-lspconfig] configures LSPs.
+  
+    @code fennel
+    (table.insert plugins :williamboman/mason-lspconfig.nvim)
+    @end
+  
+    {https://github.com/williamboman/mason-lspconfig.nvim}[mason-lspconfig.nvim] uses mason.nvim to
+    hook into nvim-lspconfig.
+  
+    @code fennel
+    (table.insert plugins {1 :williamboman/mason.nvim
+                           :config (fn [] (require :plugins.lsp.config))})
+    @end
+ 
+    {https://github.com/williamboman/mason.nvim}[mason.nvim] installs LSPs.
+
+*** File Management
+    @code fennel
+    (table.insert plugins {1 :junegunn/fzf
+                           :run "./install --all"})
+    @end
+  
+    {https://github.com/junegunn/fzf}[FZF] is a command-line fuzzy finder.
+  
+    @code fennel
+    (table.insert plugins {1 "~/Git Repos/dirbuf.nvim"
+                           :config (fn [] (require :plugins.dirbuf.config))})
+    @end
+  
+    {https://github.com/elihunter173/dirbuf.nvim}[dirbuf.nvim] is a dired-like file manager.
+  
+    @code fennel
+    (table.insert plugins {1 :ibhagwan/fzf-lua
+                           :requires :vijaymarupudi/nvim-fzf
+                           :config (fn [] (require :plugins/fzf/config))})
+    @end
+  
+    {https://github.com/ibhagwan/fzf-lua}[fzf-lua] is a binding for FZF.
+  
+    @code fennel
+    (table.insert plugins :airblade/vim-rooter)
+    @end
+  
+    {https://github.com/airblade/vim-rooter}[vim-rooter] is a root directory finder/manager.
+  
+    #tangle.none
+    @code fennel
+    (table.insert plugins {1 :kyazdani42/nvim-tree.lua
+                           :config (fn [] (require :plugins.nvim-tree.config))})
+    @end
+  
+    {https://github.com/nvim-tree/nvim-tree.lua}[nvim-tree.lua] is a file manager. Currently do not
+    use.
+
+*** Other
+    @code fennel
+    (table.insert plugins :andweeb/presence.nvim)
+    @end
+  
+    {https://github.com/andweeb/presence.nvim}[presence.nvim] shows Neovim status for Discord.
+  
+    #tangle.none
+    @code fennel
+    (table.insert plugins {1 :nvim-neorg/neorg
+                           :config (fn [] (require :plugins.neorg.config))
+                           :requires :nvim-lua/plenary.nvim})
+    @end
+
+    @code fennel
+    (table.insert plugins {1 "~/Git Repos/neorg/"
+                           :config (fn [] (require :plugins.neorg.config))
+                           :requires :nvim-lua/plenary.nvim})
+    @end
+  
+    {https://github.com/nvim-neorg/neorg}[Neorg] is a markup language and organization plugin.
+  
 ** packer.nvim Call
    @code fennel
    ((. (require :packer) :startup) {1 (fn [use] (each [_ v (ipairs plugins)] (use v)))
