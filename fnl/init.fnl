@@ -4,11 +4,11 @@
                               katcros-fnl.macros.nvim.api.options.macros]
               autoload {c aniseed.compile
                         s aniseed.string
-                        render katdotnvim.utils.export.render}})
-(require :au)
-(require :config)
-(require :maps)
-(require :system)
+                        render katdotnvim.utils.export.render}
+              require {: au
+                       : config
+                       : maps
+                       sys system}})
 (defn checkForCompile [] (let [file (io.open :/home/kat/.config/nvim/lua/packer_compiled.lua
                                              :r)]
                            (if (not= file nil)
@@ -23,12 +23,6 @@
 (table.insert plugins :wbthomason/packer.nvim)
 (table.insert plugins :Olical/aniseed)
 (table.insert plugins :lewis6991/impatient.nvim)
-(table.insert plugins {1 :rcarriga/nvim-notify
-                       :config (fn [] (set vim.notify (require :notify))
-                                 (vim.notify.setup {:stages :slide}))})
-(table.insert plugins {1 :Olical/conjure
-                       :branch :develop
-                       :config (fn [] (require :plugins.conjure.config))})
 (table.insert plugins {1 :nvim-treesitter/nvim-treesitter
                        :run ":TSUpdate"
                        :config (fn [] (require :plugins.treesitter.config))})
@@ -38,8 +32,9 @@
                        :config (fn [] (require :plugins.treesitter.rainbow.config))})
 (table.insert plugins {1 :romgrk/nvim-treesitter-context
                        :config (fn [] (require :plugins.treesitter.context.config))})
-(table.insert plugins {1 :lewis6991/gitsigns.nvim
-                       :config (fn [] (require :plugins.gitsigns.config))})
+(table.insert plugins {1 :rcarriga/nvim-notify
+                       :config (fn [] (set vim.notify (require :notify))
+                                 (vim.notify.setup {:stages :slide}))})
 (table.insert plugins :katawful/kat.vim)
 (table.insert plugins {1 "~/Git Repos/katdotnvim/"
                        :config (fn [] ((. (require :plugins.colors.time) :set-colors))
@@ -53,7 +48,19 @@
                        :config (fn [] (require :plugins.indent-blankline.config))})
 (table.insert plugins {1 "~/Git Repos/vim-startify/"
                        :config (fn [] (require :plugins.startify.config))})
-(table.insert plugins :andweeb/presence.nvim)
+(table.insert plugins {1 :gelguy/wilder.nvim
+                       :config (fn [] (require :plugins.wilder.config))})
+(table.insert plugins "~/Git Repos/syntax-test")
+(table.insert plugins "~/Git Repos/kreative")
+(table.insert plugins {1 :nanozuki/tabby.nvim
+                       :config (fn [] (require :plugins.tabby.config))})
+(table.insert plugins {1 :lewis6991/gitsigns.nvim
+                       :config (fn [] (require :plugins.gitsigns.config))})
+(table.insert plugins {1 :tpope/vim-fugitive
+                       :config (fn [] (require :plugins.fugitive.config))})
+(table.insert plugins {1 :Olical/conjure
+                       :branch :develop
+                       :config (fn [] (require :plugins.conjure.config))})
 (table.insert plugins {1 :eraserhd/parinfer-rust
                        :run "cargo build --release"})
 (table.insert plugins {1 :lervag/vimtex
@@ -62,15 +69,15 @@
 (table.insert plugins "~/Git Repos/obluavim")
 (table.insert plugins {1 :katawful/Obli-Vim-Docs
                        :ft :obse})
+(table.insert plugins :vim-scripts/bnf.vim)
+(table.insert plugins :killphi/vim-ebnf)
 (table.insert plugins {1 :SirVer/ultisnips
                        :config (fn [] (require :plugins.ultisnips.config))})
 (table.insert plugins :tpope/vim-commentary)
-(table.insert plugins {1 :gelguy/wilder.nvim
-                       :config (fn [] (require :plugins.wilder.config))})
-(table.insert plugins "~/Git Repos/syntax-test")
-(table.insert plugins "~/Git Repos/kreative")
-(table.insert plugins :vim-scripts/bnf.vim)
-(table.insert plugins :killphi/vim-ebnf)
+(table.insert plugins {1 :neovim/nvim-lspconfig})
+(table.insert plugins :williamboman/mason-lspconfig.nvim)
+(table.insert plugins {1 :williamboman/mason.nvim
+                       :config (fn [] (require :plugins.lsp.config))})
 (table.insert plugins {1 :junegunn/fzf
                        :run "./install --all"})
 (table.insert plugins {1 "~/Git Repos/dirbuf.nvim"
@@ -78,18 +85,11 @@
 (table.insert plugins {1 :ibhagwan/fzf-lua
                        :requires :vijaymarupudi/nvim-fzf
                        :config (fn [] (require :plugins/fzf/config))})
-(table.insert plugins {1 :tpope/vim-fugitive
-                       :config (fn [] (require :plugins.fugitive.config))})
 (table.insert plugins :airblade/vim-rooter)
-(table.insert plugins {1 :nvim-neorg/neorg
+(table.insert plugins :andweeb/presence.nvim)
+(table.insert plugins {1 "~/Git Repos/neorg/"
                        :config (fn [] (require :plugins.neorg.config))
                        :requires :nvim-lua/plenary.nvim})
-(table.insert plugins {1 :nanozuki/tabby.nvim
-                       :config (fn [] (require :plugins.tabby.config))})
-(table.insert plugins {1 :neovim/nvim-lspconfig})
-(table.insert plugins :williamboman/mason-lspconfig.nvim)
-(table.insert plugins {1 :williamboman/mason.nvim
-                       :config (fn [] (require :plugins.lsp.config))})
 ((. (require :packer) :startup) {1 (fn [use] (each [_ v (ipairs plugins)] (use v)))
                                  :config {:display {:open_fn (. (require :packer.util)
                                                                 :float)}
