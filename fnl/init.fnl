@@ -52,8 +52,7 @@
                        :config (fn [] (require :plugins.wilder.config))})
 (table.insert plugins "~/Git Repos/syntax-test")
 (table.insert plugins "~/Git Repos/kreative")
-(table.insert plugins {1 :nanozuki/tabby.nvim
-                       :config (fn [] (require :plugins.tabby.config))})
+(table.insert plugins :nanozuki/tabby.nvim)
 (table.insert plugins {1 :lewis6991/gitsigns.nvim
                        :config (fn [] (require :plugins.gitsigns.config))})
 (table.insert plugins {1 :tpope/vim-fugitive
@@ -110,3 +109,4 @@
 (if (= (checkForCompile) false)
     ((. (require :packer) :compile)))
 (require :plugins.session.init)
+(require :plugins.tabby.config)

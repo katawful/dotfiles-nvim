@@ -267,8 +267,7 @@ packer.nvim to make management easier.
 that I made.
 
 ```fennel
-(table.insert plugins {1 :nanozuki/tabby.nvim
-                       :config (fn [] (require :plugins.tabby.config))})
+(table.insert plugins :nanozuki/tabby.nvim)
 ```
 
 [tabby.nvim](https://github.com/nanozuki/tabby.nvim) is a tabline plugin.
@@ -508,3 +507,12 @@ Just double checking that `packer.nvim` compiles properly.
 ```
 
 Some internal config plugins cannot be loaded implicitly, so they must be loaded last.
+
+
+## Tabby Call
+
+```fennel
+(require :plugins.tabby.config)
+```
+
+Tabby.nvim needs to be called separately due to a race condition.

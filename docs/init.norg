@@ -4,7 +4,7 @@ description: Initialization of config files
 authors: kat
 categories: config docs
 created: 2022-10-11
-updated: 2022-10-14
+updated: 2022-10-15
 version: 0.0.15
 tangle: [
   /home/kat/.config/nvim/init.lua
@@ -270,8 +270,7 @@ tangle: [
     that I made.
   
     @code fennel
-    (table.insert plugins {1 :nanozuki/tabby.nvim
-                           :config (fn [] (require :plugins.tabby.config))})
+    (table.insert plugins :nanozuki/tabby.nvim)
     @end
   
     {https://github.com/nanozuki/tabby.nvim}[tabby.nvim] is a tabline plugin.
@@ -496,3 +495,10 @@ tangle: [
    @end
    
    Some internal config plugins cannot be loaded implicitly, so they must be loaded last.
+
+** Tabby Call
+   @code fennel
+   (require :plugins.tabby.config)
+   @end
+
+   Tabby.nvim needs to be called separately due to a race condition.
