@@ -3,9 +3,9 @@ title: init
 description: Initialization of config files
 authors: kat
 categories: config docs
-created: 2022-10-11
-updated: 2022-10-15
-version: 0.0.15
+created: 2022-12-24
+updated: 2022-12-25
+version: 1.0.0
 tangle: [
   /home/kat/.config/nvim/init.lua
   /home/kat/.config/nvim/fnl/init.fnl
@@ -13,73 +13,72 @@ tangle: [
 @end
 
 * Bootstrapping
+
+  I use {https://github.com/folke/lazy.nvim}[lazy.nvim] for my package manager. It is fairly new as
+  of this switch and comes with some nice features overall.
+
   Since I use Aniseed to compile and run Fennel files, I need to use a minimal init.lua that handles
   this.
 
   @code lua
-  local packer_path = vim.fn.stdpath("data") .. "/site/pack"
+  local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+  local package_path = vim.fn.stdpath("data") .. "/lazy"
   @end
 
-  Get the packer.nvim path. This will be used to simplify paths within the bootstrap.
+  This gets the lazy.nvim path to be used in the bootstrap.
 
   @code lua
-  function ensure (user, repo)
-    local install_path = string.format("%s/packer/start/%s", packer_path, repo, repo)
-    if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-      vim.api.nvim_command(string.format("!git clone https://github.com/%s/%s %s", user, repo, install_path))
-      vim.api.nvim_command(string.format("packadd %s", repo))
+  if not vim.loop.fs_stat(lazy_path) then
+    vim.fn.system({
+      "git",
+      "clone",
+      "--filter=blob:none",
+      "--single-branch",
+      "https://github.com/folke/lazy.nvim.git",
+      lazy_path,
+    })
+  end
+  vim.opt.runtimepath:prepend(lazy_path)
+  @end
+
+  This clones lazy.nvim to the system path. This is the suggested install method
+
+  @code lua
+  function ensure (repo, package, dir)
+    if not dir then
+      vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "--single-branch",
+        repo,
+        package_path,
+      })
+      vim.api.nvim_command(string.format("packadd %s", package))
+    else
+      local install_path = string.format("%s/%s", package_path, package)
+      vim.fn.system(string.format("rm -r %s", install_path))
+      vim.fn.system(string.format("ln -s %s %s", repo, package_path))
+      vim.api.nvim_command(string.format("packadd %s", package))
     end
   end
   @end
 
-  This function "ensures" that external repos are installed by force. It updates the plugin repo to
-  the appropriate package path, then manually adds the package.
-
   @code lua
-  function local_ensure (dir, repo)
-      local install_path = string.format("%s/packer/start/%s", packer_path, repo)
-      local pack_path = string.format("%s/packer/start/", packer_path)
-      vim.fn.system(string.format("rm -r %s", install_path))
-      vim.fn.system(string.format("ln -s %s %s", dir, pack_path))
-      vim.api.nvim_command(string.format("packadd %s", repo))
-  end
+  ensure("~/Git\\ Repos/katcros-fnl", "katcros-fnl", true)
+  ensure("Olical/aniseed", "aniseed")
   @end
-
-  This function "ensures" that local repos are installed by force. This was needed to load my own
-  personal fennel macros that are managed by git. This has to manually link the repo to the package
-  path, something that packer already does for local repos.
-
-  @code lua
-  ensure("lewis6991", "impatient.nvim")
-  require("impatient")
-  @end
-  
-  {https://github.com/lewis6991/impatient.nvim}[impatient.nvim] is a bytecode caching plugin to
-  speed up the loading of Lua files. This has to be required now in order to speed up plugins loaded
-  after.
+  This installs Aniseed and my macros. Since all of my plugins are loaded with Fennel files, I need
+  to be able to compile and access them before lazy.nvim actually runs. They will then be managed
+  with lazy.nvim after the bootstrap runs.
 
   @code lua
-  ensure("wbthomason", "packer.nvim")
-  @end
-
-  {https://github.com/wbthomason/packer.nvim}[packer.nvim] is a package management plugin. It loads
-  and manages plugins. There is no needed configuration for the bootstrap.
-
-  @code lua
-  local_ensure("~/Git\\ Repos/katcros-fnl/", "katcros-fnl")
-  @end
-
-  {https://github.com/katawful/katcros-fnl}[katcros-fnl] are my Fennel macros, primarily designed
-  for Neovim. Since I constantly develop these, they are loaded locally.
-
-  @code lua
-  ensure("Olical", "aniseed")
   vim.g["aniseed#env"] = {module = "init", compile = true}
   @end
 
   {https://github.com/Olical/aniseed}[Aniseed] is a runtime environment for Fennel and Neovim. It
   provides Clojure-like additions, like modules. It is used here to initialize my configurations.
-
+  Enable Aniseed's configuration runtime environment.
 
 * init.fnl
   @code fennel
@@ -87,10 +86,10 @@ tangle: [
                                 katcros-fnl.macros.nvim.api.utils.macros
                                 katcros-fnl.macros.nvim.api.autocommands.macros
                                 katcros-fnl.macros.nvim.api.options.macros]
-                autoload {c aniseed.compile
-                          s aniseed.string
-                          render katdotnvim.utils.export.render}
-                require {: au
+                require {c aniseed.compile
+                         s aniseed.string
+                         render katdotnvim.utils.export.render
+                         : au
                          : config
                          : maps
                          sys system}})
@@ -100,25 +99,10 @@ tangle: [
   The modules in `require` need to be loaded anyways to load in said configs.
 
 *** System Config Files
-    -> {@ ../fnl/au.fnl}[Autocommands]
-    -> {@ ../fnl/config.fnl}[System-wide Configs]
-    -> {@ ../fnl/maps.fnl}[Maps]
-    -> {@ ../fnl/system.fnl}[System-wide variables]
-
-  @code fennel
-  (defn checkForCompile [] (let [file (io.open :/home/kat/.config/nvim/lua/packer_compiled.lua
-                                               :r)]
-                             (if (not= file nil)
-                                 (do
-                                   (io.close file)
-                                   (require :packer_compiled))
-                                 (do
-                                   false))))
-  (checkForCompile)
-  @end
-
-  This is used to make sure packer.nvim is actually compiled on startup. I don't know if this
-  actually works or not.
+    - {@ ../fnl/au.fnl}[Autocommands]
+    - {@ ../fnl/config.fnl}[System-wide Configs]
+    - {@ ../fnl/maps.fnl}[Maps]
+    - {@ ../fnl/system.fnl}[System-wide variables]
 
 ** Plugins
 
@@ -131,10 +115,9 @@ tangle: [
  
 *** Bootstrapped Plugins
     @code fennel
-    (table.insert plugins "~/Git Repos/katcros-fnl/")
-    (table.insert plugins :wbthomason/packer.nvim)
+    (table.insert plugins :folke/lazy.nvim)
     (table.insert plugins :Olical/aniseed)
-    (table.insert plugins :lewis6991/impatient.nvim)
+    (table.insert plugins {:dir "~/Git Repos/katcros-fnl/"})
     @end
 
     These are the plugins we loaded in with the {* Bootstrapping}[bootstrap], they're updated with
@@ -144,7 +127,7 @@ tangle: [
 *** Treesitter
     @code fennel
     (table.insert plugins {1 :nvim-treesitter/nvim-treesitter
-                           :run ":TSUpdate"
+                           :bulid ":TSUpdate"
                            :config (fn [] (require :plugins.treesitter.config))})
     @end
   
@@ -193,6 +176,15 @@ tangle: [
     {https://github.com/SmiteshP/nvim-gps}[nvim-gps] shows position in statusline. Currently don't
     use.
 
+    @code fennel
+    (table.insert plugins {1 :folke/todo-comments.nvim
+                           :config (fn [] (require :plugins.todo-comments.config))})
+    @end
+
+    {https://github.com/folke/todo-comments.nvim}[todo-comments.nvim] highlights common comment
+    strings such as 'TODO'
+
+
 *** Fluff
     @code fennel
     (table.insert plugins {1 :rcarriga/nvim-notify
@@ -205,7 +197,7 @@ tangle: [
 
     @code fennel
     (table.insert plugins :katawful/kat.vim)
-    (table.insert plugins {1 "~/Git Repos/katdotnvim/"
+    (table.insert plugins {:dir "~/Git Repos/katdotnvim/"
                            :config (fn [] ((. (require :plugins.colors.time) :set-colors))
                                      ((. (require :plugins.colors.scheme) :set*)))})
     @end
@@ -241,7 +233,7 @@ tangle: [
     virtual text.
   
     @code fennel
-    (table.insert plugins {1 "~/Git Repos/vim-startify/"
+    (table.insert plugins {:dir "~/Git Repos/vim-startify/"
                            :config (fn [] (require :plugins.startify.config))})
     @end
   
@@ -256,14 +248,14 @@ tangle: [
     search.
   
     @code fennel
-    (table.insert plugins "~/Git Repos/syntax-test")
+    (table.insert plugins {:dir "~/Git Repos/syntax-test"})
     @end
   
     This is a tiny syntax plugin for me to look at various hl groups. It's only installed with
     packer.nvim to make management easier.
   
     @code fennel
-    (table.insert plugins "~/Git Repos/kreative")
+    (table.insert plugins {:dir "~/Git Repos/kreative"})
     @end
   
     {https://github.com/katawful/kreative}[Kreative] is a 16 color GUI colorscheme generator plugin
@@ -312,7 +304,9 @@ tangle: [
   
     @code fennel
     (table.insert plugins {1 :eraserhd/parinfer-rust
-                           :run "cargo build --release"})
+                           :build (let [path (.. (do-viml stdpath :data) :/lazy/parinfer-rust)]
+                                    (string.format "(cd %s; cargo build --release)"
+                                                   path))})
     @end
   
     {https://github.com/eraserhd/parinfer-rust}[parinfer-rust] is a rust based parinfer plugin for
@@ -326,20 +320,20 @@ tangle: [
     {https://github.com/lervag/vimtex}[VimTeX] is a LaTeX filetype plugin.
   
     @code fennel
-    (table.insert plugins "~/Git Repos/obse.vim")
+    (table.insert plugins {:dir "~/Git Repos/obl.vim"})
     @end
   
     {https://github.com/katawful/obse.vim}[obse.vim] is a syntax plugin for Oblivion.
   
     @code fennel
-    (table.insert plugins "~/Git Repos/obluavim")
+    (table.insert plugins {:dir "~/Git Repos/obluavim"})
     @end
   
     {https://github.com/katawful/obluavim}[obluavim] is my in-progress filetype plugin for Oblivion.
   
     @code fennel
     (table.insert plugins {1 :katawful/Obli-Vim-Docs
-                           :ft :obse})
+                           :ft :obl})
     @end
   
     {https://github.com/katawful/Obli-Vim-Docs}[Obli-Vim-Docs] are OBSE docs built as Vim help files.
@@ -394,13 +388,15 @@ tangle: [
 *** File Management
     @code fennel
     (table.insert plugins {1 :junegunn/fzf
-                           :run "./install --all"})
+                           :build (fn [] (let [path (.. (do-viml stdpath :data) :/lazy/fzf)
+                                               install (.. path "/install")]
+                                           (do-viml system [install "--all"])))})
     @end
   
     {https://github.com/junegunn/fzf}[FZF] is a command-line fuzzy finder.
   
     @code fennel
-    (table.insert plugins {1 "~/Git Repos/dirbuf.nvim"
+    (table.insert plugins {:dir "~/Git Repos/dirbuf.nvim"
                            :config (fn [] (require :plugins.dirbuf.config))})
     @end
   
@@ -408,7 +404,6 @@ tangle: [
   
     @code fennel
     (table.insert plugins {1 :ibhagwan/fzf-lua
-                           :requires :vijaymarupudi/nvim-fzf
                            :config (fn [] (require :plugins/fzf/config))})
     @end
   
@@ -436,28 +431,24 @@ tangle: [
   
     {https://github.com/andweeb/presence.nvim}[presence.nvim] shows Neovim status for Discord.
   
-    #tangle.none
     @code fennel
     (table.insert plugins {1 :nvim-neorg/neorg
                            :config (fn [] (require :plugins.neorg.config))
-                           :requires :nvim-lua/plenary.nvim})
+                           :dependencies [:nvim-lua/plenary.nvim]})
     @end
 
+    #tangle.none
     @code fennel
     (table.insert plugins {1 "~/Git Repos/neorg/"
                            :config (fn [] (require :plugins.neorg.config))
-                           :requires :nvim-lua/plenary.nvim})
+                           :dependencies [:nvim-lua/plenary.nvim]})
     @end
   
     {https://github.com/nvim-neorg/neorg}[Neorg] is a markup language and organization plugin.
   
-** packer.nvim Call
+** lazy.nvim Call
    @code fennel
-   ((. (require :packer) :startup) {1 (fn [use] (each [_ v (ipairs plugins)] (use v)))
-                                    :config {:display {:open_fn (. (require :packer.util)
-                                                                   :float)}
-                                             :compile_path (.. (vim.fn.stdpath :config)
-                                                               :/lua/packer_compiled.lua)}})
+   ((. (require :lazy) :setup) [plugins])
    @end
 
    Here we call `packer.nvim`. We iterate over the table `plugins` to load each plugin, and also set
@@ -480,15 +471,6 @@ tangle: [
 
    We need to compile files not found in `~/.config/nvim/fnl/`, we can use Aniseed for that.
  
-** Packer Compile Check
-   @code fennel
-   ; see if we need to compile packer
-   (if (= (checkForCompile) false)
-       ((. (require :packer) :compile)))
-   @end
-
-   Just double checking that `packer.nvim` compiles properly.
-
 ** Internal Plugin Loading
    @code fennel
    (require :plugins.session.init)
