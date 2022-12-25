@@ -1,12 +1,13 @@
-(module obse {require-macros [katcros-fnl.macros.nvim.api.options.macros
-                              katcros-fnl.macros.nvim.api.maps.macros]
-              autoload {autoclose plugins.insert.autoclose}})
+(module obl {require-macros [katcros-fnl.macros.nvim.api.options.macros
+                             katcros-fnl.macros.nvim.api.maps.macros]
+             autoload {autoclose plugins.insert.autoclose}})
 
 (set-opts-auto {tabstop 2 shiftwidth 2})
 
-(set-var g :ov_sync_time 1)
-(set-var g :ov_window_style :double)
-; (nno- :<LocalLeader>s :caw :buffer)
+(set-opts-auto {:foldmethod :expr
+                :foldexpr "nvim_treesitter#foldexpr()"
+                :foldenable false
+                :commentstring "; %s"})
 
 ; enclose word
 (ino- "(" "()<Left>" {:buffer true})
