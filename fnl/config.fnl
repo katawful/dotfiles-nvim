@@ -56,4 +56,5 @@
                    :neovide_remember_window_position false})))
 
 (match sys.name
-  :Kat-Arch (set-var g :neovide_transparency 0.9))
+  :Kat-Arch (set-var g :neovide_transparency 0.9)
+  :kat-laptop (set-opt guifont "FiraCode Nerd Font Mono:h14,MesloLGS NF:h14,DejavuSans:h14"))
