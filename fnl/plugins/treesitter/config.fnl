@@ -6,29 +6,27 @@
 
 ;; Install norg parsers
 (var parser-configs (opt- :nvim-treesitter.parsers :get_parser_configs))
-(set parser-configs.norg
-     {:install_info {:url "https://github.com/nvim-neorg/tree-sitter-norg"
-                     :files {1 :src/parser.c 2 :src/scanner.cc}
-                     :branch :main}})
 
-(set parser-configs.norg_meta
-     {:install_info {:url "https://github.com/nvim-neorg/tree-sitter-norg-meta"
-                     :files {1 :src/parser.c}
-                     :branch :main}})
+(set parser-configs.obl
+     {:install_info {:url "/home/kat/tree-sitter-obl/"
+                     :files [:src/parser.c :src/scanner.cc]
+                     :branch :main
+                     :require_generate_from_grammar true}
+      :filetype :obl})
 
-(set parser-configs.norg_table
-     {:install_info {:url "https://github.com/nvim-neorg/tree-sitter-norg-table"
-                     :files {1 :src/parser.c}
-                     :branch :main}})
+(vim.filetype.add 
+  {:extension {:obl :obl}
+   :pattern {".*.obl" :obl
+              ".*.obse" :obl
+              ".*.obscript" :obl}})
 
 ;; Seq -- sequential table of languages
 (def- languages [:query
                  :clojure
+                 :gitattributes
                  :zig
                  :python
-                 :norg
-                 :norg_meta
-                 :norg_table
+                 :obl
                  :fennel
                  :lua
                  :html
