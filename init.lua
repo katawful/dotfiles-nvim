@@ -10,7 +10,6 @@ if not vim.loop.fs_stat(lazy_path) then
     lazy_path,
   })
 end
-vim.opt.runtimepath:prepend(lazy_path)
 function ensure (repo, package, dir)
   if not dir then
     vim.fn.system({
@@ -18,17 +17,19 @@ function ensure (repo, package, dir)
       "clone",
       "--filter=blob:none",
       "--single-branch",
-      repo,
-      package_path,
+      "https://github.com/" .. repo .. ".git",
+      package_path .. "/" .. package,
     })
-    vim.api.nvim_command(string.format("packadd %s", package))
+    vim.opt.runtimepath:prepend(package_path .. "/" .. package)
   else
     local install_path = string.format("%s/%s", package_path, package)
     vim.fn.system(string.format("rm -r %s", install_path))
     vim.fn.system(string.format("ln -s %s %s", repo, package_path))
-    vim.api.nvim_command(string.format("packadd %s", package))
+    vim.opt.runtimepath:prepend(install_path)
   end
 end
 ensure("~/Git\\ Repos/katcros-fnl", "katcros-fnl", true)
 ensure("Olical/aniseed", "aniseed")
+vim.opt.runtimepath:prepend(lazy_path)
 vim.g["aniseed#env"] = {module = "init", compile = true}
+require('aniseed.env').init()

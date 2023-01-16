@@ -4,7 +4,7 @@ description: Initialization of config files
 authors: kat
 categories: config docs
 created: 2022-12-24
-updated: 2022-12-25
+updated: 2023-01-14
 version: 1.0.0
 tangle: [
   /home/kat/.config/nvim/init.lua
@@ -38,7 +38,6 @@ tangle: [
       lazy_path,
     })
   end
-  vim.opt.runtimepath:prepend(lazy_path)
   @end
 
   This clones lazy.nvim to the system path. This is the suggested install method
@@ -51,15 +50,15 @@ tangle: [
         "clone",
         "--filter=blob:none",
         "--single-branch",
-        repo,
-        package_path,
+        "https://github.com/" .. repo .. ".git",
+        package_path .. "/" .. package,
       })
-      vim.api.nvim_command(string.format("packadd %s", package))
+      vim.opt.runtimepath:prepend(package_path .. "/" .. package)
     else
       local install_path = string.format("%s/%s", package_path, package)
       vim.fn.system(string.format("rm -r %s", install_path))
       vim.fn.system(string.format("ln -s %s %s", repo, package_path))
-      vim.api.nvim_command(string.format("packadd %s", package))
+      vim.opt.runtimepath:prepend(install_path)
     end
   end
   @end
@@ -67,6 +66,7 @@ tangle: [
   @code lua
   ensure("~/Git\\ Repos/katcros-fnl", "katcros-fnl", true)
   ensure("Olical/aniseed", "aniseed")
+  vim.opt.runtimepath:prepend(lazy_path)
   @end
   This installs Aniseed and my macros. Since all of my plugins are loaded with Fennel files, I need
   to be able to compile and access them before lazy.nvim actually runs. They will then be managed
@@ -74,6 +74,7 @@ tangle: [
 
   @code lua
   vim.g["aniseed#env"] = {module = "init", compile = true}
+  require('aniseed.env').init()
   @end
 
   {https://github.com/Olical/aniseed}[Aniseed] is a runtime environment for Fennel and Neovim. It
@@ -86,10 +87,10 @@ tangle: [
                                 katcros-fnl.macros.nvim.api.utils.macros
                                 katcros-fnl.macros.nvim.api.autocommands.macros
                                 katcros-fnl.macros.nvim.api.options.macros]
-                require {c aniseed.compile
-                         s aniseed.string
-                         render katdotnvim.utils.export.render
-                         : au
+                autoload {c aniseed.compile
+                          s aniseed.string
+                          render katdotnvim.utils.export.render}
+                require {: au
                          : config
                          : maps
                          sys system}})
@@ -127,7 +128,7 @@ tangle: [
 *** Treesitter
     @code fennel
     (table.insert plugins {1 :nvim-treesitter/nvim-treesitter
-                           :bulid ":TSUpdate"
+                           :build ":TSUpdate"
                            :config (fn [] (require :plugins.treesitter.config))})
     @end
   
@@ -232,6 +233,7 @@ tangle: [
     {https://github.com/lukas-reineke/indent-blankline.nvim}[indent-blankline] shows indentation as
     virtual text.
   
+    #tangle.none
     @code fennel
     (table.insert plugins {:dir "~/Git Repos/vim-startify/"
                            :config (fn [] (require :plugins.startify.config))})
@@ -240,7 +242,14 @@ tangle: [
     {https://github.com/mhinz/vim-startify}[vim-startify] is a start-page plugin.
   
     @code fennel
+    (table.insert plugins {:dir "~/Git Repos/nvim-startify/"})
+    @end
+  
+    {https://github.com/katawful/nvim-startify}[nvim-startify] is a Neovim recreation of vim-startify
+
+    @code fennel
     (table.insert plugins {1 :gelguy/wilder.nvim
+                           :build ":UpdateRemotePlugins"
                            :config (fn [] (require :plugins.wilder.config))})
     @end
   

@@ -11,4 +11,4 @@ version: 0.0.15
 * Neovim Configs
   These are my Neovim configs, written literally in Neorg.
 
-  -> {:init:}[Initialization]
+  - {:init:}[Initialization]

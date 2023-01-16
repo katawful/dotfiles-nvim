@@ -2,19 +2,20 @@
                               katcros-fnl.macros.nvim.api.utils.macros
                               katcros-fnl.macros.nvim.api.autocommands.macros
                               katcros-fnl.macros.nvim.api.options.macros]
-              require {c aniseed.compile
-                       s aniseed.string
-                       render katdotnvim.utils.export.render
-                       : au
+              autoload {c aniseed.compile
+                        s aniseed.string
+                        render katdotnvim.utils.export.render}
+              require {: au
                        : config
                        : maps
                        sys system}})
+(set-var :g :startify_update_oldfiles 1)
 (def plugins [])
 (table.insert plugins :folke/lazy.nvim)
 (table.insert plugins :Olical/aniseed)
 (table.insert plugins {:dir "~/Git Repos/katcros-fnl/"})
 (table.insert plugins {1 :nvim-treesitter/nvim-treesitter
-                       :bulid ":TSUpdate"
+                       :build ":TSUpdate"
                        :config (fn [] (require :plugins.treesitter.config))})
 (table.insert plugins {1 :nvim-treesitter/playground
                        :config (fn [] (require :plugins.treesitter.playground.config))})
@@ -38,8 +39,7 @@
 (table.insert plugins :kyazdani42/nvim-web-devicons)
 (table.insert plugins {1 :lukas-reineke/indent-blankline.nvim
                        :config (fn [] (require :plugins.indent-blankline.config))})
-(table.insert plugins {:dir "~/Git Repos/vim-startify/"
-                       :config (fn [] (require :plugins.startify.config))})
+(table.insert plugins {:dir "~/Git Repos/nvim-startify/"})
 (table.insert plugins {1 :gelguy/wilder.nvim
                        :config (fn [] (require :plugins.wilder.config))})
 (table.insert plugins {:dir "~/Git Repos/syntax-test"})
