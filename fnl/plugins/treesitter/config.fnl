@@ -1,5 +1,6 @@
 (module plugins.treesitter.config
-        {require-macros [katcros-fnl.macros.lispism.macros
+        {autoload {sys system}
+         require-macros [katcros-fnl.macros.lispism.macros
                          katcros-fnl.macros.nvim.api.maps.macros]})
 
 ;;; Configs for tree-sitter
@@ -26,17 +27,21 @@
                  :gitattributes
                  :zig
                  :python
-                 :obl
                  :fennel
                  :lua
                  :html
                  :css
                  :cpp
                  :c
+                 :latex
+                 :vim
                  :bash
                  :javascript
                  :markdown
                  :markdown_inline])
+
+(if (not= sys.name :builder)
+    (table.insert languages :obl))
 
 ;; Setup -- setup table for nvim-treesitter
 ;; https://github.com/nvim-treesitter/nvim-treesitter

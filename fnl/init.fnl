@@ -9,7 +9,6 @@
                        : config
                        : maps
                        sys system}})
-(set-var :g :startify_update_oldfiles 1)
 (def plugins [])
 (table.insert plugins :folke/lazy.nvim)
 (table.insert plugins :Olical/aniseed)
@@ -30,8 +29,16 @@
                                  (vim.notify.setup {:stages :slide}))})
 (table.insert plugins :katawful/kat.vim)
 (table.insert plugins {:dir "~/Git Repos/katdotnvim/"
-                       :config (fn [] ((. (require :plugins.colors.time) :set-colors))
-                                 ((. (require :plugins.colors.scheme) :set*)))})
+                       :config (fn [] 
+                                 (if (= sys.name :builder)
+                                     (do
+                                       (set-opts {:background :light
+                                                  :termguicolors false})
+                                       (vim.cmd.colorscheme "kat.nvim"))
+                                     (do
+                                       (set-opt :termguicolors true)
+                                       ((. (require :plugins.colors.time) :set-colors))
+                                       ((. (require :plugins.colors.scheme) :set*)))))})
 (table.insert plugins {1 :nvim-lualine/lualine.nvim
                        :config (fn [] (require :plugins.lualine.config))})
 (table.insert plugins {1 :junegunn/goyo.vim
@@ -41,6 +48,7 @@
                        :config (fn [] (require :plugins.indent-blankline.config))})
 (table.insert plugins {:dir "~/Git Repos/nvim-startify/"})
 (table.insert plugins {1 :gelguy/wilder.nvim
+                       :build ":UpdateRemotePlugins"
                        :config (fn [] (require :plugins.wilder.config))})
 (table.insert plugins {:dir "~/Git Repos/syntax-test"})
 (table.insert plugins {:dir "~/Git Repos/kreative"})

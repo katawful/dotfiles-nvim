@@ -4,7 +4,7 @@ description: Initialization of config files
 authors: kat
 categories: config docs
 created: 2022-12-24
-updated: 2023-01-14
+updated: 2023-01-15
 version: 1.0.0
 tangle: [
   /home/kat/.config/nvim/init.lua
@@ -199,8 +199,15 @@ tangle: [
     @code fennel
     (table.insert plugins :katawful/kat.vim)
     (table.insert plugins {:dir "~/Git Repos/katdotnvim/"
-                           :config (fn [] ((. (require :plugins.colors.time) :set-colors))
-                                     ((. (require :plugins.colors.scheme) :set*)))})
+                           :config (fn [] 
+                                     (if (= sys.name :builder)
+                                         (do
+                                           (set-opts {:background :light
+                                                      :termguicolors true})
+                                           (vim.cmd.colorscheme "kat.nvim"))
+                                         (do
+                                           ((. (require :plugins.colors.time) :set-colors))
+                                           ((. (require :plugins.colors.scheme) :set*)))))})
     @end
   
     These are my colorschemes.

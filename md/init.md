@@ -2,7 +2,6 @@
 
 
 
-
 # Bootstrapping
 
 
@@ -30,7 +29,6 @@ if not vim.loop.fs_stat(lazy_path) then
     lazy_path,
   })
 end
-vim.opt.runtimepath:prepend(lazy_path)
 ```
 
 This clones lazy.nvim to the system path. This is the suggested install method
@@ -43,15 +41,15 @@ function ensure (repo, package, dir)
       "clone",
       "--filter=blob:none",
       "--single-branch",
-      repo,
-      package_path,
+      "https://github.com/" .. repo .. ".git",
+      package_path .. "/" .. package,
     })
-    vim.api.nvim_command(string.format("packadd %s", package))
+    vim.opt.runtimepath:prepend(package_path .. "/" .. package)
   else
     local install_path = string.format("%s/%s", package_path, package)
     vim.fn.system(string.format("rm -r %s", install_path))
     vim.fn.system(string.format("ln -s %s %s", repo, package_path))
-    vim.api.nvim_command(string.format("packadd %s", package))
+    vim.opt.runtimepath:prepend(install_path)
   end
 end
 ```
@@ -59,6 +57,7 @@ end
 ```lua
 ensure("~/Git\\ Repos/katcros-fnl", "katcros-fnl", true)
 ensure("Olical/aniseed", "aniseed")
+vim.opt.runtimepath:prepend(lazy_path)
 ```
 This installs Aniseed and my macros. Since all of my plugins are loaded with Fennel files, I need
 to be able to compile and access them before lazy.nvim actually runs. They will then be managed
@@ -66,6 +65,7 @@ with lazy.nvim after the bootstrap runs.
 
 ```lua
 vim.g["aniseed#env"] = {module = "init", compile = true}
+require('aniseed.env').init()
 ```
 
 [Aniseed](https://github.com/Olical/aniseed) is a runtime environment for Fennel and Neovim. It
@@ -80,10 +80,10 @@ Enable Aniseed's configuration runtime environment.
                               katcros-fnl.macros.nvim.api.utils.macros
                               katcros-fnl.macros.nvim.api.autocommands.macros
                               katcros-fnl.macros.nvim.api.options.macros]
-              require {c aniseed.compile
-                       s aniseed.string
-                       render katdotnvim.utils.export.render
-                       : au
+              autoload {c aniseed.compile
+                        s aniseed.string
+                        render katdotnvim.utils.export.render}
+              require {: au
                        : config
                        : maps
                        sys system}})
@@ -129,7 +129,7 @@ packer.nvim.
 
 ```fennel
 (table.insert plugins {1 :nvim-treesitter/nvim-treesitter
-                       :bulid ":TSUpdate"
+                       :build ":TSUpdate"
                        :config (fn [] (require :plugins.treesitter.config))})
 ```
 
@@ -160,8 +160,7 @@ languages.
 [treesitter-context](https://github.com/nvim-treesitter/nvim-treesitter-context) shows code
 context within blocks
 
-```
- fennel
+``` fennel
 (table.insert plugins {1 :nvim-treesitter/nvim-tree-docs
                        :config (fn [] (require :plugins.treesitter.docs.config))})
 ```
@@ -169,8 +168,7 @@ context within blocks
 [nvim-tree-docs](https://github.com/nvim-treesitter/nvim-tree-docs) creates docs for supported
 languages. Currently don't use.
 
-```
- fennel
+``` fennel
 (table.insert plugins {1 :SmiteshP/nvim-gps
                        :config (fn [] (require :plugins.nvim-gps.config))})
 ```
@@ -202,8 +200,15 @@ strings such as 'TODO'
 ```fennel
 (table.insert plugins :katawful/kat.vim)
 (table.insert plugins {:dir "~/Git Repos/katdotnvim/"
-                       :config (fn [] ((. (require :plugins.colors.time) :set-colors))
-                                 ((. (require :plugins.colors.scheme) :set*)))})
+                       :config (fn [] 
+                                 (if (= sys.name :builder)
+                                     (do
+                                       (set-opts {:background :light
+                                                  :termguicolors true})
+                                       (vim.cmd.colorscheme "kat.nvim"))
+                                     (do
+                                       ((. (require :plugins.colors.time) :set-colors))
+                                       ((. (require :plugins.colors.scheme) :set*)))))})
 ```
 
 These are my colorschemes.
@@ -236,7 +241,7 @@ These are my colorschemes.
 [indent-blankline](https://github.com/lukas-reineke/indent-blankline.nvim) shows indentation as
 virtual text.
 
-```fennel
+``` fennel
 (table.insert plugins {:dir "~/Git Repos/vim-startify/"
                        :config (fn [] (require :plugins.startify.config))})
 ```
@@ -244,7 +249,14 @@ virtual text.
 [vim-startify](https://github.com/mhinz/vim-startify) is a start-page plugin.
 
 ```fennel
+(table.insert plugins {:dir "~/Git Repos/nvim-startify/"})
+```
+
+[nvim-startify](https://github.com/katawful/nvim-startify) is a Neovim recreation of vim-startify
+
+```fennel
 (table.insert plugins {1 :gelguy/wilder.nvim
+                       :build ":UpdateRemotePlugins"
                        :config (fn [] (require :plugins.wilder.config))})
 ```
 
@@ -271,8 +283,7 @@ that I made.
 
 [tabby.nvim](https://github.com/nanozuki/tabby.nvim) is a tabline plugin.
 
-```
- fennel
+``` fennel
 (table.insert plugins {1 :David-Kunz/markid
                        :config (fn [] (require :plugins.markid.config))})
 ```
@@ -427,8 +438,7 @@ hook into nvim-lspconfig.
 
 [vim-rooter](https://github.com/airblade/vim-rooter) is a root directory finder/manager.
 
-```
- fennel
+``` fennel
 (table.insert plugins {1 :kyazdani42/nvim-tree.lua
                        :config (fn [] (require :plugins.nvim-tree.config))})
 ```
@@ -451,8 +461,7 @@ use.
                        :dependencies [:nvim-lua/plenary.nvim]})
 ```
 
-```
- fennel
+``` fennel
 (table.insert plugins {1 "~/Git Repos/neorg/"
                        :config (fn [] (require :plugins.neorg.config))
                        :dependencies [:nvim-lua/plenary.nvim]})
