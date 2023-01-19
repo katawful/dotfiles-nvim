@@ -11,8 +11,7 @@
            hidden false
            updatetime 100
            cmdheight 2
-           title true
-           termguicolors true})
+           title true})
 
 (set-opt clipboard :unnamedplus :append)
 
@@ -42,18 +41,15 @@
 (vim.diagnostic.config {:virtual_text false})
 
 (set-opt guifont "FiraCode Nerd Font Mono:h11,MesloLGS NF:h11,DejavuSans:h11")
-; (set- guifont "MesloLGS NF:h11")
-; (set- guifont "FiraCode Nerd Font:h11")
-(if (= vim.g.neovide true)
-    (do
-      (set-vars g {:neovide_cursor_animation_length 0.02
-                   :neovide_cursor_trail_length 2
-                   :neovide_cursor_vfx_mode :railgun
-                   :neovide_cursor_vfx_opacity 100
-                   :neovide_cursor_vfx_particle_density 20
-                   :neovide_cursor_vfx_particle_speed 10
-                   :neovide_remember_window_size false
-                   :neovide_remember_window_position false})))
+(if vim.g.neovide
+    (set-vars g {:neovide_cursor_animation_length 0.02
+                 :neovide_cursor_trail_length 2
+                 :neovide_cursor_vfx_mode :railgun
+                 :neovide_cursor_vfx_opacity 100
+                 :neovide_cursor_vfx_particle_density 20
+                 :neovide_cursor_vfx_particle_speed 10
+                 :neovide_remember_window_size false
+                 :neovide_remember_window_position false}))
 
 (match sys.name
   :Kat-Arch (set-var g :neovide_transparency 0.9)
