@@ -33,7 +33,7 @@
                                  (if (= sys.name :builder)
                                      (do
                                        (set-opts {:background :light
-                                                  :termguicolors false})
+                                                  :termguicolors true})
                                        (vim.cmd.colorscheme "kat.nvim"))
                                      (do
                                        (set-opt :termguicolors true)
