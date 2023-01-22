@@ -43,9 +43,11 @@
 (defn populate_preview_buf [self entry-str]
       "Populate preview window with session information
 Seems to be broken in kitty for some reason."
-      (let [entry (self:parse_entry entry-str)]
-        (vim.api.nvim_buf_call self.preview_bufnr
+      (let [entry (self:parse_entry entry-str)
+            ;; Set the buffer to a var
+            ;; fzf-lua sometimes breaks this
+            buffer (vim.api.nvim_win_get_buf self.win.preview_winid)]
+        (vim.api.nvim_buf_call buffer
                                (fn []
-                                 (vim.cmd (.. "edit " entry.dir :/main.norg))
-                                 (vim.cmd :redraw)))
+                                 (vim.cmd.edit (.. entry.dir :/main.norg))))
         (self.win:update_scrollbar)))

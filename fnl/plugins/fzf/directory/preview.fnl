@@ -38,15 +38,20 @@
         (. (contents) index)))
 
 (defn parse-data [data] "Get rid of newlines so it can be output"
-      (s.split data "\n"))
+      (if data
+          (s.split data "\n")
+          [""]))
 
 (defn data-length [data] "Find the length of the data"
       (local (_ output) (string.gsub data "\n" "")) output)
 
 (defn populate_preview_buf [self entry-str]
       "Populate the preview window with dirbuf"
-      (let [entry (self:parse_entry entry-str)]
-        (vim.api.nvim_buf_call self.preview_bufnr
+      (let [entry (self:parse_entry entry-str)
+            ;; Set the buffer to a var
+            ;; fzf-lua sometimes breaks this
+            buffer (vim.api.nvim_win_get_buf self.win.preview_winid)]
+        (vim.api.nvim_buf_call buffer
                                (fn []
                                  ((. (require :dirbuf) :open) entry.dir)))
         (self.win:update_scrollbar)))

@@ -36,7 +36,9 @@
         (. (contents) index)))
 
 (defn parse-data [data] "Get rid of newlines so it can be output"
-      (s.split data "\n"))
+      (if data
+          (s.split data "\n")
+          [""]))
 
 (defn data-length [data] "Find the length of the data"
       (local (_ output) (string.gsub data "\n" "")) output)
@@ -44,8 +46,10 @@
 (defn populate_preview_buf [self entry-str]
       "Populate preview window with session information"
       (let [entry (self:parse_entry entry-str)
-            data (parse-data entry.last) ; line-count (data-length entry.last)]
+            data (parse-data entry.last)
+            ;; Set the buffer to a var
+            ;; fzf-lua sometimes breaks this
+            buffer (vim.api.nvim_win_get_buf self.win.preview_winid)
             line-count 1]
-        (set self.preview_bufloaded true)
-        (vim.api.nvim_buf_set_lines self.preview_bufnr 0 line-count false data)
+        (vim.api.nvim_buf_set_lines buffer 0 line-count false data)
         (self.win:update_scrollbar)))

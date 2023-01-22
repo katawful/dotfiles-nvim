@@ -36,7 +36,9 @@
         (. (contents) index)))
 
 (defn parse-data [data] "Get rid of newlines so it can be output"
-      (s.split data "\n"))
+      (if data
+          (s.split data "\n")
+          [""]))
 
 (defn data-length [data] "Find the length of the data"
       (local (_ output) (string.gsub data "\n" "")) output)
@@ -44,9 +46,13 @@
 (defn populate_preview_buf [self entry-str] "Populate the preview window"
       (let [entry (self:parse_entry entry-str)
             data (parse-data entry.data)
+            ;; Set the buffer to a var
+            ;; fzf-lua sometimes breaks this
+            buffer (vim.api.nvim_win_get_buf self.win.preview_winid)
             line-count (data-length entry.data)]
         (set self.preview_bufloaded true)
-        (vim.api.nvim_buf_set_lines self.preview_bufnr 0 line-count false data) ; TODO new syntax type for git status?
+        (vim.api.nvim_buf_set_lines buffer 0 -1 false data) 
+        ;; TODO: new syntax type for git status?
         (local filetype :fugitive)
-        (vim.api.nvim_buf_set_option self.preview_bufnr :filetype filetype)
+        (vim.api.nvim_buf_set_option buffer :filetype filetype)
         (self.win:update_scrollbar)))
