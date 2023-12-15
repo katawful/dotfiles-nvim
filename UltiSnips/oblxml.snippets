@@ -1,0 +1,57 @@
+snippet et "True entity" A
+&true;
+endsnippet
+
+snippet en "Entity Form" A
+&${1:${VISUAL:entity}};$0
+endsnippet
+
+snippet ef "False entity" A
+&false;
+endsnippet
+
+snippet ci "Comment inline" i
+<!-- $1 -->$0
+endsnippet
+
+snippet ml "Modeline addition to set ft to oblxml" b
+<!-- vim:set ft=oblxml: -->
+endsnippet
+
+snippet cm "Comment multiline" b
+<!--
+    $0
+-->
+endsnippet
+
+snippet tin "Tag inline named" i
+<${1:${VISUAL:Tile}} ${2:${VISUAL:Attribute}}="${3:${VISUAL:Value}}"> $4 </$1>$0
+endsnippet
+
+snippet tis "Tag inline selector" i
+<${1:${VISUAL:Tile}} src="${2:${VISUAL:Selector}}()" trait="${3:${VISUAL:Trait}}"/>$0
+endsnippet
+
+snippet copy "Copy tag" wi
+<copy src="${1:${VISUAL:Selector}}()" trait="${2:${VISUAL:Trait}}" />$0
+endsnippet
+
+snippet incl "include tag" i
+<include src="${1:${VISUAL:File}}.xml"/>$0
+endsnippet
+
+snippet tn "Tag block named" b
+<$1 $2="$3">
+	$0
+</$1>
+endsnippet
+
+snippet t "Tag block" b
+<$1>
+	$0
+</$1>
+endsnippet
+
+snippet ti "Tag inline" i
+<$1> $2 </$1>$0
+endsnippet

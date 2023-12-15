@@ -37,16 +37,22 @@
                                        :name :katcros-fnl}
                          :obse.vim {:dir (.. sys.git-path "obse.vim/")
                                     :desc "Syntax files for Oblivion"
-                                    :name :obse.vim}})
+                                    :name :obse.vim}
+                         :nvim-startify {:dir (.. sys.git-path "nvim-startify/")
+                                         :desc "Fennel recreation of vim-startify"
+                                         :name :nvim-startify}
+                         :vim-startify {:dir (.. sys.git-path "vim-startify/")
+                                        :desc "Startup page"
+                                        :name :Startify}})
 
 ;; fnlfmt: skip
 (defonce git-repos
          {:oblivion-lang-ref {:dir (.. sys.git-path "oblivion-lang-ref/")
                               :desc "Language reference for Oblivion"
                               :name "Oblivon Language Reference"}
-          :tree-sitter-obse {:dir (.. sys.git-path "tree-sitter-obse/")
-                             :desc "Tree-sitter grammar for Oblivion"
-                             :name "Tree-sitter OBSE"}
+          :tree-sitter-obl {:dir (.. sys.git-path "tree-sitter-obl")
+                            :desc "Tree-sitter grammar for Oblivion"
+                            :name "Tree-sitter obl"}
           :oblivion-git {:dir (.. sys.git-path "oblivion-git/")
                          :desc "Plugin files"
                          :name "Oblivion Plugins"}

@@ -26,7 +26,7 @@
 
 (defn modify! [session-dir] "Modify a session to match to whatever path needed"
       (let [file (.. session-dir "/" session-file)
-            git-root (. sys.git-path 1)]
+            git-root sys.git-path]
         (with-open [handle (io.open file :r)]
           (print (vim.inspect (handle:read)))
           (let [data (handle:read :*a)]

@@ -9,6 +9,8 @@
              :indent_blankline_buftype_exclude [:terminal]
              :indent_blankline_filetype_exclude [:text
                                                  :terminal
+                                                 :man
+                                                 :NeogitPopup
                                                  :startify
                                                  :help
                                                  :calendar

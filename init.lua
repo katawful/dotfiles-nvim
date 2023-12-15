@@ -1,5 +1,6 @@
 local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local package_path = vim.fn.stdpath("data") .. "/lazy"
+
 if not vim.loop.fs_stat(lazy_path) then
   vim.fn.system({
     "git",
@@ -10,6 +11,7 @@ if not vim.loop.fs_stat(lazy_path) then
     lazy_path,
   })
 end
+
 function ensure (repo, package, dir)
   if not dir then
     vim.fn.system({
@@ -28,8 +30,10 @@ function ensure (repo, package, dir)
     vim.opt.runtimepath:prepend(install_path)
   end
 end
-ensure("~/Git\\ Repos/katcros-fnl", "katcros-fnl", true)
+
+ensure("~/Repos/NEOVIM/katcros-fnl", "katcros-fnl", true)
 ensure("Olical/aniseed", "aniseed")
 vim.opt.runtimepath:prepend(lazy_path)
+
 vim.g["aniseed#env"] = {module = "init", compile = true}
 require('aniseed.env').init()

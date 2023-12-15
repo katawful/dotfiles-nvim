@@ -6,4 +6,5 @@
 
 (set-vars g {:UltiSnipsExpandTrigger :<tab>
              :UltiSnipsJumpForwardTrigger :<tab>
+             :UltiSnipsEditSplit :context
              :UltiSnipsJumpBackwardsTrigger :<s-tab>})

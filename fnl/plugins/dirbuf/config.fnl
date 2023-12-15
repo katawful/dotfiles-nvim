@@ -4,4 +4,4 @@
 ;;; Configs for dirbuf
 ;;; https://github.com/elihunter173/dirbuf.nvim
 
-(opt- :dirbuf :setup {:show_hidden true})
+(opt- :dirbuf :setup {:show_hidden true :devicons false})

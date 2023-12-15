@@ -2,7 +2,7 @@
                              katcros-fnl.macros.nvim.api.maps.macros]
              autoload {autoclose plugins.insert.autoclose}})
 
-(set-opts-auto {tabstop 2 shiftwidth 2})
+(set-opts-auto {tabstop 4 shiftwidth 4})
 
 (set-opts-auto {:foldmethod :expr
                 :foldexpr "nvim_treesitter#foldexpr()"

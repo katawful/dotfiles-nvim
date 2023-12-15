@@ -50,7 +50,7 @@
       "                    ░░░░                    ░░░░                         "
       "                  ▒▒▒▒▒▒░░                ░░▒▒▒▒▒▒                       "
       "                      ▒▒░░                ░░▒▒                           "
-      "                        ████████████░░░░░░░░                            "
+      "                        ████████████░░░░░░░░                             "
       "    ░░░░░░            ▓▓▓▓▓▓▓▓▓▓            ░░            ░░░░░░         "
       "  ░░      ░░      ████▓▓▓▓▓▓▓▓▓▓              ░░░░      ░░      ░░       "
       "    ░░    ░░░░  ██▓▓▓▓▓▓▓▓▓▓▓▓▓▓                  ░░  ░░░░░░  ░░         "
@@ -127,6 +127,7 @@
                                           :KatFZFSearchNeorgWorkspaces]}]
                  :startify_custom_header ((. vim.fn "startify#center") vim.g.ascii)}))
 
+(update-variables)
 (update-variables)
 
 (let [startify (def-aug- :startifyResize)]

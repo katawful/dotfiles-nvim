@@ -1,20 +1,23 @@
-(module plugins.fugitive.maps
+(module plugins.neogit.maps
         {require-macros [katcros-fnl.macros.nvim.api.maps.macros]})
 
-;;; Maps for vim-fugitive
+;;; Maps for Neogit
 
-;; String -- fugitive leader subkey
+;; String -- neogit leader subkey
 (defonce- gitLeader :g)
 
-;; FN -- create a single mode map using the fugitive leader key
+;; Module -- neogit module
+(defonce- neogit (require :neogit))
+
+;; FN -- create a single mode map using the Neogit leader key
 ;; @mode -- mode to use
 ;; @lhs -- left hand side
 ;; @rhs -- right hand side
 ;; @description -- description for mapping
-(defn fugMap [mode lhs rhs description]
+(defn map [mode lhs rhs description]
       (match mode
         :n (do
              (nno- (.. :<leader> gitLeader lhs) rhs
                    {:desc description :silent true :nowait true}))))
 
-(fugMap :n :p "<cmd>Git push<CR>" "Push commits of current repo")
+(map :n :g (fn [] (neogit.open {:kind :split_above})) "Open Neogit window")

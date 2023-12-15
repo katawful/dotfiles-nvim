@@ -11,8 +11,9 @@ local colors = {
 }
 
 local opts = {
-    contrast = "soft",
-    colors_name = "wal"
+    contrast = "hard",
+    colors_name = "wal",
+    render = true,
 }
 
 require("kreative.color")["init-colors"](colors)

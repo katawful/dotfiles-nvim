@@ -55,7 +55,7 @@ end
 ```
 
 ```lua
-ensure("~/Git\\ Repos/katcros-fnl", "katcros-fnl", true)
+ensure("~/Git\\ Repos/NEOVIM/katcros-fnl", "katcros-fnl", true)
 ensure("Olical/aniseed", "aniseed")
 vim.opt.runtimepath:prepend(lazy_path)
 ```
@@ -76,8 +76,7 @@ Enable Aniseed's configuration runtime environment.
 # init.fnl
 
 ```fennel
-(module init {require-macros [katcros-fnl.macros.nvim.packer.macros
-                              katcros-fnl.macros.nvim.api.utils.macros
+(module init {require-macros [katcros-fnl.macros.nvim.api.utils.macros
                               katcros-fnl.macros.nvim.api.autocommands.macros
                               katcros-fnl.macros.nvim.api.options.macros]
               autoload {c aniseed.compile
@@ -108,7 +107,7 @@ The modules in `require` need to be loaded anyways to load in said configs.
 (def plugins [])
 ```
 
-Here we are defining a sequential table of plugins that can be loaded by packer.nvim later. This
+Here we are defining a sequential table of plugins that can be loaded by lazy.nvim later. This
 is done for easier management of all the plugins.
 
 
@@ -117,11 +116,11 @@ is done for easier management of all the plugins.
 ```fennel
 (table.insert plugins :folke/lazy.nvim)
 (table.insert plugins :Olical/aniseed)
-(table.insert plugins {:dir "~/Git Repos/katcros-fnl/"})
+(table.insert plugins {:dir "~/Repos/NEOVIM/katcros-fnl/"})
 ```
 
 These are the plugins we loaded in with the [bootstrap](#bootstrapping), they're updated with
-packer.nvim.
+lazy.nvim.
 
 
 
@@ -145,7 +144,7 @@ tree-sitter that hooks tree-sitter parsers into Neovim.
 tree-sitter.
 
 ```fennel
-(table.insert plugins {1 :p00f/nvim-ts-rainbow
+(table.insert plugins {:url :https://gitlab.com/HiPhish/nvim-ts-rainbow2
                        :config (fn [] (require :plugins.treesitter.rainbow.config))})
 ```
 
@@ -199,7 +198,7 @@ strings such as 'TODO'
 
 ```fennel
 (table.insert plugins :katawful/kat.vim)
-(table.insert plugins {:dir "~/Git Repos/katdotnvim/"
+(table.insert plugins {:dir "~/Repos/NEOVIM/katdotnvim/"
                        :config (fn [] 
                                  (if (= sys.name :builder)
                                      (do
@@ -207,6 +206,7 @@ strings such as 'TODO'
                                                   :termguicolors true})
                                        (vim.cmd.colorscheme "kat.nvim"))
                                      (do
+                                       (set-opt :termguicolors true)
                                        ((. (require :plugins.colors.time) :set-colors))
                                        ((. (require :plugins.colors.scheme) :set*)))))})
 ```
@@ -242,14 +242,14 @@ These are my colorschemes.
 virtual text.
 
 ``` fennel
-(table.insert plugins {:dir "~/Git Repos/vim-startify/"
+(table.insert plugins {:dir "~/Repos/NEOVIM/vim-startify/"
                        :config (fn [] (require :plugins.startify.config))})
 ```
 
 [vim-startify](https://github.com/mhinz/vim-startify) is a start-page plugin.
 
 ```fennel
-(table.insert plugins {:dir "~/Git Repos/nvim-startify/"})
+(table.insert plugins {:dir "~/Repos/NEOVIM/nvim-startify/"})
 ```
 
 [nvim-startify](https://github.com/katawful/nvim-startify) is a Neovim recreation of vim-startify
@@ -264,14 +264,14 @@ virtual text.
 search.
 
 ```fennel
-(table.insert plugins {:dir "~/Git Repos/syntax-test"})
+(table.insert plugins {:dir "~/Repos/NEOVIM/syntax-test"})
 ```
 
 This is a tiny syntax plugin for me to look at various hl groups. It's only installed with
-packer.nvim to make management easier.
+lazy.nvim to make management easier.
 
 ```fennel
-(table.insert plugins {:dir "~/Git Repos/kreative"})
+(table.insert plugins {:dir "~/Repos/NEOVIM/kreative"})
 ```
 
 [Kreative](https://github.com/katawful/kreative) is a 16 color GUI colorscheme generator plugin
@@ -339,13 +339,13 @@ LISPs. Requires `cargo` to be installed.
 [VimTeX](https://github.com/lervag/vimtex) is a LaTeX filetype plugin.
 
 ```fennel
-(table.insert plugins {:dir "~/Git Repos/obl.vim"})
+(table.insert plugins {:dir "~/Repos/OBLIVION/obl.vim"})
 ```
 
 [obse.vim](https://github.com/katawful/obse.vim) is a syntax plugin for Oblivion.
 
 ```fennel
-(table.insert plugins {:dir "~/Git Repos/obluavim"})
+(table.insert plugins {:dir "~/Repos/OBLIVION/obluavim"})
 ```
 
 [obluavim](https://github.com/katawful/obluavim) is my in-progress filetype plugin for Oblivion.
@@ -383,6 +383,21 @@ LISPs. Requires `cargo` to be installed.
 
 [vim-commentary](https://github.com/tpope/vim-commentary) is a comment editing plugin.
 
+```fennel
+(table.insert plugins {1 :IndianBoy42/fuzzy.nvim
+                       :dependencies [{1 :nvim-telescope/telescope-fzf-native.nvim
+                                       :build "make"}]})
+(table.insert plugins {1 :IndianBoy42/fuzzy_slash.nvim
+                       :opts {:Fz :Fuz
+                              :FzNext :FuzNext
+                              :FzPrev :FuzPrev
+                              :FzPattern :FuzPattern
+                              :FzClear :FuzClear}})
+```
+
+[fuzzy_slash](https://github.com/IndianBoy42/fuzzy_slash.nvim) is a fuzzy single buffer search
+plugin.
+
 
 ### LSP
 
@@ -419,7 +434,7 @@ hook into nvim-lspconfig.
 [FZF](https://github.com/junegunn/fzf) is a command-line fuzzy finder.
 
 ```fennel
-(table.insert plugins {:dir "~/Git Repos/dirbuf.nvim"
+(table.insert plugins {:dir "~/Repos/NEOVIM/dirbuf.nvim"
                        :config (fn [] (require :plugins.dirbuf.config))})
 ```
 
@@ -457,12 +472,14 @@ use.
 
 ```fennel
 (table.insert plugins {1 :nvim-neorg/neorg
+                       :build ":Neorg sync-parsers"
                        :config (fn [] (require :plugins.neorg.config))
                        :dependencies [:nvim-lua/plenary.nvim]})
 ```
 
 ``` fennel
-(table.insert plugins {1 "~/Git Repos/neorg/"
+(table.insert plugins {:dir "~/Repos/NEOVIM/neorg/"
+                       :build ":Neorg sync-parsers"
                        :config (fn [] (require :plugins.neorg.config))
                        :dependencies [:nvim-lua/plenary.nvim]})
 ```
@@ -474,10 +491,11 @@ use.
 
 ```fennel
 ((. (require :lazy) :setup) [plugins])
+(require :plugins.lazy.config)
 ```
 
-Here we call `packer.nvim`. We iterate over the table `plugins` to load each plugin, and also set
-the configs desired for `packer.nvim` itself.
+Here we call `lazy.nvim`. We iterate over the table `plugins` to load each plugin, and also set
+the configs desired for `lazy.nvim` itself.
 
 
 ## External File Compilation
@@ -501,7 +519,7 @@ We need to compile files not found in `~/.config/nvim/fnl/`, we can use Aniseed 
 
 ## Internal Plugin Loading
 
-```fennel
+``` fennel
 (require :plugins.session.init)
 ```
 

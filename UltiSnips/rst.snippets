@@ -1,0 +1,128 @@
+# -*- coding: utf-8 -*-
+
+priority -50
+
+###########################################################################
+#							   General Stuff							  #
+###########################################################################
+global !p
+from collections import Counter
+from vimsnippets import complete, has_cjk, display_width
+
+# http://docutils.sourceforge.net/docs/ref/rst/roles.html
+TEXT_ROLES = ['emphasis', 'literal', 'code', 'math',
+			  'pep-reference', 'rfc-reference',
+			  'strong', 'subscript', 'superscript',
+			  'title-reference', 'raw']
+TEXT_ROLES_REGEX = r'\.\.\srole::?\s(w+)'
+
+# http://docutils.sourceforge.net/docs/ref/rst/directives.html#specific-admonitions
+SPECIFIC_ADMONITIONS = ["attention", "caution", "danger",
+						"error", "hint", "important", "note",
+						"tip", "warning"]
+# http://docutils.sourceforge.net/docs/ref/rst/directives.html
+DIRECTIVES = ['code', 'contents', 'admonition', 'table', 'csv-table', 'list-table',
+			  'class', 'container', 'sidebar', 'topic', 'title',
+			  'role', 'default-role', 'raw']
+
+# DIRECTIVES_WITHOUT_TITLE means directive arguments equal None
+DIRECTIVES_WITHOUT_TITLE = ['math', 'meta', 'parsed-literal', 'line-block',
+							'header', 'compound', 'highlights', 'pull-quote',
+							'footer', 'epigraph', 'rubric', 'sectnum']
+
+INCLUDABLE_DIRECTIVES = ['image', 'figure', 'include']
+
+# Directives for Subsubsection Definition
+DIRECTIVES_FOR_SUBSTITUTION = ['replace', 'unicode', 'date']
+
+# http://www.pygal.org/en/stable/documentation/types/index.html
+CHART_TYPES = ["Line", "StackedLine", "HorizontalLine", "Bar", "StackedBar", "HorizontalBar", "Histogram", "XY", "DateLine", "TimeLine", "TimeDeltaLine", "DateTimeLine", "Pie", "Radar", "Box", "Dot", "Funnel", "Gauge", "SolidGauge", "Pyramid", "Treemap"]
+
+def real_filename(filename):
+	"""pealeextension name off if possible
+	# i.e. "foo.bar.png will return "foo.bar"
+	"""
+	return os.path.splitext(filename)[0]
+
+def check_file_exist(rst_path, relative_path):
+	"""
+	For RST file, it can just include files as relative path.
+
+	:param rst_path: absolute path to rst file
+	:param relative_path: path related to rst file
+	:return: relative file's absolute path if file exist
+	"""
+	abs_path = os.path.join(os.path.dirname(rst_path), relative_path)
+	if os.path.isfile(abs_path):
+		return abs_path
+
+def	make_items(times, leading='+'):
+	"""
+	make lines with leading char multitimes
+
+	:param: times, how many times you need
+	:param: leading, leading character
+	"""
+	times = int(times)
+	if leading == 1:
+		msg = ""
+		for x in range(1, times+1):
+			msg += "%s. Item\n" % x
+		return msg
+	else:
+		return ("%s Item\n" % leading) * times
+
+
+def look_up_directives(regex, fpath):
+	"""
+	find all directive args in given file
+	:param: regex, the regex that needs to match
+	:param: path, to path to rst file
+
+	:return: list, empty list if nothing match
+	"""
+	try:
+		with open(fpath) as source:
+			match = re.findall(regex, source.read())
+	except IOError:
+		match = []
+	return match
+
+
+def get_popular_code_type():
+	"""
+	find most popular code type in the given rst
+
+	:param path: file to detect
+
+	:return: string, most popular code type in file
+	"""
+	buf = "".join(vim.current.buffer)
+	types = re.findall(r'[:|\.\.\s]code::?\s(\w+)', buf)
+	try:
+		popular_type = Counter(types).most_common()[0][0]
+	except IndexError:
+		popular_type = "lua" # Don't break default
+	return popular_type
+endglobal
+
+snippet in "Inline literal" i
+`!p
+# dirty but works with CJK character detection
+if has_cjk(vim.current.line):
+	snip.rv ="\ "`\`\`${1:${VISUAL:Inline}}\`\``!p
+if has_cjk(vim.current.line):
+	snip.rv ="\ "
+else:
+	snip.rv = " "
+`$0
+endsnippet
+
+snippet rc
+.. _${1:Name}:
+$0
+endsnippet
+
+snippet rf
+:ref:\`${1:text} <${2:path}>\`$0
+endsnippet

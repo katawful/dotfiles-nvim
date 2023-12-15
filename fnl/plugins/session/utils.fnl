@@ -60,3 +60,5 @@ Asks for input for last thing done for this session"
 We don't want to deal with sessions when we just booted up Neovim"
       (let [buffers (vim.api.nvim_exec :buffers true)]
         (if (= (length buffers) 0) true false)))
+
+(defn except [dir] "Don't make a session in any directory contained in dir")

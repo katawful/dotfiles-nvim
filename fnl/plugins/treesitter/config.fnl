@@ -9,11 +9,17 @@
 (var parser-configs (opt- :nvim-treesitter.parsers :get_parser_configs))
 
 (set parser-configs.obl
-     {:install_info {:url "/home/kat/tree-sitter-obl/"
+     {:install_info {:url "/home/kat/Repos/TREESITTER/tree-sitter-obl/"
                      :files [:src/parser.c :src/scanner.cc]
                      :branch :main
                      :require_generate_from_grammar true}
       :filetype :obl})
+
+(set parser-configs.hypr
+     {:install_info {:url "https://github.com/luckasRanarison/tree-sitter-hypr"
+                     :files [:src/parser.c]
+                     :branch :master}
+      :filetype :hypr})
 
 (vim.filetype.add 
   {:extension {:obl :obl}
@@ -23,14 +29,20 @@
 
 ;; Seq -- sequential table of languages
 (def- languages [:query
+                 :rst
                  :clojure
+                 :vimdoc
                  :gitattributes
+                 :gitcommit
                  :zig
                  :python
+                 :regex
                  :fennel
                  :lua
                  :html
                  :css
+                 :obl
+                 :hypr
                  :cpp
                  :c
                  :latex

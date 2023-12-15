@@ -46,7 +46,8 @@
         (fzf-cb nil))
       (local actions
              {:default (fn [selected _]
-                         (let [index (git-preview.get-index (. selected 1))
+                         (print (vim.inspect selected))
+                         (let [index (git-preview.get-index (. selected 2))
                                contents (. (git-preview.contents) index)]
                            (vim.notify (.. "cwd: " contents.dir)
                                        vim.log.levels.INFO)
@@ -73,7 +74,7 @@
         (fzf-cb nil))
       (local actions
              {:default (fn [selected _]
-                         (let [index (neorg-preview.get-index (. selected 1))
+                         (let [index (neorg-preview.get-index (. selected 2))
                                contents (. (neorg-preview.contents) index)]
                            (vim.cmd (.. "Neorg workspace " contents.name))))})
       ((coroutine.wrap (fn []
@@ -97,14 +98,14 @@
           (set i (+ i 1)))
         (fzf-cb nil))
       (local actions {:default (fn [selected _]
-                                 (let [index (session-preview.get-index (. selected
-                                                                           1))
+                                 (let [index (session-preview.get-index
+                                               (. selected 2))
                                        contents (. (session-preview.contents)
                                                    index)]
                                    (session.load! contents)))
                       :ctrl-d (fn [selected _]
-                                (let [index (session-preview.get-index (. selected
-                                                                          1))
+                                (let [index (session-preview.get-index
+                                              (. selected 2))
                                       contents (. (session-preview.contents)
                                                   index)]
                                   (session.delete! contents)
@@ -136,31 +137,31 @@
       (local actions
              {:default (fn [selected _]
                          "cd to directory"
-                         (let [index (dir-preview.get-index (. selected 1))
+                         (let [index (dir-preview.get-index (. selected 2))
                                contents (. (dir-preview.contents) index)]
                            (open-notify contents.dir)))
               :ctrl-s (fn [selected _]
                         "cd and open up fzf of new directory"
-                        (let [index (dir-preview.get-index (. selected 1))
+                        (let [index (dir-preview.get-index (. selected 2))
                               contents (. (dir-preview.contents) index)]
                           (open-notify contents.dir)
                           (search-dirs)))
               :ctrl-e (fn [selected _]
                         "cd and open up fzf of new directory"
-                        (let [index (dir-preview.get-index (. selected 1))
+                        (let [index (dir-preview.get-index (. selected 2))
                               contents (. (dir-preview.contents) index)]
                           (open-notify contents.dir)
                           (dirbuf-open contents.dir)))
               :ctrl-x (fn [selected _]
                         "cd and open up fzf of new directory"
-                        (let [index (dir-preview.get-index (. selected 1))
+                        (let [index (dir-preview.get-index (. selected 2))
                               contents (. (dir-preview.contents) index)]
                           (open-notify contents.dir)
                           (vim.cmd :split)
                           (dirbuf-open contents.dir)))
               :ctrl-v (fn [selected _]
                         "cd and open up fzf of new directory"
-                        (let [index (dir-preview.get-index (. selected 1))
+                        (let [index (dir-preview.get-index (. selected 2))
                               contents (. (dir-preview.contents) index)]
                           (open-notify contents.dir)
                           (vim.cmd :vsplit)

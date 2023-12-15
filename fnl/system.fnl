@@ -9,7 +9,10 @@
 (defonce name (string.sub (vim.fn.system "uname -n") 1 -2))
 
 ;; String -- path for git repo based on machine
-(defonce git-path (.. home-path "/Git Repos/"))
+(defonce git-path (.. home-path "/Repos/"))
+
+;; String -- current colorscheme background
+(defonce background vim.o.background)
 
 ;; String -- raw git root
-(defonce git-root [:/Programs_and_Stuff/Git_Repos/ "/Git Repos/"])
+(defonce git-root "/Repos/")
